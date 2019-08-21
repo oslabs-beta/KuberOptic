@@ -2,21 +2,37 @@
   "name": "kubernati",
   "version": "1.0.0",
   "description": "An Electron app for developers to visualize their Kubernetes clusters in real-time",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "start": "electron ./out/electron/main.js",
+    "build": "tsc && cp ./src/website/index.html ./out/website/index.html",
+    "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/kubernati.git"
   },
-  "author": "Jacob, Jay, Jimmy, Juan",
+  "contributors": [
+    "Jacob", 
+    "Jay", 
+    "Jimmy", 
+    "Juan"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/oslabs-beta/kubernati/issues"
   },
   "homepage": "https://github.com/oslabs-beta/kubernati#readme",
   "devDependencies": {
-    "electron": "^6.0.3"
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "electron": "^6.0.3",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack-cli": "^3.3.7"
+  },
+  "dependencies": {
+    "react-dom": "^16.9.0"
   }
 }
