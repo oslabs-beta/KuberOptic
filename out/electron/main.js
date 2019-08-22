@@ -8,3 +8,5 @@ app.on('ready', () => {
     // This loads a website to display
     window.loadURL(`file://${__dirname}/../website/index.html`);
 });
+
+
