@@ -1,6 +1,7 @@
+'use strict';
 const { app, BrowserWindow } = require('electron');
+const electron = require('electron')
 
-console.log(__dirname);
 app.on('ready', () => {
   // This creates a window on startup
   const window = new BrowserWindow({ width: 800, height: 600 });
