@@ -1,19 +1,14 @@
-import React, { useRef, useEffect} from 'react';
-import visualizer from './components/visualizer'
+import * as React from 'react';
+import Visualizer from './components/Visualizer'
 
-declare namespace JSX {
-  interface IntrinsicElements {
-      app: any
-  }
-}
 
-const app = () => {
+const App = () => {
   return (
-      <div className="my-app">
-          <visualizer data={[1,2,3]} />
+      <div>
+          <Visualizer/>
       </div>
-  )
+  );
 }
 
-export default app;
+export default App;
 

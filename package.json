@@ -44,7 +44,6 @@
     "electron-reload": "^1.5.0",
     "electron-reload-webpack-plugin": "^2.0.4",
     "lodash": "^4.17.15",
-    "nodemon": "^1.19.1",
     "rimraf": "^3.0.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.0",
@@ -56,9 +55,9 @@
   },
   "dependencies": {
     "@material-ui/icons": "^4.2.1",
-    "d3": "^5.11.0",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "scale": "0.0.7"
   }
 }

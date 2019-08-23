@@ -13,7 +13,7 @@
     "baseUrl": "./src"
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*", "src/Ambient-Types/External Modules/@deck.gl"
   ],
   "exclude": ["node_modules"]
 }
