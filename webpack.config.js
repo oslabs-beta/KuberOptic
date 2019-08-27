@@ -13,6 +13,9 @@ const isEnvDevelopment = process.env.NODE_ENV === 'development';
 const commonConfig = {
   devtool: isEnvDevelopment ? 'source-map' : false,
   mode: isEnvProduction ? 'production' : 'development',
+  externals: {
+        '@google-cloud/container': 'commonjs @google-cloud/container'
+  },
   output: { path: srcPaths('dist') },
   node: { __dirname: false, __filename: false },
   resolve: {
@@ -28,7 +31,7 @@ const commonConfig = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
+        loader: 'babel-loader',
       },
       {
         test: /\.(scss|css)$/,
@@ -43,6 +46,7 @@ const commonConfig = {
       },
     ],
   },
+  watch: false
 };
 // #endregion
 
