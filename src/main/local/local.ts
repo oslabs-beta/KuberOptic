@@ -17,7 +17,7 @@ let data = {};
         data["metaDataNameSpace"] = res.body.items[0].metadata.namespace
         //  console.log('nodeName ',res.body.items[0].spec.nodeName);
         data["nodeName"] = res.body.items[0].spec.nodeName;
-        console.log('--------------------')
+       // console.log('--------------------')
        
         
         //  console.log('DockerContainer ',res.body.items[0].spec.containers[0].image);
