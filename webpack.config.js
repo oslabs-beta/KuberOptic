@@ -16,9 +16,6 @@ const commonConfig = {
   externals: {
         '@google-cloud/container': 'commonjs @google-cloud/container'
   },
-  optimization: {
-    minimize: false
-  },
   output: { path: srcPaths('dist') },
   node: { __dirname: false, __filename: false },
   resolve: {
@@ -49,6 +46,7 @@ const commonConfig = {
       },
     ],
   },
+  watch: false
 };
 // #endregion
 

@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron ./dist/main.bundle.js",
-    "dev": "rimraf dist && cross-env NODE_ENV=development webpack --watch --progress --colors & cross-env NODE_ENV=development electron .",
+    "dev": "electron ./dist/main.bundle.js",
     "prod": "rimraf dist && cross-env NODE_ENV=production webpack --progress --colors",
     "build": "tsc && cp ./src/client/index.html",
     "build:watch": "npm run build -- --watch",

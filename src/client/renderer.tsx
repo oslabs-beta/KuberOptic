@@ -17,7 +17,7 @@ ipcRenderer.on('cluster-client', (event: any, arg: any) => {
 
 ReactDOM.render(
   <div className='div'>
-    Chicken Nuggets!!!
+    Chicken nuggets!!! 
   </div>,
   document.getElementById('app')
 );
