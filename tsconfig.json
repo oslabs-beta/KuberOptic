@@ -2,13 +2,14 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitThis": true, 
     "module": "commonjs",
     "target": "es6",
     "jsx": "react",
-    "lib": ["es6", "dom", "es2017"],
+    "lib": ["es6", "dom", "es2017", "esnext"],
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "baseUrl": "./src"
   },
