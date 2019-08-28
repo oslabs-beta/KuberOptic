@@ -30,6 +30,7 @@
   "devDependencies": {
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@types/underscore": "^1.9.2",
     "copy-pkg-json-webpack-plugin": "0.0.38",
     "cross-env": "^5.2.0",
     "css-loader": "^3.2.0",
@@ -61,6 +62,7 @@
     "react-dom": "^16.9.0",
     "scale": "0.0.7",
     "three": "^0.107.0",
-    "three-orbitcontrols": "^2.102.2"
+    "three-orbitcontrols": "^2.102.2",
+    "underscore": "^1.9.1"
   }
 }

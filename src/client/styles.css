@@ -7,3 +7,27 @@
 	display:block;
 }
 
+#tool-tip {
+display: none; 
+position: absolute; 
+pointer-events: none; 
+font-size: 13px; 
+width: 120px; 
+text-align: center; 
+line-height: 1; 
+padding: 6px; 
+background: white; 
+font-family: sans-serif;
+}
+
+#point-tip {
+	padding: 4px; 
+	margin-bottom: 4px;
+	}
+
+#group-tip {
+	padding: 4px;
+	}
+
+	
+
