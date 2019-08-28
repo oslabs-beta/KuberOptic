@@ -10,7 +10,7 @@
     "lib": ["es6", "dom", "es2017"],
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
   },
   "include": [
     "./src/**/*"

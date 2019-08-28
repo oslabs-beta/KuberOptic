@@ -1,5 +1,8 @@
 const fetchLocal = require('./local/local').default
 const fetchGCP = require('./gcp/getGCPdata').default
+const { app, ipcMain, BrowserWindow } = require('electron');
+// console.log('Entering GCP...');
+// const container = require('@google-cloud/container');
 
 const GOOGLE_APPLICATION_CREDENTIALS:object = {
    "type": "service_account",
@@ -14,19 +17,43 @@ const GOOGLE_APPLICATION_CREDENTIALS:object = {
    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/458439475138-compute%40developer.gserviceaccount.com"
  }
  
+ async function getLocal() {
+    const res = await fetchLocal();
+    //console.log(res)
+    return res
+ }
+ async function getGcp(GOOGLE_APPLICATION_CREDENTIALS) {
+    const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS);
+    //console.log(res)
+    return res;
+ }
+ //getLocal();
+ //getGcp(GOOGLE_APPLICATION_CREDENTIALS);
  
+ ipcMain.on('asynchronous-message', (event: any, arg: any) => {
+     console.log(arg) // prints "ping"
+     getGcp(GOOGLE_APPLICATION_CREDENTIALS).then(res=>{
+        event.sender.send('cluster-client', res)
+     })
+     getLocal().then(res=>{
+      event.sender.send('cluster-client', res)   
+     })
+     // arg should be the users credentials in the future
+     //event.sender.send('cluster-client',[gcpData, locals]);
+ })
 
-async function getLocal() {
-   const res = await fetchLocal();
-   console.log(res)
-   return res
-}
+// Even listeners
 
-async function getGcp(GOOGLE_APPLICATION_CREDENTIALS) {
-   const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS);
-   console.log(res)
-   return res;
-}
+// start up the main process
+app.on('ready', () => {
+  // This creates a window on startup
+  const window = new BrowserWindow({ width: 800,
+    height: 600 ,
+    webPreferences: {
+      nodeIntegration: true // allow node integration on BrowserWindow
+    },
+  });
 
-getLocal();
-getGcp(GOOGLE_APPLICATION_CREDENTIALS);
+  // This loads the html page we bundled with webpack to display
+  window.loadURL(`file://${__dirname}/index.html`);
+});

@@ -11,10 +11,10 @@ const GOOGLE_APPLICATION_CREDENTIALS = {
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/458439475138-compute%40developer.gserviceaccount.com"
 }
-
+require('babel-polyfill');
 
   //export this object to main.ts
-  async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-central1-a') {
+async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-central1-a') {
     
     const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
     const projectId:string = GOOGLE_APPLICATION_CREDENTIALS.project_id;
