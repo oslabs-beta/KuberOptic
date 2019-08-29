@@ -1,11 +1,32 @@
 const container = require('@google-cloud/container');
 const GOOGLE_APPLICATION_CREDENTIALS ={
-  
 }
-require('babel-polyfill');
 
-  //export this object to main.ts
-async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-central1-a') {
+/*Anal stuff that I dont wanna do rn */
+
+//const containeranalysis = require('@google-cloud/containeranalysis');
+
+// const client = new containeranalysis.v1beta1.GrafeasV1Beta1Client({
+//   // optional auth parameters.
+// });
+
+// // Iterate over all elements.
+// const formattedParent = client.projectPath('kubernati');
+
+// client.listScanConfigs({parent: formattedParent})
+//   .then(responses => {
+//     console.log(responses)
+//     // for (const resource of resources) {
+//     //   // doThingsWith(resource)
+//     // }
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
+
+//export this object to main.ts
+  
+async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string='us-central1-a') {
     
     const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
     const projectId:string = GOOGLE_APPLICATION_CREDENTIALS.project_id;
@@ -16,7 +37,10 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-
     };
     const [response] = await client.listClusters(request);
     const clusters:any = response.clusters;
-    // console.log(clusters[0])
+
+  /**Testing environment */
+
+//     console.log(clusters[0])
 
     const clusterArray = [];
 
@@ -41,14 +65,12 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-
       })
       clusterArray.push(gcpDat)
      })
-
-
-
-     // console.log(cluster)
+      
+    // console.log(clusters[0].nodePools[0].instanceGroupUrls)
     // console.log(cluster.nodePools[1])
-   // console.log(clusterArray);
+    // console.log(clusterArray);
   return clusterArray;
 }
-quickstart(GOOGLE_APPLICATION_CREDENTIALS)
+//quickstart(GOOGLE_APPLICATION_CREDENTIALS)
 
 export default quickstart;

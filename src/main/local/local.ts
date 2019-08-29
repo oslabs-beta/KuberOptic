@@ -1,14 +1,16 @@
 const k8s = require('@kubernetes/client-node');
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
-
+console.log("im invoking the whole locals")
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+
 //const k8sApi2 = kc.makeApiClient(k8s.ExtensionsV1beta1Api);
 
-let data = {};
- async function fetchLocal(data={}){
+//let data = {};
+
+async function fetchLocal(data={}){
     await k8sApi.listNamespacedPod('default').then((res) => {
-        //getting clusterName
+       //console.log(res.body.items)
         //  console.log('meta clusterName: ' , res.body.items[0].metadata.clusterName)
         data["clusterName"] = res.body.items[0].metadata.clusterName;
         //  console.log('meta timestamp creation : ' , res.body.items[0].metadata.creationTimestamp)
@@ -17,10 +19,9 @@ let data = {};
         data["metaDataNameSpace"] = res.body.items[0].metadata.namespace
         //  console.log('nodeName ',res.body.items[0].spec.nodeName);
         data["nodeName"] = res.body.items[0].spec.nodeName;
-       // console.log('--------------------')
-       
+        // console.log('--------------------')
         
-        //  console.log('DockerContainer ',res.body.items[0].spec.containers[0].image);
+        // console.log('DockerContainer ',res.body.items[0].spec.containers[0].image);
         for(let i = 0; i < res.body.items.length; i++){
            res.body.items[i].spec.containers.forEach(
               (el,j)=>data[`dockerContainer_${j}`] = {'podName':res.body.items[i].metadata.name,'image':el.image, 'containerName':el.name})
@@ -29,9 +30,11 @@ let data = {};
         //  console.log('containerName ',res.body.items[0].spec.containers[0].name);
         //  console.log('Amount of Pods: ' + res.body.items.length);
     })
+   //console.log(data)
   return data;
 }
 //fetchLocal()
+
 export default fetchLocal;
 // k8sApi.listNamespacedService('default').then((res) => {
 //   console.log('Services Name: ' + res.body.items[0].metadata.name);
