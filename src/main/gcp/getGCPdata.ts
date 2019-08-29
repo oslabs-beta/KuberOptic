@@ -1,12 +1,10 @@
 const container = require('@google-cloud/container');
-const GOOGLE_APPLICATION_CREDENTIALS ={
-  
-}
+const GOOGLE_APPLICATION_CREDENTIALS = require('./creds.json');
 require('babel-polyfill');
 
   //export this object to main.ts
 async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-central1-a') {
-    
+
     const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
     const projectId:string = GOOGLE_APPLICATION_CREDENTIALS.project_id;
     //console.log(projectId)
@@ -31,11 +29,11 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-
       //console.log( cluster.name ,' status :', cluster.status);
       gcpDat["clusterStatus"] = cluster.status;
       //console.log('currentNodeCount is :', cluster.currentNodeCount);
-      gcpDat["nodeCount"] = cluster.currentNodeCount; 
+      gcpDat["nodeCount"] = cluster.currentNodeCount;
       //console.log('location is :' , cluster.location);
       gcpDat["location"] = cluster.location;
       cluster.nodePools.forEach((node, i)=>{
-        gcpDat[`NodePool_${i}:`] = 
+        gcpDat[`NodePool_${i}:`] =
         [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
          `MachineType: ${node.config.machineType}`]
       })
@@ -46,9 +44,9 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string = 'us-
 
      // console.log(cluster)
     // console.log(cluster.nodePools[1])
-   // console.log(clusterArray);
+   console.log(clusterArray);
   return clusterArray;
 }
-quickstart(GOOGLE_APPLICATION_CREDENTIALS)
+// quickstart(GOOGLE_APPLICATION_CREDENTIALS)
 
 export default quickstart;
