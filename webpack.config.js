@@ -7,6 +7,7 @@ function srcPaths(src) {
   return path.join(__dirname, src);
 }
 
+
 const isEnvProduction = process.env.NODE_ENV === 'production';
 const isEnvDevelopment = process.env.NODE_ENV === 'development';
 
@@ -14,6 +15,7 @@ const commonConfig = {
   devtool: isEnvDevelopment ? 'source-map' : false,
   mode: isEnvProduction ? 'production' : 'development',
   output: { path: srcPaths('dist') },
+  optimization: {minimize: false},
   node: { __dirname: false, __filename: false },
   resolve: {
     alias: {
@@ -28,7 +30,7 @@ const commonConfig = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
+        loader: 'babel-loader',
       },
       {
         test: /\.(scss|css)$/,

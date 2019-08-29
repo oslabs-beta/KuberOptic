@@ -38,6 +38,7 @@
     "electron-installer-dmg": "^3.0.0",
     "electron-prebuilt": "^1.4.13",
     "electron-reload": "^1.5.0",
+    "electron-reload-webpack-plugin": "^2.0.4",
     "lodash": "^4.17.15",
     "rimraf": "^3.0.0",
     "source-map-loader": "^0.2.4",
@@ -46,12 +47,22 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7"
+    "webpack-cli": "^3.3.7",
+    "webpack-livereload-plugin": "^2.2.0"
   },
   "dependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@material-ui/icons": "^4.2.1",
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@types/react-router-dom": "^4.3.5",
+    "babel-loader": "^8.0.6",
+    "electron-connect": "^0.6.3",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1"
   }
 }
