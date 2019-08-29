@@ -3,23 +3,33 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 // import 'styles.css';
 
-const { ipcRenderer } = require('electron');
-// console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
-ipcRenderer.send('asynchronous-message', 'weed');
+const GOOGLE_APPLICATION_CREDENTIALS:object = {
+ }
+const zone:string = 'us-central1-a' 
 
-ipcRenderer.on('cluster-client', (event: any, arg: any) => {
+const input = [GOOGLE_APPLICATION_CREDENTIALS, zone];
+const { ipcRenderer } = require('electron');
+//const clusterz = ['test'];
+
+
+// console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
+ipcRenderer.send('asynchronous-message', input);
+ipcRenderer.on('cluster-gcp', (event: any, arg: any) => {
   console.log('gcp data: ', arg)
-  // console.log(`GCP DATA: `,arg[0]) // prints "pong"
-  // console.log(`Local Data: `, arg[1])
-  // event.sender(arg);
+ // clusterz.push(arg)
+})
+ipcRenderer.on('cluster-local', (event: any, arg: any)=>{
+  console.log('local data: ', arg)
+  //clusterz.push(arg)
+  //console.log('clusterz is: ', clusterz)
 })
 
-// render our main
-// console.log('Renderer file loaded', typeof ReactDOM);
 
 ReactDOM.render(
   <div className='div'>
+  <h1>
     Chicken nuggets!!! 
+  </h1>
   </div>,
   document.getElementById('app')
 );
