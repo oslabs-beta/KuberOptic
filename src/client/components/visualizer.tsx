@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import * as _ from 'underscore';
 
 
+
 const Visualizer = () => {
 
     useEffect(() => {
@@ -12,8 +13,8 @@ const Visualizer = () => {
       const vizWidth = width;
       const height = window.innerHeight;
       const fov = 40;
-      const near = 10;
-      const far = 10000;
+      const near = 20;
+      const far = 5000;
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
       ref.current.appendChild(renderer.domElement);
@@ -25,7 +26,9 @@ const Visualizer = () => {
       renderer.setSize( width, height );
       // here we will define our points and sprites 
       const pointAmmount = 10;
-      const circleSprite = new THREE.TextureLoader().load("https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png")
+      // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
+      // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
+      const circleSprite = new THREE.TextureLoader().load("/Users/jacobbanks/Code/Kubernati/kubernati/src/client/assets/Basic_hexagon.svg")
       const colorArray = ["#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00", "#6a3d9a"]
       const randomPosition = (radius?: number) => {
         radius = 2000;
@@ -49,14 +52,15 @@ const Visualizer = () => {
       const pointsGeometry = new THREE.Geometry();
       const colors = []; 
       for (const point of generatedPoints) {
-        const vertex = new THREE.Vector3(point.position[0], point.position[1], 0)
+        const vertex = new THREE.Vector3(point.position[0], point.position[1])
         pointsGeometry.vertices.push(vertex);
         const color = new THREE.Color(colorArray[point.group]);
         colors.push(color);
       }
+      //sizeAttenuation: false
       pointsGeometry.colors = colors;
-      const pointsMaterial = new THREE.PointsMaterial({ size: 100,
-        sizeAttenuation: false, vertexColors: THREE.VertexColors, map: circleSprite, transparent: true,});
+      const pointsMaterial = new THREE.PointsMaterial({ size: 100, sizeAttenuation: false,
+        vertexColors: THREE.VertexColors, map: circleSprite, transparent: true,});
       const points = new THREE.Points(pointsGeometry, pointsMaterial);
       const scene = new THREE.Scene();
       // scene.background = new THREE.Color(0xffffff);
