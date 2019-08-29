@@ -7,6 +7,7 @@ function srcPaths(src) {
   return path.join(__dirname, src);
 }
 
+
 const isEnvProduction = process.env.NODE_ENV === 'production';
 const isEnvDevelopment = process.env.NODE_ENV === 'development';
 
@@ -18,6 +19,7 @@ const commonConfig = {
   },
   optimization:{minimize:false},
   output: { path: srcPaths('dist') },
+  optimization: {minimize: false},
   node: { __dirname: false, __filename: false },
   resolve: {
     alias: {

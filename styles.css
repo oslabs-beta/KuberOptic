@@ -1,0 +1,117 @@
+.app {
+  height: 100vh;
+  background-color: rgb(0, 0, 0); 
+}
+
+.text {
+  color: aqua;
+  margin-top: 20px;
+  margin-left: 290px;
+  font-size: 20px;
+}
+
+.displayContainer {
+  color: aquamarine;
+}
+
+.kubLogo {
+  transform: rotate(360deg);
+  height: 300px;
+  width: 300px;
+  margin-top: 25px;
+  margin-left: 240px;
+  color: rgb(254, 254, 255);
+  animation: rotation 2.5s infinite linear;
+}
+
+
+.logo {
+  transform: rotate(360deg);
+  height: 100px;
+  width: 100px;
+  margin-top: 35px;
+  margin-left: 92px;
+  background-color: oldlace;
+  border: solid 5px black;
+  border-radius: 20px;
+  /* animation: rotation 4s infinite linear; */
+}
+
+.logo1 {
+  transform: rotate(360deg);
+  height: 100px;
+  width: 100px;
+  margin-top: 35px;
+  margin-left: 130px;
+  border: solid 10px black;
+  border-radius: 20px;
+  /* animation: rotation 4s infinite linear; */
+}
+
+.logo2 {
+  transform: rotate(360deg);
+  height: 100px;
+  width: 100px;
+  margin-top: 35px;
+  margin-left: 130px;
+  /* animation: rotation 4s infinite linear; */
+  background-color: red;
+  border: solid 5px black;
+  border-radius: 20px;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.uploadInput {
+ height: 70px;
+ width: 250px;
+ border: dodgerblue solid 5px;
+ border-radius: 5px;
+ color: black;
+ background-color: rgb(255, 255, 255);
+ margin-left: 250px;
+ margin-top: 30px;
+ font-size: 30px;
+ font-family: sans-serif;
+}
+
+.uploadButt {
+  height: 50px;
+  width: 75px;
+  border: dodgerblue solid 5px;
+ border-radius: 5px;
+ margin-top: 30px;
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ font-weight: bold;
+ font-size: 15px;
+ background-color: rgb(255, 255, 255);
+ }
+
+ .uploadDiv {
+   height: 100vh;
+ }
+
+ .kubUpload {
+  transform: rotate(360deg);
+  height: 100px;
+  width: 100px;
+  margin-top: 60px;
+  margin-left: 325px;
+  color: rgb(254, 254, 255);
+  animation: rotation 1s infinite linear;
+}
+
+.kubUploadText {
+  height: 100px;
+  width: 200px;
+  margin-top: 15px;
+  color: aquamarine;
+  margin-left: 285px;
+}
