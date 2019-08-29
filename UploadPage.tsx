@@ -6,8 +6,11 @@ import { useState, useEffect, useContext } from 'react';
 // import Route from 'react-router-dom';
 import DisplayContainer from './DisplayContainer';
 import {StoreContext} from './store';
+const { ipcRenderer } = require('electron');
 // import path from 'path';
-
+ipcRenderer.on('clusterClient', (event: any, argument: any) => {
+    console.log(argument);
+})
 
 
 
@@ -22,7 +25,8 @@ const UploadPage = () => {
 
 
     const handleSubmit = () => {
-        console.log(Store)
+        ipcRenderer.send('asynchronous-message', Store.credentials)
+        console.log(Store.credentials)
         // console.log(Store.uploadPageState)
         setStore({...Store, uploadPageState: true});
         console.log(`this is landing page ${Store.landingPageState}`)

@@ -14,6 +14,10 @@ const isEnvDevelopment = process.env.NODE_ENV === 'development';
 const commonConfig = {
   devtool: isEnvDevelopment ? 'source-map' : false,
   mode: isEnvProduction ? 'production' : 'development',
+  externals: {
+        '@google-cloud/container': 'commonjs @google-cloud/container'
+  },
+  optimization:{minimize:false},
   output: { path: srcPaths('dist') },
   optimization: {minimize: false},
   node: { __dirname: false, __filename: false },
@@ -45,11 +49,12 @@ const commonConfig = {
       },
     ],
   },
+  watch: false
 };
 // #endregion
 
 const mainConfig = lodash.cloneDeep(commonConfig);
-mainConfig.entry = './src/main/main.ts';
+mainConfig.entry = ['babel-polyfill','./src/main/main.ts'];
 mainConfig.target = 'electron-main';
 mainConfig.output.filename = 'main.bundle.js';
 mainConfig.plugins = [
