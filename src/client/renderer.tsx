@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 // import 'styles.css';
 
 const GOOGLE_APPLICATION_CREDENTIALS:object = {
- }
+}
 const zone:string = 'us-central1-a' 
 
 const input = [GOOGLE_APPLICATION_CREDENTIALS, zone];
