@@ -1,8 +1,7 @@
-const fetchLocal = require('./local/local').default
-const fetchGCP = require('./gcp/getGCPdata').default
+// const fetchLocal = require('./local/local').default
+// const fetchGCP = require('./gcp/getGCPdata').default
 const { app, ipcMain, BrowserWindow } = require('electron');
-// console.log('Entering GCP...');
-// const container = require('@google-cloud/container');
+// const electron = require('electron')
 
 const GOOGLE_APPLICATION_CREDENTIALS:object = {
   "type": "service_account",
@@ -17,34 +16,36 @@ const GOOGLE_APPLICATION_CREDENTIALS:object = {
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dg-420%40demogorgan.iam.gserviceaccount.com"
 }
 
- async function getLocal() {
-    const res = await fetchLocal();
-    //console.log(res)
-    return res
- }
- async function getGcp(GOOGLE_APPLICATION_CREDENTIALS) {
-    const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS);
-    //console.log(res)
-    return res;
- }
+ // async function getLocal() {
+ //    const res = await fetchLocal();
+ //    //console.log(res)
+ //    return res
+ // }
+ // async function getGcp(GOOGLE_APPLICATION_CREDENTIALS) {
+ //    const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS);
+ //    //console.log(res)
+ //    return res;
+ // }
  //getLocal();
  //getGcp(GOOGLE_APPLICATION_CREDENTIALS);
 
  ipcMain.on('asynchronous-message', (event: any, arg: any) => {
      console.log(arg) // prints "ping"
-     getGcp(GOOGLE_APPLICATION_CREDENTIALS).then(res=>{
-        event.sender.send('cluster-client', res)
-     })
-     getLocal().then(res=>{
-      event.sender.send('cluster-client', res)
-     })
+     // getGcp(GOOGLE_APPLICATION_CREDENTIALS).then(res=>{
+     //    event.sender.send('cluster-client', res)
+     // })
+     // getLocal().then(res=>{
+     //  event.sender.send('cluster-client', res)
+     // })
      // arg should be the users credentials in the future
-     //event.sender.send('cluster-client',[gcpData, locals]);
- })
+     console.log(arg);
+     event.sender.send('clusterClient', 'yayYaaaaaay')
+})
 
 // Even listeners
 
 // start up the main process
+
 app.on('ready', () => {
   // This creates a window on startup
   const window = new BrowserWindow({ width: 800,
