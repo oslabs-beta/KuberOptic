@@ -1,6 +1,8 @@
 // const fetchLocal = require('./local/local').default
 // const fetchGCP = require('./gcp/getGCPdata').default
 const { app, ipcMain, BrowserWindow } = require('electron');
+// const electron = require('electron')
+
  
 //  async function getLocal() {
 //     const res = await fetchLocal();
@@ -34,6 +36,7 @@ ipcMain.on('asynchronous-message', (event: any, arg: any) => {
 // Even listeners
 
 // start up the main process
+
 app.on('ready', () => {
   // This creates a window on startup
   const window = new BrowserWindow({ width: 800,

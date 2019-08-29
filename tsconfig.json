@@ -7,13 +7,14 @@
     "module": "commonjs",
     "target": "es6",
     "jsx": "react",
-    "lib": ["es6", "dom", "es2017"],
+    "lib": ["es6", "dom", "es2017", "esnext"],
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "baseUrl": "./src",
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*", "src/Ambient-Types/External Modules/@deck.gl"
   ],
   "exclude": ["node_modules"]
 }

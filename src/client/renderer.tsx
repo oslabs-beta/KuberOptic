@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import ReactDOM from 'react-dom';
 import * as ReactDOM from 'react-dom';
-// import 'styles.css';
+import "./styles.css"
 import App from '../app'
 
 // render our main
@@ -31,4 +31,3 @@ ReactDOM.render(<App />, document.getElementById('root'));
 //   //clusterz.push(arg)
 //   //console.log('clusterz is: ', clusterz)
 // })
-
