@@ -3,8 +3,29 @@ import React, { useEffect, useRef}from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
 
-
-
+const store = {
+  clusters: [{
+    nodePool_0: ["DefaultPool", {discSize: "100GB"}, {machineType: "g1Small"}],
+    nodePool_1: ["Pool1", {discSize: "100GB"}, {machineType: "g1Small"}],
+    nodePool_2: ["Pool2", {discSize: "100GB"}, {machineType: "g1Small"}],
+    clusterData: {},
+    clusterDscription: "",
+    clusterName: "StandardCluster 1",
+    clusterStatus: "Running",
+    creationTime: "02:40",
+    location: "us-central1-a",
+    nodeCount: 7,
+  }, {
+    nodePool_0: [],
+    clusterData: {},
+    clusterDscription: "",
+    clusterName: "StandardCluster 3",
+    clusterStatus: "Running",
+    creationTime: "02:40",
+    location: "us-central1-a",
+    nodeCount: 1,
+  }]
+}
 const Visualizer = () => {
 
     useEffect(() => {
@@ -23,9 +44,9 @@ const Visualizer = () => {
       // camera.lookAt(new THREE.Vector3(0, 0, 0));
       // camera.aspect = width / height;
       // camera.updateProjectionMatrix();
-      renderer.setSize( width, height );
+      // renderer.setSize( width, height );
       // here we will define our points and sprites 
-      const pointAmmount = 10;
+      const pointAmmount = store.clusters.length;
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
       const circleSprite = new THREE.TextureLoader().load("/Users/jacobbanks/Code/Kubernati/kubernati/src/client/assets/Basic_hexagon.svg")
@@ -34,21 +55,34 @@ const Visualizer = () => {
         radius = 2000;
         const ptAngle = Math.random() * 2 * Math.PI;
         const ptRadiusSq = Math.random() * radius * radius;
+        // const ptLine = radius / 2;
+        // const ptY = radius / 2;
+        // const xCache = {};
         const ptX = Math.sqrt(ptRadiusSq) * Math.cos(ptAngle);
         const ptY = Math.sqrt(ptRadiusSq) * Math.sin(ptAngle);
+        // let ptX = ptLine + 100;
+        
+        // xCache[ptX] = ptX;
+        // if (xCache[ptX] === ptX) {
+        //   ptX += 100;
+        //   xCache[ptX] = ptX
+        // }
         return [ptX, ptY];
       }
       // const generatedPoints = d3.range(pointAmmount).map(phyllotaxis(2))
       const pointInfo = [];
       for (let i = 0; i < pointAmmount; i++) {
         const position = randomPosition()
-        const name = 'Point ' + i;
+        const name = store.clusters[i].clusterName;
+        const clusterStatus = store.clusters[i].clusterStatus;
+        const creationTime = store.clusters[i].creationTime;
+        const location = store.clusters[i].location;
+        const nodeCount = store.clusters[i].nodeCount;
         const group = Math.floor(Math.random() * 5);
-        const point = { position, name, group }; 
+        const point = { position, name, clusterStatus, creationTime, location, nodeCount, group }; 
         pointInfo.push(point);
       }
       const generatedPoints = pointInfo;
-      console.log(generatedPoints);
       const pointsGeometry = new THREE.Geometry();
       const colors = []; 
       for (const point of generatedPoints) {
@@ -90,8 +124,8 @@ const Visualizer = () => {
 
         function zoomHandler(d3_transform) {
           let scale = d3_transform.k;
-          let x = -(d3_transform.x - vizWidth/2) / scale;
-          let y = (d3_transform.y - height/2) / scale;
+          let x = -(d3_transform.x - vizWidth / 2) / scale;
+          let y = (d3_transform.y - height / 2) / scale;
           let z = getZFromScale(scale);
           camera.position.set(x, y, z);
         }
@@ -135,12 +169,8 @@ const Visualizer = () => {
       };
 
       // Initial tooltip state
-      const tooltipState = { 
+      const tooltipState: {[k: string]: any} = { 
         display: "none",
-        left: "",
-        name: "",
-        group: "",
-        top: "",
       } 
       const toolTip = divRefOne.current;
       const pointTip = divRefTwo.current;
@@ -170,7 +200,10 @@ const Visualizer = () => {
         toolTip.style.top = tooltipState.top + 'px';
         pointTip.innerText = tooltipState.name;
         pointTip.style.background = colorArray[tooltipState.group];
-        groupTip.innerText = `Group ${tooltipState.group}`;
+        pStatus.current.textContent = tooltipState.clusterStatus //+ tooltipState.creationTime + tooltipState.location + tooltipState.nodeCount;
+        pTime.current.textContent = tooltipState.creationTime;
+        pLocation.current.textContent = tooltipState.location;
+        pNode.current.textContent = tooltipState.nodeCount;
       }
 
       function showTooltip(mousePosition, datum) {
@@ -183,6 +216,11 @@ const Visualizer = () => {
         tooltipState.top = mousePosition[1] + yOffset;
         tooltipState.name = datum.name;
         tooltipState.group = datum.group;
+        tooltipState.clusterStatus = datum.clusterStatus;
+        tooltipState.clusterStatus = datum.clusterStatus;
+        tooltipState.creationTime = datum.creationTime;
+        tooltipState.location = datum.location;
+        tooltipState.nodeCount = datum.nodeCount;
         updateTooltip();
       }
 
@@ -242,13 +280,23 @@ const Visualizer = () => {
   const divRefOne = useRef<HTMLDivElement>(null)
   const divRefTwo = useRef<HTMLDivElement>(null)
   const divRefThree = useRef<HTMLDivElement>(null)
+  const pStatus = useRef<HTMLParagraphElement>(null)
+  const pTime = useRef<HTMLParagraphElement>(null)
+  const pLocation = useRef<HTMLParagraphElement>(null)
+  const pNode = useRef<HTMLParagraphElement>(null)
+
 
   return (
     <>
       <div ref={ref}>
         <div ref={divRefOne} id="tool-tip">
           <div ref={divRefTwo} id="point-tip" />
-          <div ref={divRefThree} id="group-tip" />
+          <div ref={divRefThree} id="group-tip">
+            <p ref={pStatus}/>
+            <p ref={pTime}/>
+            <p ref={pLocation}/>
+            <p ref={pNode}/>
+          </div>
         </div>
       </div>
     </>
