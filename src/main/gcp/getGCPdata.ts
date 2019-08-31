@@ -1,6 +1,5 @@
 const container = require('@google-cloud/container');
-// const GOOGLE_APPLICATION_CREDENTIALS ={
-// }
+const GOOGLE_APPLICATION_CREDENTIALS = {};
 
 /*Anal stuff that I dont wanna do rn */
 
@@ -41,12 +40,19 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any={}, zone:string='us
 
   /**Testing environment */
 
-//     console.log(clusters[0])
+   // console.log(clusters[0][name])
+   const clusterArray = [];
 
-    const clusterArray = [];
-
-    clusters.forEach(cluster=>{
-      let gcpDat:object = {};
+   clusters.forEach(cluster=>{
+     let gcpDat:object = {};
+     let clusterDat = {};
+         for(let prop in cluster){
+           //console.log(prop)
+           if(prop!== 'masterAuth' && prop!== 'masterAuthorizedNetworksConfig'){
+             clusterDat[prop] = cluster[prop]
+            }
+          }
+      gcpDat["clusterData"] = clusterDat;
       //console.log('clusterName is :', cluster.name);
       gcpDat["clusterName"] = cluster.name;
       //console.log('cluster description is :' , cluster.description);
@@ -72,6 +78,6 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any={}, zone:string='us
    // console.log(clusterArray);
   return clusterArray;
 }
-quickstart()
+// quickstart()
 
 export default quickstart;

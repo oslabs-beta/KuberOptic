@@ -20,8 +20,8 @@ const UploadPage = () => {
         // update gcp data to store
         Store.gcp = arg;
         // setStore({...Store, gcp: arg});
-        // console.log('Da Store after', Store);
-        // event.returnValue = 'done';
+        console.log('Da Store after', Store);
+        event.returnValue = 'done';
         // console.log(argument);
     })
 
@@ -29,6 +29,7 @@ const UploadPage = () => {
         setStore({...Store, credentials:e.currentTarget.value})
 
     }
+//
 
 
     const handleSubmit = () => {

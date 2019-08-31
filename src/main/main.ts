@@ -32,7 +32,7 @@ const { app, ipcMain, BrowserWindow } = require('electron');
      // arg should be the users credentials in the future
      // console.log(arg);
      // event.sender.send('clusterClient', 'yayYaaaaaay')
-     // event.returnValue = 'done';
+     event.returnValue = 'done';
 })
 
 // Even listeners
