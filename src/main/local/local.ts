@@ -43,7 +43,7 @@ async function fetchLocal(data={}){
         //  console.log('nodeName ',res.body.items[0].spec.nodeName);
         data["nodeName"] = res.body.items[0].spec.nodeName;
         // console.log('--------------------')
-        
+
         // console.log('DockerContainer ',res.body.items[0].spec.containers[0].image);
         for(let i = 0; i < res.body.items.length; i++){
            res.body.items[i].spec.containers.forEach(
@@ -72,7 +72,7 @@ export default fetchLocal;
 //k8sApi2.listNamespacedDeployment('default').then((res) => {
    // console.log('---------------------------')
    // console.log(res.body.items[0].spec.stragety);
-//    console.log('deployment info: ', 
+//    console.log('deployment info: ',
 //    {'stragety':res.body.items[0].stragety,
 //       'status':res.body.items[0].status,
 // })

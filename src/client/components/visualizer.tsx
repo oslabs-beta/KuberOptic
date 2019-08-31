@@ -69,16 +69,16 @@ const Visualizer = () => {
       // camera.aspect = width / height;
       // camera.updateProjectionMatrix();
       // renderer.setSize( width, height );
-      // here we will define our points and sprites 
+      // here we will define our points and sprites
 
       //---------------number of hexagons---------------\\
       const pointAmmount = store.clusters.length;
-    
+
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
       const circleSprite = new THREE.TextureLoader().load(".././src/client/assets/Basic_hexagon.svg")
       const colorArray = ["#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00", "#6a3d9a"]
-     
+
       /* Testing to make random elements appear  */
       // const randomPosition = (radius?: number) => {
       //   radius = 500;
@@ -94,16 +94,16 @@ const Visualizer = () => {
       const pointInfo2 = [];
       for (let i = 0; i < pointAmmount; i++) {
         const position = [2400*i -2400,0]
-        const group = Math.floor(Math.random() * 25);
+        const group = Math.floor(Math.random() * 5);
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
         const creationTime = store.clusters[i].creationTime;
         const location = store.clusters[i].location;
         const nodeCount = store.clusters[i].nodeCount;
-        const point = { position, name, clusterStatus, creationTime, location, nodeCount, group }; 
+        const point = { position, name, clusterStatus, creationTime, location, nodeCount, group };
         pointInfo.push(point);
       }
-      
+
       for(let j = 0; j < store.clusters[0].nodeCount; j++){
         //console.log("im in other if statement")
         const name2 = `Point` + j;
@@ -112,12 +112,12 @@ const Visualizer = () => {
         const point2 = {pos, name2, group}
         pointInfo2.push(point2)
       }
-      
+
       const generatedPoints = pointInfo;
       //console.log(generatedPoints);
       const pointsGeometry = new THREE.Geometry();
       const pointsGeometry2 = new THREE.Geometry();
-      const colors = []; 
+      const colors = [];
       const colors2 = [];
       for (const point of generatedPoints) {
         const vertex = new THREE.Vector3(point.position[0], point.position[1])
@@ -178,7 +178,7 @@ const Visualizer = () => {
           let z = getZFromScale(scale);
           camera.position.set(x, y, z);
         }
-        
+
         let zoom = d3.zoom()
         .scaleExtent([getScaleFromZ(far), getScaleFromZ(near)])
         .on('zoom', () =>  {
@@ -188,9 +188,9 @@ const Visualizer = () => {
           //d3 White space in the browser
           const view = d3.select(renderer.domElement);
           function setUpZoom() {
-            view.call(zoom);    
+            view.call(zoom);
             const initialScale = getScaleFromZ(far);
-            const initialTransform = d3.zoomIdentity.translate(vizWidth / 2, height / 2).scale(initialScale);    
+            const initialTransform = d3.zoomIdentity.translate(vizWidth / 2, height / 2).scale(initialScale);
             zoom.transform(view, initialTransform);
             camera.position.set(0, 0, far);
           }
@@ -203,7 +203,7 @@ const Visualizer = () => {
       animate();
 
       // raycasting, toolbar, and collission detection
-      // ray casting helper functions start 
+      // ray casting helper functions start
       const mouseToThree = (mouseX?: number, mouseY?: number) => {
         return new THREE.Vector3( mouseX / vizWidth * 2 - 1, - (mouseY / height) * 2 + 1, 1)
       }
@@ -220,9 +220,9 @@ const Visualizer = () => {
       // Initial tooltip state
 
       // overlay on the hover
-      const tooltipState: {[k: string]: any} = { 
+      const tooltipState: {[k: string]: any} = {
         display: "none",
-      } 
+      }
       const toolTip = divRefOne.current;
       const pointTip = divRefTwo.current;
       const groupTip = divRefThree.current;
@@ -244,7 +244,7 @@ const Visualizer = () => {
         const point = new THREE.Points(geometry, material);
         hoverContainer.add(point);
       };
-      
+
 
       const updateTooltip = () => {
         toolTip.style.display = tooltipState.display;
@@ -298,7 +298,7 @@ const Visualizer = () => {
         }
       }
 
-      // raycasting helper functions end 
+      // raycasting helper functions end
       view.on('mousemove', () => {
         const [mouseX, mouseY] = d3.mouse(view.node());
         const mousePosition = [mouseX, mouseY];
@@ -314,7 +314,7 @@ const Visualizer = () => {
         tooltipState.display = 'none';
         updateTooltip();
       }
-    
+
       // Point generator function
       // function phyllotaxis(radius) {
       //   const theta = Math.PI * (3 - Math.sqrt(5));
