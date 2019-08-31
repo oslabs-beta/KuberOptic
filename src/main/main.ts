@@ -1,36 +1,38 @@
 // const fetchLocal = require('./local/local').default
-// const fetchGCP = require('./gcp/getGCPdata').default
+const fetchGCP = require('./gcp/getGCPdata').default;
 const { app, ipcMain, BrowserWindow } = require('electron');
 // const electron = require('electron')
 
- 
-//  async function getLocal() {
-//     const res = await fetchLocal();
-//     //console.log(res)
-//     return res
-//  }
+// const GOOGLE_APPLICATION_CREDENTIALS:object = {
+// }
 
-//  async function getGcp(GOOGLE_APPLICATION_CREDENTIALS, timeZone) {
-//     const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS, timeZone);
-//     //console.log(res)
-//     return res;
-//  }
- 
+ // async function getLocal() {
+ //    const res = await fetchLocal();
+ //    //console.log(res)
+ //    return res
+ // }
+ async function getGcp(GOOGLE_APPLICATION_CREDENTIALS) {
+    const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS);
+    //console.log(res)
+    return res;
+ }
  //getLocal();
  //getGcp(GOOGLE_APPLICATION_CREDENTIALS);
- 
-ipcMain.on('asynchronous-message', (event: any, arg: any) => {
-    //  getGcp(arg[0], arg[1]).then(res=>{
-    //  // console.log("insideGCP")  
-    //   event.sender.send('cluster-gcp', res)
-    //  })
-    
-    //  getLocal().then(res=>{
-    //   event.sender.send('cluster-local', res)   
-    //  })
+
+ ipcMain.on('asynchronous-message', (event: any, arg: any) => {
+     console.log('credentials sent from client: ', arg) // prints "ping"
+     getGcp(arg).then(res=>{
+       console.log('',res)
+        event.sender.send('clusterClient', res)
+     })
+     .catch((e)=>console.log(e))
+     // getLocal().then(res=>{
+     //  event.sender.send('cluster-client', res)
+     // })
      // arg should be the users credentials in the future
-     console.log(arg);
-     event.sender.send('clusterClient', 'yayYaaaaaay')
+     // console.log(arg);
+     // event.sender.send('clusterClient', 'yayYaaaaaay')
+     event.returnValue = 'done';
 })
 
 // Even listeners

@@ -12,7 +12,7 @@ const DisplayContainer = () => {
   const [Store, setStore] = useContext(StoreContext)
 
     return (
-        <div className='displayContainer'>{Store.credentials}
+        <div className='displayContainer'>
         <Visualizer />
         </div>
     )
