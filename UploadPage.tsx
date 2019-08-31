@@ -25,6 +25,7 @@ const UploadPage = () => {
     }
 //
 
+
     const handleSubmit = () => {
         ipcRenderer.send('asynchronous-message', Store.credentials)
         console.log(Store.credentials)

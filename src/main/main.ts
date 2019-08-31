@@ -18,8 +18,8 @@ const GOOGLE_APPLICATION_CREDENTIALS={
     return res;
  }
  
- //getLocal();
- //getGcp(GOOGLE_APPLICATION_CREDENTIALS);
+ getLocal();
+ getGcp(GOOGLE_APPLICATION_CREDENTIALS, 'us-central1-a');
  
 ipcMain.on('asynchronous-message', (event: any, arg: any) => {
      getGcp(GOOGLE_APPLICATION_CREDENTIALS, 'us-central1-a').then(res=>{
