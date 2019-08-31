@@ -24,11 +24,11 @@ const Visualizer = () => {
       // camera.aspect = width / height;
       // camera.updateProjectionMatrix();
       renderer.setSize( width, height );
-      // here we will define our points and sprites 
+      // here we will define our points and sprites
       const pointAmmount = 10;
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
-      const circleSprite = new THREE.TextureLoader().load("/Users/jacobbanks/Code/Kubernati/kubernati/src/client/assets/Basic_hexagon.svg")
+      const circleSprite = new THREE.TextureLoader().load("/Users/juanespinoza/Documents/codesmith/kubernati/src/client/assets/Basic_hexagon.svg")
       const colorArray = ["#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00", "#6a3d9a"]
       const randomPosition = (radius?: number) => {
         radius = 2000;
@@ -44,13 +44,13 @@ const Visualizer = () => {
         const position = randomPosition()
         const name = 'Point ' + i;
         const group = Math.floor(Math.random() * 5);
-        const point = { position, name, group }; 
+        const point = { position, name, group };
         pointInfo.push(point);
       }
       const generatedPoints = pointInfo;
       console.log(generatedPoints);
       const pointsGeometry = new THREE.Geometry();
-      const colors = []; 
+      const colors = [];
       for (const point of generatedPoints) {
         const vertex = new THREE.Vector3(point.position[0], point.position[1])
         pointsGeometry.vertices.push(vertex);
@@ -95,7 +95,7 @@ const Visualizer = () => {
           let z = getZFromScale(scale);
           camera.position.set(x, y, z);
         }
-        
+
         let zoom = d3.zoom()
         .scaleExtent([getScaleFromZ(far), getScaleFromZ(near)])
         .on('zoom', () =>  {
@@ -105,9 +105,9 @@ const Visualizer = () => {
 
           const view = d3.select(renderer.domElement);
           function setUpZoom() {
-            view.call(zoom);    
+            view.call(zoom);
             const initialScale = getScaleFromZ(far);
-            const initialTransform = d3.zoomIdentity.translate(vizWidth / 2, height / 2).scale(initialScale);    
+            const initialTransform = d3.zoomIdentity.translate(vizWidth / 2, height / 2).scale(initialScale);
             zoom.transform(view, initialTransform);
             camera.position.set(0, 0, far);
           }
@@ -120,7 +120,7 @@ const Visualizer = () => {
       animate();
 
       // raycasting, toolbar, and collission detection
-      // ray casting helper functions start 
+      // ray casting helper functions start
       const mouseToThree = (mouseX?: number, mouseY?: number) => {
         return new THREE.Vector3( mouseX / vizWidth * 2 - 1, - (mouseY / height) * 2 + 1, 1)
       }
@@ -135,13 +135,13 @@ const Visualizer = () => {
       };
 
       // Initial tooltip state
-      const tooltipState = { 
+      const tooltipState = {
         display: "none",
         left: "",
         name: "",
         group: "",
         top: "",
-      } 
+      }
       const toolTip = divRefOne.current;
       const pointTip = divRefTwo.current;
       const groupTip = divRefThree.current;
@@ -162,7 +162,7 @@ const Visualizer = () => {
         const point = new THREE.Points(geometry, material);
         hoverContainer.add(point);
       };
-      
+
 
       const updateTooltip = () => {
         toolTip.style.display = tooltipState.display;
@@ -208,7 +208,7 @@ const Visualizer = () => {
         }
       }
 
-      // raycasting helper functions end 
+      // raycasting helper functions end
       view.on('mousemove', () => {
         const [mouseX, mouseY] = d3.mouse(view.node());
         const mousePosition = [mouseX, mouseY];
@@ -224,7 +224,7 @@ const Visualizer = () => {
         tooltipState.display = 'none';
         updateTooltip();
       }
-    
+
       // Point generator function
       function phyllotaxis(radius) {
         const theta = Math.PI * (3 - Math.sqrt(5));
