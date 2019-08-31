@@ -1,6 +1,6 @@
 const container = require('@google-cloud/container');
-const GOOGLE_APPLICATION_CREDENTIALS ={
-}
+// const GOOGLE_APPLICATION_CREDENTIALS ={
+// }
 
 /*Anal stuff that I dont wanna do rn */
 
@@ -26,14 +26,15 @@ const GOOGLE_APPLICATION_CREDENTIALS ={
 
 //export this object to main.ts
 
-async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string='us-central1-a') {
-
+async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any={}, zone:string='us-central1-a') {
+    // console.log('passed into quickstart: ', Object.keys(GOOGLE_APPLICATION_CREDENTIALS));
+    // console.log('gapi: ', GOOGLE_APPLICATION_CREDENTIALS);
     const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
-    const projectId:string = GOOGLE_APPLICATION_CREDENTIALS.project_id;
-    //console.log(projectId)
+    const projectId:string = await client.getProjectId();
+    console.log('quickstart projectId:', projectId)
     const request:object = {
-      projectId: projectId,
-      zone: zone
+      projectId,
+      zone
     };
     const [response] = await client.listClusters(request);
     const clusters:any = response.clusters;
@@ -68,9 +69,9 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string='us-ce
 
     // console.log(clusters[0].nodePools[0].instanceGroupUrls)
     // console.log(cluster.nodePools[1])
-   console.log(clusterArray);
+   // console.log(clusterArray);
   return clusterArray;
 }
-// quickstart(GOOGLE_APPLICATION_CREDENTIALS)
+quickstart()
 
 export default quickstart;
