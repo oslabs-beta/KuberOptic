@@ -4,6 +4,9 @@ import * as ReactDOM from 'react-dom';
 import "./styles.css"
 import App from '../app'
 
+const GOOGLE_APPLICATION_CREDENTIALS:object = {
+}
+const zone:string = 'us-central1-a' 
 // render our main
 // console.log('Renderer file loaded', typeof ReactDOM);
 

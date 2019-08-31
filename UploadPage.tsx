@@ -8,6 +8,7 @@ import DisplayContainer from './DisplayContainer';
 import {StoreContext} from './store';
 const { ipcRenderer } = require('electron');
 // import path from 'path';
+
 ipcRenderer.on('clusterClient', (event: any, argument: any) => {
     console.log(argument);
 })
@@ -22,6 +23,7 @@ const UploadPage = () => {
         setStore({...Store, credentials:e.currentTarget.value})
 
     }
+//
 
 
     const handleSubmit = () => {
