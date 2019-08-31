@@ -1,6 +1,10 @@
 const fetchLocal = require('./local/local').default
 const fetchGCP = require('./gcp/getGCPdata').default
 const { app, ipcMain, BrowserWindow } = require('electron');
+// const electron = require('electron')
+
+const GOOGLE_APPLICATION_CREDENTIALS={
+ }
  
  async function getLocal() {
     const res = await fetchLocal();
@@ -18,20 +22,23 @@ const { app, ipcMain, BrowserWindow } = require('electron');
  //getGcp(GOOGLE_APPLICATION_CREDENTIALS);
  
 ipcMain.on('asynchronous-message', (event: any, arg: any) => {
-     getGcp(arg[0], arg[1]).then(res=>{
+     getGcp(GOOGLE_APPLICATION_CREDENTIALS, 'us-central1-a').then(res=>{
      // console.log("insideGCP")  
-      event.sender.send('cluster-gcp', res)
+      event.sender.send('clusterClient', res)
      })
     
      getLocal().then(res=>{
-      event.sender.send('cluster-local', res)   
+      event.sender.send('clusterClient', res)   
      })
      // arg should be the users credentials in the future
+    // console.log(arg);
+     event.sender.send('clusterClient', 'yayYaaaaaay')
 })
 
 // Even listeners
 
 // start up the main process
+
 app.on('ready', () => {
   // This creates a window on startup
   const window = new BrowserWindow({ width: 800,
