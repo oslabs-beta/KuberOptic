@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 // import { BrowserRouter as Flash, Link, Redirect} from 'react-router-dom';
 // import Route from 'react-router-dom';
 import DisplayContainer from './DisplayContainer';
-import {StoreContext} from './store';
+import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
 // import path from 'path';
 
@@ -35,7 +35,7 @@ const UploadPage = () => {
     const handleSubmit = () => {
         // console.log(Store.credentials);
         const creds = JSON.parse(Store.credentials); // strings need to be in double quotes
-        console.log('type of creds: ', creds);
+        //console.log('type of creds: ', creds);
         if(typeof creds !== 'object'){
           console.log('Enter a JSON object from GCP');
           // document.getElementsByClassName('uploadInput')[0].innerHTML = '';
@@ -53,7 +53,7 @@ const UploadPage = () => {
     return <div>{Store.uploadPageState ? <DisplayContainer /> :
         <div className='uploadDiv'>
             <div>
-              <img className='kubUpload' src='.././kub2.png'/>
+              <img className='kubUpload' src='../assets/credsPage/kub.png'/>
               <div className='kubUploadText'>The All Seeing Kubernati</div>
             </div>
         <input className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
