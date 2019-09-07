@@ -66,7 +66,7 @@ const commonConfig = {
       },
       {
         test: /\.(jpg|png|svg|ico|icns)$/,
-        loader: 'file-loader',
+        loader: 'url-loader?limit=8192',
         options: {
           name: '[path][name].[ext]',
         },

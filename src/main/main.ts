@@ -3,8 +3,8 @@ const fetchGCP = require('./gcp/getGCPdata').default;
 const { app, ipcMain, BrowserWindow } = require('electron');
 // const electron = require('electron')
 
-// const GOOGLE_APPLICATION_CREDENTIALS:object = {
-// }
+const GOOGLE_APPLICATION_CREDENTIALS = {
+};
 
  // async function getLocal() {
  //    const res = await fetchLocal();
@@ -22,7 +22,7 @@ const { app, ipcMain, BrowserWindow } = require('electron');
  ipcMain.on('asynchronous-message', (event: any, arg: any) => {
     //  console.log('credentials sent from client: ', arg) // prints "ping"
     //  getGcp(arg).then(res=>{
-    //    console.log('',res)
+    //    console.log('resss ',res)
     //     event.sender.send('clusterClient', res)
     //  })
     //  .catch((e)=>console.log(e))
@@ -42,7 +42,7 @@ const { app, ipcMain, BrowserWindow } = require('electron');
 app.on('ready', () => {
   // This creates a window on startup
   const window = new BrowserWindow({ width: 800,
-    height: 600 ,
+    height: 600,
     webPreferences: {
       nodeIntegration: true // allow node integration on BrowserWindow
     },

@@ -14,6 +14,7 @@ function App() {
     <StoreContextProvider>
   <div className='app'>
     <LandingPage />
+    
   </div>
 
   </StoreContextProvider>

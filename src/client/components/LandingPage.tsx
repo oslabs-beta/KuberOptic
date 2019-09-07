@@ -1,28 +1,30 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import { type } from 'os';
-// import { BrowserRouter as Flash, Link, Redirect} from 'react-router-dom';
-// import Route from 'react-router-dom';
+
 import UploadPage from './UploadPage';
+import UploadPage2 from './UploadPage2'
 import {StoreContext} from '../../../store';
-
 const LandingPage = () => {
-    const [Store, setStore] = useContext(StoreContext);
+  const [Store, setStore] = useContext(StoreContext);
 
-    const myFunction = () => {
-        console.log(Store.landingPageState);
-        setStore({...Store, landingPageState: true})
-        
-    }
-//
+  const myFunctionG = () => {
+      console.log(Store.landingPageState);
+      setStore({...Store, landingPageState: true})    
+  }
+  const myFunctionA = () => {
+    console.log(Store.landingPageState2);
+    setStore({...Store, landingPageState2: true})    
+  }
+    
     return (
       <div>
-      {Store.landingPageState ? <UploadPage /> :
+      {Store.landingPageState ? <UploadPage /> : 
+       Store.landingPageState2 ? <UploadPage2/> : 
         <div>   
-          <div><img className='kubLogo' src="../assets/credsPage/kub.png"/></div>
+          <div><img className='kubLogo' src={require('../assets/credsPage/kub.png')}/></div>
           <div className='text'>The All Seeing Kubernati</div>  
-        <img className='logo' src="../assets/credsPage/aws.png" onClick={myFunction}/>
-        <img className='logo1' src="../assets/credsPage/azure2.png" onClick={myFunction}/>
-        <img className='logo2' src="../assets/credsPage/google.png" onClick={myFunction}/>
+        <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
+        <img className='logo1' src={require("../assets/credsPage/azure2.png")} onClick={myFunctionG}/>
+        <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
         </div>
     }
     </div>
