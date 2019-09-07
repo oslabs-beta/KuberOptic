@@ -14,20 +14,16 @@ const UploadPage = () => {
     const [Store, setStore] = useContext(StoreContext);
 
     ipcRenderer.on('clusterClient', (event: any, arg: any) => {
-        // add argument to store
-        // console.log('change gcp to store to',arg);
-        // console.log('Da Store before', Store);
-        // update gcp data to store
-        Store.gcp = arg;
-        // setStore({...Store, gcp: arg});
-        console.log('Da Store after', Store);
-        event.returnValue = 'done';
+        // setStore is async so console.logging right away won't be accurate
+        setStore({...Store, gcp: arg});
+        // console.log('Da Store after', Store);
+        // event.returnValue = 'done';
         // console.log(argument);
     })
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         setStore({...Store, credentials:e.currentTarget.value})
-
+        // console.log('state after updating text', Store);
     }
 //
 

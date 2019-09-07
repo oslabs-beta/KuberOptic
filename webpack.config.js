@@ -94,7 +94,7 @@ mainConfig.plugins = [
 ];
 
 const rendererConfig = lodash.cloneDeep(commonConfig);
-rendererConfig.entry = './src/client/renderer.tsx';
+rendererConfig.entry = ['babel-polyfill','./src/client/renderer.tsx'];
 rendererConfig.target = 'electron-renderer';
 rendererConfig.output.filename = 'renderer.bundle.js';
 rendererConfig.plugins = [
