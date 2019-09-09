@@ -9,8 +9,8 @@ let data = {};
 
 async function fetchLocal(data={}){
     await k8sApi.listNamespacedPod('default').then((res) => {
-      
-      
+
+
    const metaDat = {};
    for(let meta in res.body.items[0].metadata){
       if(res.body.items[0].metadata[meta]){
@@ -53,10 +53,10 @@ async function fetchLocal(data={}){
         //  console.log('containerName ',res.body.items[0].spec.containers[0].name);
         //  console.log('Amount of Pods: ' + res.body.items.length);
     })
-   //console.log(data)
+   // console.log(data)
   return data;
 }
-fetchLocal()
+// fetchLocal();
 
 export default fetchLocal;
 // k8sApi.listNamespacedService('default').then((res) => {
