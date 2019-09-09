@@ -5,13 +5,17 @@ import * as React from 'react';
 // import { BrowserRouter as Router, Link, Redirect, Route} from 'react-router-dom';
 import LandingPage from './LandingPage';
 import '../styles.css';
- import { StoreContextProvider } from '../store';
+import { StoreContextProvider } from '../../../store';
+import Visualizer from './visualizer'
+import Deploy from './gcpDeploy';
+import 'tachyons';
 
 function App() {
   return (
     <StoreContextProvider>
   <div className='app'>
     <LandingPage />
+    
   </div>
 
   </StoreContextProvider>

@@ -2,9 +2,17 @@ import * as THREE from 'three'
 import React, { useEffect, useRef}from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
+import SideBar from './sidebar';
+const width = window.innerWidth;
+const height = window.innerHeight;
+const vizWidth = width;
+const fov = 100;
+const near = 50;
+const far = 5000;
+
 
 // Store ----
-//
+
 const store = {
   clusters: [
     {
@@ -50,51 +58,43 @@ const store = {
   }]
 }
 
+
 const Visualizer = () => {
 
-    useEffect(() => {
+  useEffect(() => {
       // boilerplate for setting up the camera renderer and scene
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const vizWidth = width;
-      const fov = 100;
-      const near = 50;
-      const far = 5000;
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
       ref.current.appendChild(renderer.domElement);
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
-      // camera.position.set(0, 0, 125);
-      // camera.lookAt(new THREE.Vector3(0, 0, 0));
-      // camera.aspect = width / height;
-      // camera.updateProjectionMatrix();
-      // renderer.setSize( width, height );
-      // here we will define our points and sprites
 
       //---------------number of hexagons---------------\\
       const pointAmmount = store.clusters.length;
 
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
-      const circleSprite = new THREE.TextureLoader().load(".././src/client/assets/Basic_hexagon.svg")
-      const colorArray = ["#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00", "#6a3d9a"]
-
+      const testSprite = new THREE.TextureLoader().load(".././src/client/assets/visualizerPage/Basic_hexagon.svg")
+      const circleSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png')
+      //const colorArray = ["#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00", "#6a3d9a"]
+      const colorArray = ['orange', 'blue', 'green']
+      const colorArray2 = ['red']
       /* Testing to make random elements appear  */
-      // const randomPosition = (radius?: number) => {
-      //   radius = 500;
-      //   const ptAngle = Math.random() * 2 * Math.PI;
-      //   const ptRadiusSq = Math.random() * radius * radius;
-      //   const ptX = Math.sqrt(ptRadiusSq) * Math.cos(ptAngle);
-      //   const ptY = Math.sqrt(ptRadiusSq) * Math.sin(ptAngle);
-      //   return [ptX, ptY];
-      // }
+      const randomPosition = (offset:number, radius?: number ) => {
+        //radius = 500;
+        const ptAngle = Math.random() * 2 * Math.PI;
+        const ptRadiusSq = Math.random() * radius * radius;
+        const ptX = Math.sqrt(ptRadiusSq) * Math.cos(ptAngle);
+        const ptY = Math.sqrt(ptRadiusSq) * Math.sin(ptAngle);
+        return [ptX + offset, ptY];
+      }
 
       // const generatedPoints = d3.range(pointAmmount).map(phyllotaxis(2))
       const pointInfo = [];
       const pointInfo2 = [];
+      //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [2400*i -2400,0]
-        const group = Math.floor(Math.random() * 5);
+        const position = [2400*i -4800,1]
+        const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
         const creationTime = store.clusters[i].creationTime;
@@ -103,51 +103,58 @@ const Visualizer = () => {
         const point = { position, name, clusterStatus, creationTime, location, nodeCount, group };
         pointInfo.push(point);
       }
+      
 
-      for(let j = 0; j < store.clusters[0].nodeCount; j++){
-        //console.log("im in other if statement")
+      //for each cluster we must put nodes inside
+      //omfg it works
+      store.clusters.forEach(((cluster,i)=>{
+        for(let j = 0; j < cluster.nodeCount; j++){
         const name2 = `Point` + j;
-        const pos = [j*800, 50*j ]
-        const group = Math.floor(Math.random() * 5);
-        const point2 = {pos, name2, group}
+        const position = randomPosition(pointInfo[i].position[0], 300);
+        const group = 0;
+        const point2 = {position, name2, group}
         pointInfo2.push(point2)
-      }
+        }
+      }))
 
       const generatedPoints = pointInfo;
+      const generatedPoints2 = pointInfo2;
       //console.log(generatedPoints);
       const pointsGeometry = new THREE.Geometry();
       const pointsGeometry2 = new THREE.Geometry();
       const colors = [];
       const colors2 = [];
+      
       for (const point of generatedPoints) {
+        //console.log(point)
         const vertex = new THREE.Vector3(point.position[0], point.position[1])
         pointsGeometry.vertices.push(vertex);
         const color = new THREE.Color(colorArray[point.group]);
         colors.push(color);
       }
       // console.log(pointInfo2);
-      // for (const point2 of pointInfo2) {
-      //   console.log('point2')
-      //   const vertex = new THREE.Vector3(point2.position[0], point2.position[1])
-      //   pointsGeometry2.vertices.push(vertex);
-      //   const color = new THREE.Color(colorArray[point2.group]);
-      //   colors2.push(color);
-      // }
+      for (const point2 of generatedPoints2) {
+       // console.log('point2:' , point2)
+        const vertex = new THREE.Vector3(point2.position[0], point2.position[1])
+        pointsGeometry2.vertices.push(vertex);
+        const color = new THREE.Color(colorArray2[point2.group]);
+        colors2.push(color);
+      }
       //sizeAttenuation: false
       pointsGeometry.colors = colors;
       pointsGeometry2.colors = colors2;
       //sizeAttenuation:true makes shakes bigger when zoom
-      const pointsMaterial = new THREE.PointsMaterial({ size: 600, sizeAttenuation: true,
+      const pointsMaterial = new THREE.PointsMaterial({ size: 800, sizeAttenuation: true,
         vertexColors: THREE.VertexColors, map: circleSprite, transparent: true,});
-      const pointsMaterial2 = new THREE.PointsMaterial({ size: 200, sizeAttenuation: true,
-        vertexColors: THREE.VertexColors, map: circleSprite, transparent: true,});
+      const pointsMaterial2 = new THREE.PointsMaterial({ size: 100, sizeAttenuation: true,
+        vertexColors: THREE.VertexColors, map: testSprite, transparent: true,});
         //this where the shape is created
       const points = new THREE.Points(pointsGeometry, pointsMaterial);
       const points2 = new THREE.Points(pointsGeometry2, pointsMaterial2);
       const scene = new THREE.Scene();
       // scene.background = new THREE.Color(0xffffff);
       scene.add(points);
-      // scene.add(points2)
+      scene.add(points2)
       scene.background = new THREE.Color('black');
 
         function toRadians (angle) {
@@ -194,6 +201,7 @@ const Visualizer = () => {
             zoom.transform(view, initialTransform);
             camera.position.set(0, 0, far);
           }
+
           setUpZoom();
 
       const animate = function () {
@@ -233,9 +241,10 @@ const Visualizer = () => {
         //console.log('in highlight point');
         const geometry = new THREE.Geometry();
         geometry.vertices.push(new THREE.Vector3(datum.position[0], datum.position[1], 0));
+        //geometry.colors = [ new THREE.Color(colorArray[datum.group])];
         geometry.colors = [ new THREE.Color(colorArray[datum.group])];
         const material = new THREE.PointsMaterial({
-          size: 26,
+          size: 500,
           sizeAttenuation: false,
           vertexColors: THREE.VertexColors,
           map: circleSprite,
@@ -277,7 +286,8 @@ const Visualizer = () => {
       }
       //ray caster makes sure when we hover over shape we get it on dom element
       const raycaster = new THREE.Raycaster();
-      raycaster.params.Points.threshold = 10;
+      //this threshhold is what makes you hover over more than the centre
+      raycaster.params.Points.threshold = 300;
 
       const checkCollission = (mousePosition) => {
         const mouseVector = mouseToThree(...mousePosition);
@@ -315,19 +325,8 @@ const Visualizer = () => {
         updateTooltip();
       }
 
-      // Point generator function
-      // function phyllotaxis(radius) {
-      //   const theta = Math.PI * (3 - Math.sqrt(5));
-      //   return function(i) {
-      //     const r = radius * Math.sqrt(i), a = theta * i;
-      //     return [
-      //       width / 2 + r * Math.cos(a) - width / 2,
-      //       height / 2 + r * Math.sin(a) - height / 2
-      //     ];
-      //   };
-      // }
   })
-
+  //const sidebar = useRef<HTMLDivElement>(null)
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
   const divRefTwo = useRef<HTMLDivElement>(null)
@@ -340,7 +339,8 @@ const Visualizer = () => {
 
   return (
     <>
-      <div ref={ref}>
+      <SideBar/>
+      <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
           <div ref={divRefTwo} id="point-tip" />
           <div ref={divRefThree} id="group-tip">
