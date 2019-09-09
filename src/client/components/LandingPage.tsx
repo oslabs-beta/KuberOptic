@@ -17,7 +17,7 @@ const LandingPage = () => {
     
     return (
       <div>
-      {Store.landingPageState ? <UploadPage /> : 
+      {Store.landingPageState ? <UploadPage/> : 
        Store.landingPageState2 ? <UploadPage2/> : 
         <div>   
           <div><img className='kubLogo' src={require('../assets/credsPage/kub.png')}/></div>

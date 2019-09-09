@@ -153,11 +153,56 @@
     font-size: 15px;
     background-color: rgb(255, 255, 255);
   }
-    .loc{
-      height:20px;
-      width:200px;
-      font-size:15px;
+
+  .inputDeployPage{
+    display:flex;
+    flex-direction: column;
+    float:left;
+  }
+  #infobox{
+    display:flex;
+    flex-direction: column;
+    float:right;
+  }
+
+  .buts{
+    display:flex;
+    align-items: flex-end;
+  }
+  #clicker {
+    background-color:lightblue;
+    outline:none;
+    cursor:pointer;
     }
+  #hiddenAf{
+    display:none;
+    background-color:lightblue;
+  }
+  #clicker:focus+#hiddenAf{
+    display:block;
+  }
+  .uploadButt {
+    float:inline-end;
+    height: 50px;
+    width: 75px;
+    border:15px;
+    border-radius: 5px;
+    margin-top: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: rgb(255, 255, 255);
+    }
+  .loc{
+    height:20px;
+    width:200px;
+    font-size:15px;
+  }
+  .clusterType{
+    height:20px;
+    width:200px;
+    font-size:15px;
+  }
     .uploadDiv {
       height: 100vh;
     }

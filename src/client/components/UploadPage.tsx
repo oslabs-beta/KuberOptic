@@ -58,10 +58,17 @@ const UploadPage = () => {
         <input className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
         <button className='uploadButt' onClick={handleSubmit}> Submit </button>
         <button className = 'backButton' onClick={handleBack}>  Back  </button>
+        
         <select className='loc' onChange={handleLoc}>
         <option value='us-central1-a'>us-central1-a</option>
         <option value='us-central1-b'>us-central1-b</option>
         <option value='us-central1-c'>us-central1-c</option>
+        <option value='southamerica-east1-a'>southamerica-east1-a</option>
+        <option value='southamerica-east1-b'>southamerica-east1-b</option>
+        <option value='southamerica-east1-c'>southamerica-east1-c</option>
+        <option value='europe-west2-a'>europe-west2-a</option>
+        <option value='us-west1-a'>us-west1-a</option>
+  
         </select>
         
         </div>

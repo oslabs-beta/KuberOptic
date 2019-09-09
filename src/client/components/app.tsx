@@ -7,7 +7,8 @@ import LandingPage from './LandingPage';
 import '../styles.css';
 import { StoreContextProvider } from '../../../store';
 import Visualizer from './visualizer'
-
+import Deploy from './gcpDeploy';
+import 'tachyons';
 
 function App() {
   return (
