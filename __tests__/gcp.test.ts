@@ -1,14 +1,12 @@
-// jest tests will go here
-// import GCP, local,
-// import test credentials?
+// import test credentials
 const fetchLocal = require('../src/main/local/local').default
+const [quickstart, create] = require('../src/main/gcp/getGCPdata').default
+
 // set up tests to output of GCP functions, local cluster functions
 // GCP tests are asynchronous
 
-// may migrate local tests to another file, if more modular
-
 // test creation with different inputs
-describe('Local Cluster', () => {
+describe('Cluster testing', () => {
 
   describe('Testing fectchLocal function', () => {
     it('fetchLocal data should return a node named Minikube', () => {
@@ -23,9 +21,20 @@ describe('Local Cluster', () => {
       fetchLocal().then(data => expect(data.dataforNodes.dockerContainer_0.containerName).toBe('hello-node'));
     });
 
-    // describe('', () => {
-    //
-    // })
-
   });
+
+  describe('Testing GCP fetchData Function', () => {
+    xit('quickstart should return GCP cluster data with the correct credentials input', () => {
+      quickstart({}).then(data => expect(data).not.toBe(undefined))
+    })
+    xit('check for correct cluster data', () => {
+      quickstart({}).then(data => expect(data).not.toBe(undefined))
+    })
+
+  })
+
+  // describe('Testing GCP Create Function', () => {
+  //
+  // })
+
 });
