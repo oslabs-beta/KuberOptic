@@ -7,21 +7,22 @@ import LandingPage from './LandingPage';
 import '../styles.css';
 import { StoreContextProvider } from '../../../store';
 import Visualizer from './visualizer'
-
+import Deploy from './gcpDeploy';
+import 'tachyons';
 
 function App() {
   return (
     <StoreContextProvider>
   <div className='app'>
     <LandingPage />
-    
+
   </div>
 
   </StoreContextProvider>
   );
- 
 
-    
+
+
 
 }
 export default App;

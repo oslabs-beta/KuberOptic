@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "types": ["node"],
     "sourceMap": true,
     "noImplicitAny": false,
     "noImplicitThis": true, 

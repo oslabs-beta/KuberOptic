@@ -64,8 +64,7 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
       //console.log('location is :' , cluster.location);
       gcpDat["location"] = cluster.location;
       cluster.nodePools.forEach((node, i)=>{
-        gcpDat[`NodePool_${i}:`] =
-        [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
+        gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
          `MachineType: ${node.config.machineType}`]
       })
       clusterArray.push(gcpDat)
@@ -78,12 +77,14 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
 }
 let input = {'clusterType':'affordable', 'name':'deploycluster', 'zone':'us-central1-a'};
 
-async function create(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string ='us-central1-a', input:object = {'clusterType':'affordable', 'name':'deployCluster', 'zone':'us-central1-a'}){
+async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-central1-a', input:object = {'clusterType':'affordable', 'name':'deployCluster', 'zone':'us-central1-a'}){
   const client:any = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
-  const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
-  
+  GOOGLE_APPLICATION_CREDENTIALS = JSON.parse(GOOGLE_APPLICATION_CREDENTIALS);
+  const projectId:string = GOOGLE_APPLICATION_CREDENTIALS["project_id"];
   let cluster:object ={};
-
+  console.log(`we're invoking create input is:` , input)
+  console.log('gcptype: ', GOOGLE_APPLICATION_CREDENTIALS["project_id"])
+  //console.log
   if(input['clusterType'] == 'affordable'){
     cluster = {
       "name": input['name'],

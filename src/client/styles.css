@@ -23,20 +23,20 @@
     border-radius: 10px;
   }
   #tool-tip {
-    display: none; 
-    position: absolute; 
-    pointer-events: none; 
-    font-size: 14px; 
-    width: 250px; 
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    font-size: 14px;
+    width: 250px;
     color: black;
-    text-align: center; 
-    line-height: 1; 
-    padding: 6px; 
-    background: white; 
+    text-align: center;
+    line-height: 1;
+    padding: 6px;
+    background: white;
     font-family: sans-serif;
   }
   #point-tip {
-    padding: 4px; 
+    padding: 4px;
     margin-bottom: 4px;
   }
   #group-tip {
@@ -46,23 +46,23 @@
     font-weight: 400;
     color: black;
       }
-/*   
+/*
   .app {
     height: 100vh;
-    background-color: rgb(0, 0, 0); 
+    background-color: rgb(0, 0, 0);
   } */
-  
+
   .text {
     color: aqua;
     margin-top: 20px;
     margin-left: 290px;
     font-size: 20px;
   }
-  
+
   .displayContainer {
     color: aquamarine;
   }
-  
+
   .kubLogo {
     transform: rotate(360deg);
     height: 300px;
@@ -72,8 +72,8 @@
     color: rgb(254, 254, 255);
     animation: rotation 2.5s infinite linear;
   }
-  
-  
+
+
   .logo {
     transform: rotate(360deg);
     height: 100px;
@@ -85,7 +85,7 @@
     border-radius: 20px;
     /* animation: rotation 4s infinite linear; */
   }
-  
+
   .logo1 {
     transform: rotate(360deg);
     height: 100px;
@@ -96,7 +96,7 @@
     border-radius: 20px;
     /* animation: rotation 4s infinite linear; */
   }
-  
+
   .logo2 {
     transform: rotate(360deg);
     height: 100px;
@@ -108,7 +108,7 @@
     border: solid 5px black;
     border-radius: 20px;
   }
-  
+
   @keyframes rotation {
     from {
       transform: rotate(0deg);
@@ -117,7 +117,7 @@
       transform: rotate(359deg);
     }
   }
-  
+
   .uploadInput {
     height: 70px;
     width: 250px;
@@ -130,7 +130,7 @@
     font-size: 30px;
     font-family: sans-serif;
   }
-  
+
   .uploadButt {
     height: 50px;
     width: 75px;
@@ -153,11 +153,56 @@
     font-size: 15px;
     background-color: rgb(255, 255, 255);
   }
-    .loc{
-      height:20px;
-      width:200px;
-      font-size:15px;
+
+  .inputDeployPage{
+    display:flex;
+    flex-direction: column;
+    float:left;
+  }
+  #infobox{
+    display:flex;
+    flex-direction: column;
+    float:right;
+  }
+
+  .buts{
+    display:flex;
+    align-items: flex-end;
+  }
+  #clicker {
+    background-color:lightblue;
+    outline:none;
+    cursor:pointer;
     }
+  #hiddenAf{
+    display:none;
+    background-color:lightblue;
+  }
+  #clicker:focus+#hiddenAf{
+    display:block;
+  }
+  .uploadButt {
+    float:inline-end;
+    height: 50px;
+    width: 75px;
+    border:15px;
+    border-radius: 5px;
+    margin-top: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: rgb(255, 255, 255);
+    }
+  .loc{
+    height:20px;
+    width:200px;
+    font-size:15px;
+  }
+  .clusterType{
+    height:20px;
+    width:200px;
+    font-size:15px;
+  }
     .uploadDiv {
       height: 100vh;
     }
@@ -170,7 +215,7 @@
     color: rgb(254, 254, 255);
     /* animation: rotation 1s infinite linear; */
   }
-  
+
   .kubUploadText {
     height: 100px;
     width: 200px;
@@ -178,4 +223,3 @@
     color: aquamarine;
     margin-left: 285px;
   }
-  
