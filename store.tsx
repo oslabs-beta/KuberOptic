@@ -13,12 +13,10 @@ export const StoreContextProvider = (props: any) => {
       uploadPageState: false,
       uploadPageState2:false,
       gcpDeployPage:false,
-      credentials: {
-       }
-      ,
+      credentials: {},
       gcp: {},
-      gcploc:null,
-      })
+      gcploc:null
+    })
 
 
 

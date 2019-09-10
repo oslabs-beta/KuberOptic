@@ -180,8 +180,8 @@ const Visualizer = () => {
 
         function zoomHandler(d3_transform) {
           let scale = d3_transform.k;
-          let x = -(d3_transform.x - vizWidth/2) / scale;
-          let y = (d3_transform.y - height/2) / scale;
+          let x = -(d3_transform.x - vizWidth / 2) / scale;
+          let y = (d3_transform.y - height / 2) / scale;
           let z = getZFromScale(scale);
           camera.position.set(x, y, z);
         }
@@ -219,6 +219,7 @@ const Visualizer = () => {
       function sortIntersectsByDistanceToRay(intersects) {
         return _.sortBy(intersects, "distanceToRay");
       }
+      
       // const pointsContainer = new THREE.Object3D();
       const hoverContainer = new THREE.Object3D();
       const removeHighlights = () => {
@@ -331,18 +332,16 @@ const Visualizer = () => {
   const divRefOne = useRef<HTMLDivElement>(null)
   const divRefTwo = useRef<HTMLDivElement>(null)
   const divRefThree = useRef<HTMLDivElement>(null)
-
   const pStatus = useRef<HTMLParagraphElement>(null)
   const pTime = useRef<HTMLParagraphElement>(null)
   const pLocation = useRef<HTMLParagraphElement>(null)
   const pNode = useRef<HTMLParagraphElement>(null)
-
   return (
     <>
       <SideBar/>
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
-          <div ref={divRefTwo} id="point-tip" />
+          <div ref={divRefTwo} id="point-tip"/>
           <div ref={divRefThree} id="group-tip">
             <p ref={pStatus}/>
             <p ref={pTime}/>

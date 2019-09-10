@@ -1,7 +1,6 @@
 const container = require('@google-cloud/container');
 const GOOGLE_APPLICATION_CREDENTIALS = {
-}
-;
+};
 
 /*Anal stuff that I dont wanna do rn */
 
@@ -65,8 +64,7 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
       //console.log('location is :' , cluster.location);
       gcpDat["location"] = cluster.location;
       cluster.nodePools.forEach((node, i)=>{
-        gcpDat[`NodePool_${i}:`] =
-        [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
+        gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
          `MachineType: ${node.config.machineType}`]
       })
       clusterArray.push(gcpDat)
@@ -449,7 +447,6 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
       "location": input['zone']
     }
   }
-  
   if(input['clusterType'] == 'highly_available'){
     cluster = {
       "name": input['name'],

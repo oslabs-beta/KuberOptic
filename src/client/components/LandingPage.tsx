@@ -8,20 +8,20 @@ const LandingPage = () => {
 
   const myFunctionG = () => {
       console.log(Store.landingPageState);
-      setStore({...Store, landingPageState: true})    
+      setStore({...Store, landingPageState: true})
   }
   const myFunctionA = () => {
     console.log(Store.landingPageState2);
-    setStore({...Store, landingPageState2: true})    
+    setStore({...Store, landingPageState2: true})
   }
-    
+
     return (
       <div>
-      {Store.landingPageState ? <UploadPage/> : 
-       Store.landingPageState2 ? <UploadPage2/> : 
-        <div>   
+      {Store.landingPageState ? <UploadPage /> :
+       Store.landingPageState2 ? <UploadPage2/> :
+        <div>
           <div><img className='kubLogo' src={require('../assets/credsPage/kub.png')}/></div>
-          <div className='text'>The All Seeing Kubernati</div>  
+          <div className='text'>The All Seeing Kubernati</div>
         <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
         <img className='logo1' src={require("../assets/credsPage/azure2.png")} onClick={myFunctionG}/>
         <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
