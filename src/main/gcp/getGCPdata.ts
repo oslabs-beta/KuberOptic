@@ -65,8 +65,7 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
       //console.log('location is :' , cluster.location);
       gcpDat["location"] = cluster.location;
       cluster.nodePools.forEach((node, i)=>{
-        gcpDat[`NodePool_${i}:`] =
-        [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
+        gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
          `MachineType: ${node.config.machineType}`]
       })
       clusterArray.push(gcpDat)
