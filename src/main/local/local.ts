@@ -80,3 +80,5 @@ export default fetchLocal;
 //});
 //console.log('k8auth: ' , k8sApi.authentications.default.contexts[0])
 //console.log(data;
+
+
