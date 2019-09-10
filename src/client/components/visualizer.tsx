@@ -211,6 +211,7 @@ const Visualizer = () => {
       function sortIntersectsByDistanceToRay(intersects) {
         return _.sortBy(intersects, "distanceToRay");
       }
+      
       // const pointsContainer = new THREE.Object3D();
       const hoverContainer = new THREE.Object3D();
       const removeHighlights = () => {
@@ -340,7 +341,7 @@ const Visualizer = () => {
     <>
       <div ref={ref}>
         <div ref={divRefOne} id="tool-tip">
-          <div ref={divRefTwo} id="point-tip" />
+          <div ref={divRefTwo} id="point-tip"/>
           <div ref={divRefThree} id="group-tip">
             <p ref={pStatus}/>
             <p ref={pTime}/>

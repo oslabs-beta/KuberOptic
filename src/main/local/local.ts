@@ -56,7 +56,7 @@ async function fetchLocal(data={}){
    //console.log(data)
   return data;
 }
-fetchLocal()
+//fetchLocal()
 
 export default fetchLocal;
 // k8sApi.listNamespacedService('default').then((res) => {
