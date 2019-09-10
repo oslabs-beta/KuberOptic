@@ -46,7 +46,7 @@ const UploadPage = () => {
         }
     }
     const handleLoc = (event) => {
-      setStore({...Store, gcploc: event.currentTarget.value});      
+      setStore({...Store, gcploc: event.currentTarget.value});
     }
     return <div>{Store.uploadPageState ? <DisplayContainer /> :
         <div className='uploadDiv'>
@@ -54,11 +54,11 @@ const UploadPage = () => {
               <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
               <div className='kubUploadText'>Google Cloud Platform</div>
             </div>
-        
+
         <input className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
         <button className='uploadButt' onClick={handleSubmit}> Submit </button>
         <button className = 'backButton' onClick={handleBack}>  Back  </button>
-        
+
         <select className='loc' onChange={handleLoc}>
         <option value='us-central1-a'>us-central1-a</option>
         <option value='us-central1-b'>us-central1-b</option>
@@ -68,9 +68,9 @@ const UploadPage = () => {
         <option value='southamerica-east1-c'>southamerica-east1-c</option>
         <option value='europe-west2-a'>europe-west2-a</option>
         <option value='us-west1-a'>us-west1-a</option>
-  
+
         </select>
-        
+
         </div>
 }</div>
 }

@@ -15,14 +15,14 @@ function App() {
     <StoreContextProvider>
   <div className='app'>
     <LandingPage />
-    
+
   </div>
 
   </StoreContextProvider>
   );
- 
 
-    
+
+
 
 }
 export default App;

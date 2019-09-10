@@ -23,20 +23,20 @@
     border-radius: 10px;
   }
   #tool-tip {
-    display: none; 
-    position: absolute; 
-    pointer-events: none; 
-    font-size: 14px; 
-    width: 250px; 
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    font-size: 14px;
+    width: 250px;
     color: black;
-    text-align: center; 
-    line-height: 1; 
-    padding: 6px; 
-    background: white; 
+    text-align: center;
+    line-height: 1;
+    padding: 6px;
+    background: white;
     font-family: sans-serif;
   }
   #point-tip {
-    padding: 4px; 
+    padding: 4px;
     margin-bottom: 4px;
   }
   #group-tip {
@@ -46,23 +46,23 @@
     font-weight: 400;
     color: black;
       }
-/*   
+/*
   .app {
     height: 100vh;
-    background-color: rgb(0, 0, 0); 
+    background-color: rgb(0, 0, 0);
   } */
-  
+
   .text {
     color: aqua;
     margin-top: 20px;
     margin-left: 290px;
     font-size: 20px;
   }
-  
+
   .displayContainer {
     color: aquamarine;
   }
-  
+
   .kubLogo {
     transform: rotate(360deg);
     height: 300px;
@@ -72,8 +72,8 @@
     color: rgb(254, 254, 255);
     animation: rotation 2.5s infinite linear;
   }
-  
-  
+
+
   .logo {
     transform: rotate(360deg);
     height: 100px;
@@ -85,7 +85,7 @@
     border-radius: 20px;
     /* animation: rotation 4s infinite linear; */
   }
-  
+
   .logo1 {
     transform: rotate(360deg);
     height: 100px;
@@ -96,7 +96,7 @@
     border-radius: 20px;
     /* animation: rotation 4s infinite linear; */
   }
-  
+
   .logo2 {
     transform: rotate(360deg);
     height: 100px;
@@ -108,7 +108,7 @@
     border: solid 5px black;
     border-radius: 20px;
   }
-  
+
   @keyframes rotation {
     from {
       transform: rotate(0deg);
@@ -117,7 +117,7 @@
       transform: rotate(359deg);
     }
   }
-  
+
   .uploadInput {
     height: 70px;
     width: 250px;
@@ -130,7 +130,7 @@
     font-size: 30px;
     font-family: sans-serif;
   }
-  
+
   .uploadButt {
     height: 50px;
     width: 75px;
@@ -215,7 +215,7 @@
     color: rgb(254, 254, 255);
     /* animation: rotation 1s infinite linear; */
   }
-  
+
   .kubUploadText {
     height: 100px;
     width: 200px;
@@ -223,4 +223,3 @@
     color: aquamarine;
     margin-left: 285px;
   }
-  

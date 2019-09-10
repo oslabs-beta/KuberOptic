@@ -1,3 +1,9 @@
-I just added a readme
+KuberOptic
 
--test2
+Deployment and visualization tool
+
+Authors
+- Juan
+- Jay
+- Jimmy
+- Jacob

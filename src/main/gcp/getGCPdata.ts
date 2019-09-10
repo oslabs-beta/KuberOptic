@@ -1,7 +1,6 @@
 const container = require('@google-cloud/container');
 const GOOGLE_APPLICATION_CREDENTIALS = {
-}
-;
+};
 
 /*Anal stuff that I dont wanna do rn */
 
@@ -448,7 +447,6 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
       "location": input['zone']
     }
   }
-  
   if(input['clusterType'] == 'highly_available'){
     cluster = {
       "name": input['name'],
