@@ -1,0 +1,12 @@
+{
+  "extends": ["tslint:recommended","ts-lint-react","tslint-config-prettier"],
+  "tslint.autoFixOnSave": true,
+  "linterOptions": {
+
+  },
+  "rules": {
+    "jsx-boolean-value": false,
+    "ordered-imports": false,
+    "comment-format": false
+  }
+}

@@ -1,8 +1,5 @@
 const container = require('@google-cloud/container');
-const GOOGLE_APPLICATION_CREDENTIALS = {
-};
-
-/*Anal stuff that I dont wanna do rn */
+const GOOGLE_APPLICATION_CREDENTIALS = {};
 
 //const containeranalysis = require('@google-cloud/containeranalysis');
 
@@ -31,7 +28,7 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
      let gcpDat:object = {};
      let clusterDat = {};
       for(let prop in cluster){
-      if(prop!== 'masterAuth' && prop!== 'masterAuthorizedNetworksConfig'){     
+      if(prop!== 'masterAuth' && prop!== 'masterAuthorizedNetworksConfig'){
         if(prop == 'nodePools' || prop == 'networkConfig' || prop == 'endpoint'){
             clusterDat[prop] = cluster[prop]
         }
@@ -70,7 +67,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
   let cluster:object ={};
   console.log(`we're invoking create input is:` , input)
   console.log('gcptype: ', GOOGLE_APPLICATION_CREDENTIALS["project_id"])
- 
+
   if(input['clusterType'] == 'affordable'){
     cluster = {
       "name": input['name'],

@@ -11,38 +11,72 @@ describe('Cluster testing', () => {
   describe('Testing fectchLocal function', () => {
     it('fetchLocal data should return a node named Minikube', () => {
       fetchLocal().then(data => expect(data.dataforNodes.nodeName).not.toBe(undefined));
-    })
+    });
     it('fetchLocal data should come from default namespace', () => {
       fetchLocal().then(data => expect(data.dataforNodes.metaDataNameSpace).not.toBe(undefined));
     });
-    it('fetchLocal data should come from default namespace', () => {
+    it('fetchLocal data should have the correct container', () => {
       fetchLocal().then(data => expect(data.dataforNodes.dockerContainer_0.containerName).toBe('hello-node'));
+    });
+    it('fetchLocal data should return the correct name of the cluster', () => {
+      fetchLocal().then(data => expect(data.dataforNodes.clusterName).toBe('Minikube'));
+    });
+    it('fetchLocal data should return the correct status of the cluster', () => {
+      fetchLocal().then(data => expect(data.dataforNodes.metaDat.statusDat.phase).toBe('Running'));
+    });
+    it('fetchLocal data should verify that service links have been enabled', () => {
+      fetchLocal().then(data => expect(data.dataforNodes.metaDat.specDat.enableServiceLinks).toBeTruthy());
     });
 
   });
 
+  //
   describe('Testing GCP fetchData Function', () => {
-    xit('quickstart should return GCP cluster data with the correct credentials input', () => {
-      quickstart(testCreds).then(data => expect(data).not.toBe(undefined))
+    xit('quickstart should return GCP cluster data as an array with at least one cluster', () => {
+      // make sure the length is of length 1 or more
+      quickstart(testCreds).then(data => expect(data.length).not.toBe(0))
+    });
+    xit('First cluster has correct properties', () => {
+      quickstart(testCreds).then(data => {
+        expect(data[0].clusterData.name).not.toBe(undefined)
+        expect(data[0].clusterData.clusterName).not.toBe(undefined)
+      });
     })
+    xit('CLuster should be up and running', () => {
+      quickstart(testCreds).then(data => expect(data[0].clusterData.clusterStatus).toBe('RUNNING'))
+    });
     xit('check for correct cluster data', () => {
-      quickstart(testCreds).then(data => expect(data).not.toBe(undefined))
-    })
+      quickstart(testCreds).then(data => expect(data[0].location).toBe('us-central1-a'))
+    });
+    xit('check for correct number of nodes', () => {
+      quickstart(testCreds).then(data => expect(data[0].nodeCount).toBe(4))
+    });
 
   })
 
   // tests will be rewritten to check for most relevant data
   describe('Testing GCP create Function', () => {
-    xit('quickstart should return GCP cluster data with the correct credentials input', () => {
-      create(testCreds).then(data => expect(data).not.toBe(undefined))
-    })
+
+    xit('Should correctly create a cluster to GCP', () => {
+      // nothing should be returned from the create function
+      create(testCreds).then(data => expect(data).toBe(undefined))
+    });
     xit('check for correct cluster data', () => {
       create(testCreds).then(data => expect(data).not.toBe(undefined))
-    })
+    });
 
   })
-  // describe('Testing GCP Create Function', () => {
-  //
-  // })
+
+  // need to import some function or object from AWS to perform tests
+  describe('Testing AWS Function', () => {
+    xit('Commands are working correctly', () => {
+      //test case to be added
+    });
+
+    xit('Correct configuration to AWS', () => {
+      //test case to be added
+    });
+
+  })
 
 });
