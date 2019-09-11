@@ -13,18 +13,7 @@ const GOOGLE_APPLICATION_CREDENTIALS = {
 // // Iterate over all elements.
 // const formattedParent = client.projectPath('kubernati');
 
-// client.listScanConfigs({parent: formattedParent})
-//   .then(responses => {
-//     console.log(responses)
-//     // for (const resource of resources) {
-//     //   // doThingsWith(resource)
-//     // }
-//   })
-//   .catch(err => {
-//     console.error(err);
-//   });
-
-//export this object to main.ts
+;
 
 async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us-central1-a') {
     const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
@@ -35,21 +24,19 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
     };
     const [response] = await client.listClusters(request);
     const clusters:any = response.clusters;
-    //console.log(clusters)
-  /**Testing environment */
 
-   // console.log(clusters[0][name])
    const clusterArray = [];
 
    clusters.forEach(cluster=>{
      let gcpDat:object = {};
      let clusterDat = {};
-         for(let prop in cluster){
-           //console.log(prop)
-           if(prop!== 'masterAuth' && prop!== 'masterAuthorizedNetworksConfig'){
-             clusterDat[prop] = cluster[prop]
-            }
-          }
+      for(let prop in cluster){
+      if(prop!== 'masterAuth' && prop!== 'masterAuthorizedNetworksConfig'){     
+        if(prop == 'nodePools' || prop == 'networkConfig' || prop == 'endpoint'){
+            clusterDat[prop] = cluster[prop]
+        }
+        }
+      }
       gcpDat["clusterData"] = clusterDat;
       //console.log('clusterName is :', cluster.name);
       gcpDat["clusterName"] = cluster.name;
@@ -72,10 +59,9 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
 
     // console.log(clusters[0].nodePools[0].instanceGroupUrls)
     // console.log(cluster.nodePools[1])
-   //console.log(clusterArray);
+  //  console.log(clusterArray);
   return clusterArray;
 }
-let input = {'clusterType':'affordable', 'name':'deploycluster', 'zone':'us-central1-a'};
 
 async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-central1-a', input:object = {'clusterType':'affordable', 'name':'deployCluster', 'zone':'us-central1-a'}){
   const client:any = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
@@ -84,7 +70,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
   let cluster:object ={};
   console.log(`we're invoking create input is:` , input)
   console.log('gcptype: ', GOOGLE_APPLICATION_CREDENTIALS["project_id"])
-  //console.log
+ 
   if(input['clusterType'] == 'affordable'){
     cluster = {
       "name": input['name'],
@@ -545,7 +531,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
 //   console.log('test2')
 // }
 //create(GOOGLE_APPLICATION_CREDENTIALS)
- //quickstart(GOOGLE_APPLICATION_CREDENTIALS);
+// quickstart(GOOGLE_APPLICATION_CREDENTIALS);
 export default [quickstart,create];
 
 // export default [test1, test2]
