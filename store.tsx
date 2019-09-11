@@ -8,15 +8,14 @@ export const StoreContext = createContext(null);
 
 
 export const StoreContextProvider = (props: any) => {
+  
     const [Store, setStore] = useState({
       landingPageState: false,
       uploadPageState: false,
       uploadPageState2:false,
       gcpDeployPage:false,
-      credentials: {
-       }
-      ,
-      gcp: {},
+      credentials: {},
+      clusters: null,
       gcploc:null,
       })
 
