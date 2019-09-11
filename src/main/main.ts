@@ -21,11 +21,11 @@ const GOOGLE_APPLICATION_CREDENTIALS = {
 
  ipcMain.on('asynchronous-message', (event: any, arg: any) => {
     //  console.log('credentials sent from client: ', arg) // prints "ping"
-    //  getGcp(arg).then(res=>{
-    //    console.log('resss ',res)
-    //     event.sender.send('clusterClient', res)
-    //  })
-    //  .catch((e)=>console.log(e))
+     getGcp(arg).then(res=>{
+       console.log('resss ',res)
+        event.sender.send('clusterClient', res)
+     })
+     .catch((e)=>console.log(e))
      // getLocal().then(res=>{
      //  event.sender.send('cluster-client', res)
      // })
@@ -40,13 +40,13 @@ const GOOGLE_APPLICATION_CREDENTIALS = {
 
 app.on('ready', () => {
   // This creates a window on startup
-  const window = new BrowserWindow({ width: 800,
-    height: 600,
+  const window = new BrowserWindow({  
     webPreferences: {
       nodeIntegration: true // allow node integration on BrowserWindow
     },
   });
-
+    window.maximize();
+    window.show();
 
 
   // This loads the html page we bundled with webpack to display

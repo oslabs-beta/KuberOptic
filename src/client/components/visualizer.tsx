@@ -337,7 +337,8 @@ const Visualizer = () => {
   const pLocation = useRef<HTMLParagraphElement>(null)
   const pNode = useRef<HTMLParagraphElement>(null)
   return (
-    <>
+    // <>
+        <div className="vizDiv">
       <SideBar/>
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
@@ -350,7 +351,8 @@ const Visualizer = () => {
           </div>
         </div>
       </div>
-    </>
+      </div>
+    // </>
     );
 };
 

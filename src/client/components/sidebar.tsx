@@ -13,9 +13,9 @@ const SideBar = () =>{
     }
     return(
         <div id='leSidebar'>
-            <p>Options</p>
-        <button onClick={handleDeploy}> Deploy! </button>
-        <button onClick ={handleBack}> Back </button>
+            {/* <p>Options</p> */}
+        <button className="SB" onClick={handleDeploy}> Deploy! </button>
+        <button className="SB" onClick ={handleBack}> Back </button>
         </div>
     )
 }
