@@ -32,23 +32,23 @@ describe('Cluster testing', () => {
 
   //
   describe('Testing GCP fetchData Function', () => {
-    it('quickstart should return GCP cluster data as an array with at least one cluster', () => {
+    xit('quickstart should return GCP cluster data as an array with at least one cluster', () => {
       // make sure the length is of length 1 or more
       quickstart(testCreds).then(data => expect(data.length).not.toBe(0))
     });
-    it('First cluster has correct properties', () => {
+    xit('First cluster has correct properties', () => {
       quickstart(testCreds).then(data => {
         expect(data[0].clusterData.name).not.toBe(undefined)
         expect(data[0].clusterData.clusterName).not.toBe(undefined)
       });
     })
-    it('CLuster should be up and running', () => {
+    xit('CLuster should be up and running', () => {
       quickstart(testCreds).then(data => expect(data[0].clusterData.clusterStatus).toBe('RUNNING'))
     });
-    it('check for correct cluster data', () => {
+    xit('check for correct cluster data', () => {
       quickstart(testCreds).then(data => expect(data[0].location).toBe('us-central1-a'))
     });
-    it('check for correct number of nodes', () => {
+    xit('check for correct number of nodes', () => {
       quickstart(testCreds).then(data => expect(data[0].nodeCount).toBe(4))
     });
 
