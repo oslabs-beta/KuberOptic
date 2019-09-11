@@ -16,58 +16,30 @@ const far = 5000;
 // Store ----
 
 
-// const store = {
-//   clusters: [
-//     {
-//     nodePool_0: ["DefaultPool", {discSize: "100GB"}, {machineType: "g1Small"}],
-//     nodePool_1: ["Pool1", {discSize: "100GB"}, {machineType: "g1Small"}],
-//     nodePool_2: ["Pool2", {discSize: "100GB"}, {machineType: "g1Small"}],
-//     clusterData: {nodePools: [Array],
-//       networkConfig: [Object],
-//       endpoint: '35.225.31.212'},
-//     clusterDscription: "",
-//     clusterName: "StandardCluster 1",
-//     clusterStatus: "Running",
-//     creationTime: "02:40",
-//     location: "us-central1-a",
+// const store = [
+//   {
+//     endpoint: '35.225.31.212',
+//     clusterName: 'standard-cluster-1',
+//     clusterDescription: '',
+//     creationTime: '2019-08-27T23:21:01+00:00',
+//     clusterStatus: 'RUNNING',
 //     nodeCount: 7,
-//   }, {
-//     nodePool_0: [],
-//     clusterData: {nodePools: [Array],
-//       networkConfig: [Object],
-//       endpoint: '35.225.31.212'},
-//     clusterDscription: "",
-//     clusterName: "StandardCluster 3",
-//     clusterStatus: "Running",
-//     creationTime: "02:40",
-//     location: "us-central1-a",
-//     nodeCount: 1,
+//     location: 'us-central1-a',
+//     NodePool_0: [ 'default-pool', 'diskSize[Gb]: 100', 'MachineType: g1-small' ],
+//     NodePool_1: [ 'pool-1', 'diskSize[Gb]: 100', 'MachineType: f1-micro' ],
+//     NodePool_2: [ 'pool-2', 'diskSize[Gb]: 100', 'MachineType: f1-micro' ]
 //   },
 //   {
-//     nodePool_0: [],
-//     clusterData: {nodePools: [Array],
-//       networkConfig: [Object],
-//       endpoint: '35.225.31.212'},
-//     clusterDscription: "",
-//     clusterName: "StandardCluster 5",
-//     clusterStatus: "Running",
-//     creationTime: "02:40",
-//     location: "us-central1-a",
-//     nodeCount: 2,
-//   },
-//   {
-//     nodePool_0: [],
-//     clusterData: {nodePools: [Array],
-//       networkConfig: [Object],
-//       endpoint: '35.225.31.212'},
-//     clusterDscription: "",
-//     clusterName: "KuberNATTTI",
-//     clusterStatus: "Running",
-//     creationTime: "02:40",
-//     location: "us-central1-a",
+//     endpoint: '34.70.204.169',
+//     clusterName: 'weakclust',
+//     clusterDescription: '',
+//     creationTime: '2019-09-11T03:02:01+00:00',
+//     clusterStatus: 'RUNNING',
 //     nodeCount: 1,
-//   }]
-// }
+//     location: 'us-central1-a',
+//     NodePool_0: [ 'pool-1', 'diskSize[Gb]: 30', 'MachineType: g1-small' ]
+//   }
+// ]
 
 
 const Visualizer = () => {
@@ -75,7 +47,6 @@ const Visualizer = () => {
   let [store, setStore] = useContext(StoreContext);
   
   useEffect(() => {
-    
     if(store.clusters){
     // boilerplate for setting up the camera renderer and scene
       const renderer = new THREE.WebGLRenderer();
@@ -114,7 +85,7 @@ const Visualizer = () => {
         const creationTime = store.clusters[i].creationTime;
         const location = store.clusters[i].location;
         const nodeCount = store.clusters[i].nodeCount;
-        const endpoint = store.clusters[i].clusterData.endpoint
+        const endpoint = store.clusters[i].endpoint
         console.log('clusterData is :' ,endpoint)
         const point = { position, name, clusterStatus, creationTime, location, nodeCount, endpoint, group };
         console.log('info of shits: ' , point);

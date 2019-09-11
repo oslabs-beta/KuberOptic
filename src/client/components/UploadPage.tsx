@@ -3,41 +3,46 @@ import { useState, useEffect, useContext } from 'react';
 import DisplayContainer from './DisplayContainer';
 import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
+require('events').EventEmitter.defaultMaxListeners = 20;
+
 const UploadPage = () => {
-
-    const [Store, setStore] = useContext(StoreContext);
-    ipcRenderer.on('clusterClient', (event: any, arg: any) => {
-
-          let input = []
-          input.push(arg);
-          setStore({...Store, clusters:arg});
-          event.returnValue = 'done';
-;
-    })
+  
+  const [Store, setStore] = useContext(StoreContext);
+  ipcRenderer.on('clusterClient', (event: any, arg: any) => {
+    //logic incase we have more than one cluster already rendered    
+  // if(Store.clusters != null){
+  //   let newClusters = Store.clusters;
+  //   newClusters.push(arg)
+  //   console.log("Store:", Store)
+  //   setStore({...Store, clusters:newClusters})
+  // }
+  // else{
+  //   console.log("Store  null:", Store)
+  //   setStore({...Store, clusters:arg});
+  // }
+  setStore({...Store, clusters:arg});
+  event.returnValue = 'done';
+  })
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-        setStore({...Store, credentials:e.currentTarget.value})
-
+      setStore({...Store, credentials:e.currentTarget.value})
     }
-
+    
     const handleBack = ()=>{
       setStore({...Store, landingPageState:false})
     }
-
+    
     const handleSubmit = () => {
-        // console.log(Store.credentials);
-        const creds = JSON.parse(Store.credentials); // strings need to be in double quotes
-        //console.log('type of creds: ', creds);
+      // console.log(Store.credentials);
+      const creds = JSON.parse(Store.credentials); // strings need to be in double quotes
         if(typeof creds !== 'object'){
           console.log('Enter a JSON object from GCP');
           console.log('locStore: ', Store.gcploc)
-          // document.getElementsByClassName('uploadInput')[0].innerHTML = '';
-          // setStore({...Store, credentials: ''})
         }
         else{
           ipcRenderer.send('asynchronous-message', creds)
           // console.log(Store.credentials)
-          // console.log(Store.uploadPageState)
+          console.log(Store.uploadPageState)
           setStore({...Store, uploadPageState: true});
           // console.log(`this is landing page ${Store.landingPageState}`)
         }
@@ -55,9 +60,9 @@ const UploadPage = () => {
             </div>
 
         <input className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
+  
         <button className='uploadButt' onClick={handleSubmit}> Submit </button>
         <button className = 'backButton' onClick={handleBack}>  Back  </button>
-
         <select className='loc' onChange={handleLoc}>
         <option value='us-central1-a'>us-central1-a</option>
         <option value='us-central1-b'>us-central1-b</option>

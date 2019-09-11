@@ -21,8 +21,8 @@ const gcpDeploy = () =>{
     setStore({...Store, gcpDeployPage:false})
     }
     const handleSubmit = () =>{
-        console.log('input is ',input)
         console.log('-----------')
+        console.log('input is ',input)
         console.log('-----------')
         console.log('storeloc ', input['zone']);
         create(Store.credentials, input['zone'], input)

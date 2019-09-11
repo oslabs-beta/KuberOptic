@@ -29,15 +29,9 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
 
    clusters.forEach(cluster=>{
      let gcpDat:object = {};
-     let clusterDat = {};
-      for(let prop in cluster){
-      if(prop!== 'masterAuth' && prop!== 'masterAuthorizedNetworksConfig'){     
-        if(prop == 'nodePools' || prop == 'networkConfig' || prop == 'endpoint'){
-            clusterDat[prop] = cluster[prop]
-        }
-        }
-      }
-      gcpDat["clusterData"] = clusterDat;
+
+    //  console.log('clustEndpt =', cluster.endpoint)
+      gcpDat["endpoint"] = cluster.endpoint
       //console.log('clusterName is :', cluster.name);
       gcpDat["clusterName"] = cluster.name;
       //console.log('cluster description is :' , cluster.description);
@@ -59,7 +53,7 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
 
     // console.log(clusters[0].nodePools[0].instanceGroupUrls)
     // console.log(cluster.nodePools[1])
-  //  console.log(clusterArray);
+  //  console.log('clustrArray: ', clusterArray);
   return clusterArray;
 }
 

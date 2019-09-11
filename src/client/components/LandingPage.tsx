@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-
 import UploadPage from './UploadPage';
 import UploadPage2 from './UploadPage2'
 import {StoreContext} from '../../../store';
+const { ipcRenderer } = require('electron');
+
 const LandingPage = () => {
   const [Store, setStore] = useContext(StoreContext);
 
@@ -14,7 +15,6 @@ const LandingPage = () => {
     console.log(Store.landingPageState2);
     setStore({...Store, landingPageState2: true})
   }
-
     return (
       <div>
       {Store.landingPageState ? <UploadPage /> :

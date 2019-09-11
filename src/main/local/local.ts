@@ -18,13 +18,6 @@ async function fetchLocal(data={}){
       }
    }
 
-   const specDat = {};
-   for(let specz in res.body.items[0].spec){
-      //only grabs primitive values of spec
-      if(res.body.items[0].spec[specz] && typeof res.body.items[0].spec[specz] !== 'object'){
-         specDat[specz] = res.body.items[0].spec[specz]
-      }
-   }
 
    const statusDat = {};
    for(let stat in res.body.items[0].status){
@@ -33,7 +26,7 @@ async function fetchLocal(data={}){
       }
    }
 
-       data["dataforNodes"] = {metaDat, specDat, statusDat}
+       data["endpoint"] = statusDat["hostIP"]
       //  console.log('meta clusterName: ' , res.body.items[0].metadata.clusterName)
         data["clusterName"] = res.body.items[0].metadata.clusterName||'Minikube';
         //  console.log('meta timestamp creation : ' , res.body.items[0].metadata.creationTimestamp)
@@ -42,19 +35,24 @@ async function fetchLocal(data={}){
         data["metaDataNameSpace"] = res.body.items[0].metadata.namespace
         //  console.log('nodeName ',res.body.items[0].spec.nodeName);
         data["nodeName"] = res.body.items[0].spec.nodeName;
+        data["nodeCount"] = 1;
+        data["location"] = "localhost";
         // console.log('--------------------')
 
         // console.log('DockerContainer ',res.body.items[0].spec.containers[0].image);
         for(let i = 0; i < res.body.items.length; i++){
            res.body.items[i].spec.containers.forEach(
-              (el,j)=>data[`dockerContainer_${j}`] = {'podName':res.body.items[i].metadata.name,'image':el.image, 'containerName':el.name})
+              (el,j)=>data[`NodePool_${j}`] = {'podName':res.body.items[i].metadata.name,'image':el.image, 'containerName':el.name})
 
          }
         //  console.log('containerName ',res.body.items[0].spec.containers[0].name);
         //  console.log('Amount of Pods: ' + res.body.items.length);
     })
-   // console.log(data)
-  return data;
+   // console.log('data array: ' , data)
+   let res = [];
+   res.push(data)
+   // console.log(res);
+  return res;
 }
 // fetchLocal();
 
