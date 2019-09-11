@@ -6,23 +6,18 @@ const { ipcRenderer } = require('electron');
 const UploadPage = () => {
 
     const [Store, setStore] = useContext(StoreContext);
-
     ipcRenderer.on('clusterClient', (event: any, arg: any) => {
-        // add argument to store
-        // console.log('change gcp to store to',arg);
-        // console.log('Da Store before', Store);
-        // update gcp data to store
-        // Store.gcp = arg;
-        setStore({...Store, gcp: arg});
-        console.log('Da Store after', Store);
-        event.returnValue = 'done';
-        // console.log(argument);
+
+          setStore({...Store, clusters:arg});
+          event.returnValue = 'done';
+;
     })
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         setStore({...Store, credentials:e.currentTarget.value})
 
     }
+
     const handleBack = ()=>{
       setStore({...Store, landingPageState:false})
     }
@@ -45,9 +40,11 @@ const UploadPage = () => {
           // console.log(`this is landing page ${Store.landingPageState}`)
         }
     }
+
     const handleLoc = (event) => {
       setStore({...Store, gcploc: event.currentTarget.value});
     }
+    
     return <div>{Store.uploadPageState ? <DisplayContainer /> :
         <div className='uploadDiv'>
             <div>

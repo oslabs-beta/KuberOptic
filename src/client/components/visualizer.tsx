@@ -1,8 +1,10 @@
 import * as THREE from 'three'
-import React, { useEffect, useRef}from 'react'
+import React, { useEffect, useRef, useContext }from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
 import SideBar from './sidebar';
+import {StoreContext} from '../../../store';
+
 const width = window.innerWidth;
 const height = window.innerHeight;
 const vizWidth = width;
@@ -13,61 +15,73 @@ const far = 5000;
 
 // Store ----
 
-const store = {
-  clusters: [
-    {
-    nodePool_0: ["DefaultPool", {discSize: "100GB"}, {machineType: "g1Small"}],
-    nodePool_1: ["Pool1", {discSize: "100GB"}, {machineType: "g1Small"}],
-    nodePool_2: ["Pool2", {discSize: "100GB"}, {machineType: "g1Small"}],
-    clusterData: {},
-    clusterDscription: "",
-    clusterName: "StandardCluster 1",
-    clusterStatus: "Running",
-    creationTime: "02:40",
-    location: "us-central1-a",
-    nodeCount: 7,
-  }, {
-    nodePool_0: [],
-    clusterData: {},
-    clusterDscription: "",
-    clusterName: "StandardCluster 3",
-    clusterStatus: "Running",
-    creationTime: "02:40",
-    location: "us-central1-a",
-    nodeCount: 1,
-  },
-  {
-    nodePool_0: [],
-    clusterData: {},
-    clusterDscription: "",
-    clusterName: "StandardCluster 5",
-    clusterStatus: "Running",
-    creationTime: "02:40",
-    location: "us-central1-a",
-    nodeCount: 2,
-  },
-  {
-    nodePool_0: [],
-    clusterData: {},
-    clusterDscription: "",
-    clusterName: "KuberNATTTI",
-    clusterStatus: "Running",
-    creationTime: "02:40",
-    location: "us-central1-a",
-    nodeCount: 1,
-  }]
-}
+
+// const store = {
+//   clusters: [
+//     {
+//     nodePool_0: ["DefaultPool", {discSize: "100GB"}, {machineType: "g1Small"}],
+//     nodePool_1: ["Pool1", {discSize: "100GB"}, {machineType: "g1Small"}],
+//     nodePool_2: ["Pool2", {discSize: "100GB"}, {machineType: "g1Small"}],
+//     clusterData: {nodePools: [Array],
+//       networkConfig: [Object],
+//       endpoint: '35.225.31.212'},
+//     clusterDscription: "",
+//     clusterName: "StandardCluster 1",
+//     clusterStatus: "Running",
+//     creationTime: "02:40",
+//     location: "us-central1-a",
+//     nodeCount: 7,
+//   }, {
+//     nodePool_0: [],
+//     clusterData: {nodePools: [Array],
+//       networkConfig: [Object],
+//       endpoint: '35.225.31.212'},
+//     clusterDscription: "",
+//     clusterName: "StandardCluster 3",
+//     clusterStatus: "Running",
+//     creationTime: "02:40",
+//     location: "us-central1-a",
+//     nodeCount: 1,
+//   },
+//   {
+//     nodePool_0: [],
+//     clusterData: {nodePools: [Array],
+//       networkConfig: [Object],
+//       endpoint: '35.225.31.212'},
+//     clusterDscription: "",
+//     clusterName: "StandardCluster 5",
+//     clusterStatus: "Running",
+//     creationTime: "02:40",
+//     location: "us-central1-a",
+//     nodeCount: 2,
+//   },
+//   {
+//     nodePool_0: [],
+//     clusterData: {nodePools: [Array],
+//       networkConfig: [Object],
+//       endpoint: '35.225.31.212'},
+//     clusterDscription: "",
+//     clusterName: "KuberNATTTI",
+//     clusterStatus: "Running",
+//     creationTime: "02:40",
+//     location: "us-central1-a",
+//     nodeCount: 1,
+//   }]
+// }
 
 
 const Visualizer = () => {
 
+ let [store, setStore] = useContext(StoreContext);
+  
   useEffect(() => {
-      // boilerplate for setting up the camera renderer and scene
+    
+    if(store.clusters){
+    // boilerplate for setting up the camera renderer and scene
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
       ref.current.appendChild(renderer.domElement);
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
-
       //---------------number of hexagons---------------\\
       const pointAmmount = store.clusters.length;
 
@@ -93,14 +107,17 @@ const Visualizer = () => {
       const pointInfo2 = [];
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [2400*i -4800,1]
+        const position = [2400*i -2400,1]
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
         const creationTime = store.clusters[i].creationTime;
         const location = store.clusters[i].location;
         const nodeCount = store.clusters[i].nodeCount;
-        const point = { position, name, clusterStatus, creationTime, location, nodeCount, group };
+        const endpoint = store.clusters[i].clusterData.endpoint
+        console.log('clusterData is :' ,endpoint)
+        const point = { position, name, clusterStatus, creationTime, location, nodeCount, endpoint, group };
+        console.log('info of shits: ' , point);
         pointInfo.push(point);
       }
       
@@ -232,6 +249,9 @@ const Visualizer = () => {
       const tooltipState: {[k: string]: any} = {
         display: "none",
       }
+      const grouptipState:{[k: string]: any} = {
+        display: "none",
+      }
       const toolTip = divRefOne.current;
       const pointTip = divRefTwo.current;
       const groupTip = divRefThree.current;
@@ -266,8 +286,19 @@ const Visualizer = () => {
         pTime.current.textContent = tooltipState.creationTime;
         pLocation.current.textContent = tooltipState.location;
         pNode.current.textContent = tooltipState.nodeCount;
+        pendpoint.current.textContent = tooltipState.endpoint;
       }
-
+      const updateTooltip2 = () => {
+        groupTip.style.display = grouptipState.display;
+        groupTip.style.left = grouptipState.left + 'px';
+        groupTip.style.top = grouptipState.top + 'px';
+        pointTip.innerText = grouptipState.name;
+        pointTip.style.background = colorArray[grouptipState.group];
+        pStatus.current.textContent = grouptipState.clusterStatus //+ grouptipState.creationTime + grouptipState.location + grouptipState.nodeCount;
+        pTime.current.textContent = grouptipState.creationTime;
+        pLocation.current.textContent = grouptipState.location;
+        pNode.current.textContent = grouptipState.nodeCount;
+      }
       function showTooltip(mousePosition, datum) {
         //console.log('I am in showtooltip')
         const tooltipWidth = 120;
@@ -279,12 +310,27 @@ const Visualizer = () => {
         tooltipState.name = datum.name;
         tooltipState.group = datum.group;
         tooltipState.clusterStatus = datum.clusterStatus;
-        tooltipState.clusterStatus = datum.clusterStatus;
         tooltipState.creationTime = datum.creationTime;
         tooltipState.location = datum.location;
         tooltipState.nodeCount = datum.nodeCount;
+        tooltipState.endpoint = datum.endpoint
         updateTooltip();
       }
+      function showTooltip2(mousePosition, datum) {
+        //console.log('I am in showtooltip')
+        grouptipState.display = "block";
+        grouptipState.left = 0;
+        grouptipState.top = 400;
+        grouptipState.name = datum.name;
+        grouptipState.group = datum.group;
+        grouptipState.clusterStatus = datum.clusterStatus;
+        grouptipState.clusterStatus = datum.clusterStatus;
+        grouptipState.creationTime = datum.creationTime;
+        grouptipState.location = datum.location;
+        grouptipState.nodeCount = datum.nodeCount;
+        updateTooltip2();
+      }
+
       //ray caster makes sure when we hover over shape we get it on dom element
       const raycaster = new THREE.Raycaster();
       //this threshhold is what makes you hover over more than the centre
@@ -301,6 +347,7 @@ const Visualizer = () => {
           const collision: any = sortedCollisions[0];
           const index = collision.index
           const datum = generatedPoints[index];
+          // showTooltip2(mousePosition, datum);
           showTooltip(mousePosition, datum);
           highlightPoint(datum);
         } else {
@@ -325,34 +372,45 @@ const Visualizer = () => {
         tooltipState.display = 'none';
         updateTooltip();
       }
-
+    }
   })
+
   //const sidebar = useRef<HTMLDivElement>(null)
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
   const divRefTwo = useRef<HTMLDivElement>(null)
   const divRefThree = useRef<HTMLDivElement>(null)
-  const pStatus = useRef<HTMLParagraphElement>(null)
-  const pTime = useRef<HTMLParagraphElement>(null)
-  const pLocation = useRef<HTMLParagraphElement>(null)
-  const pNode = useRef<HTMLParagraphElement>(null)
+
+  const pStatus = useRef<HTMLSpanElement>(null)
+  const pTime = useRef<HTMLSpanElement>(null)
+  const pLocation = useRef<HTMLSpanElement>(null)
+  const pNode = useRef<HTMLSpanElement>(null)
+  const pendpoint = useRef<HTMLSpanElement>(null)
+
   return (
-    // <>
-        <div className="vizDiv">
+    <>
+        
       <SideBar/>
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
-          <div ref={divRefTwo} id="point-tip"/>
-          <div ref={divRefThree} id="group-tip">
-            <p ref={pStatus}/>
-            <p ref={pTime}/>
-            <p ref={pLocation}/>
-            <p ref={pNode}/>
+          <div ref={divRefTwo} id="point-tip" />
+          <div> status: <span ref={pStatus}/> 
+          </div>
+          <div>
+            Time Created: <span ref={pTime}/>
+          </div>
+          <div>
+            Cluster Location: <span ref={pLocation}/>
+          </div>
+          <div>
+            nodeCount:<span ref={pNode}/>
+          </div>
+          <div>
+            Endpoint: <span ref={pendpoint}/>
           </div>
         </div>
       </div>
-      </div>
-    // </>
+    </>
     );
 };
 

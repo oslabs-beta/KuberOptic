@@ -1,19 +1,30 @@
 // const fetchLocal = require('./local/local').default
-const fetchGCP = require('./gcp/getGCPdata').default;
+const [fetchGCP, create] = require('./gcp/getGCPdata').default;
 const { app, ipcMain, BrowserWindow } = require('electron');
 // const electron = require('electron')
+const EventEmitter = require('events');
 
-const GOOGLE_APPLICATION_CREDENTIALS = {
-};
+class MyEmitter extends EventEmitter {}
 
- // async function getLocal() {
- //    const res = await fetchLocal();
- //    //console.log(res)
- //    return res
- // }
+const myEmitter = new MyEmitter();
+// increase the limit
+myEmitter.setMaxListeners(29);
+
+for(let i = 0; i < 29; i++) {
+  myEmitter.on('event', _ => console.log(i));
+}
+
+myEmitter.emit('event');
+
+//  async function getLocal() {
+//     const res = await fetchLocal();
+//     //console.log(res)
+//     return res
+//  }
  async function getGcp(GOOGLE_APPLICATION_CREDENTIALS) {
     const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS);
-    //console.log(res)
+    let dat = new Date()
+    console.log('dateGetgcp -------' , '    ', dat.getTime())
     return res;
  }
  //getLocal();
@@ -22,13 +33,14 @@ const GOOGLE_APPLICATION_CREDENTIALS = {
  ipcMain.on('asynchronous-message', (event: any, arg: any) => {
     //  console.log('credentials sent from client: ', arg) // prints "ping"
      getGcp(arg).then(res=>{
-       console.log('resss ',res)
-        event.sender.send('clusterClient', res)
-     })
+      // let dat = new Date()
+       event.sender.send('clusterClient', res)
+      })
      .catch((e)=>console.log(e))
-     // getLocal().then(res=>{
-     //  event.sender.send('cluster-client', res)
-     // })
+    //  getLocal().then(res=>{
+    //    console.log(res)
+    //   event.sender.send('clusterClient', res)
+    //  })
      // arg should be the users credentials in the future
      // console.log(arg);
      // event.sender.send('clusterClient', 'yayYaaaaaay')

@@ -1,11 +1,11 @@
-  #info {
-    position: absolute;
-    top: 10px;
-    width: 100%;
-    text-align: center;
-    z-index: 100;
-    display:block;
-  }
+#info {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 100;
+  display:block;
+}
   #leCanvas{
     float:left;
     width: 100%;
@@ -40,13 +40,19 @@
     margin-bottom: 4px;
   }
   #group-tip {
-    padding: 4px;
-    height: 135px;
-    font-size: 16px;
-    font-weight: 400;
+    display: none; 
+    position: absolute; 
+    pointer-events: none; 
+    font-size: 14px; 
+    width: 250px; 
     color: black;
-      }
-/*
+    text-align: center; 
+    line-height: 1; 
+    padding: 6px; 
+    background: white; 
+    font-family: sans-serif;
+  }
+/*   
   .app {
     height: 100vh;
     background-color: rgb(0, 0, 0);
@@ -179,18 +185,6 @@
   #clicker:focus+#hiddenAf{
     display:block;
   }
-  /* .uploadButt {
-    float:inline-end;
-    height: 50px;
-    width: 75px;
-    border:15px;
-    border-radius: 5px;
-    margin-top: 30px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: rgb(255, 255, 255);
-    } */
   .loc{
     /* height:20px;
     width:200px;
