@@ -52,13 +52,13 @@ myEmitter.emit('event');
 
 app.on('ready', () => {
   // This creates a window on startup
-  const window = new BrowserWindow({ width: 800,
-    height: 600,
+  const window = new BrowserWindow({  
     webPreferences: {
       nodeIntegration: true // allow node integration on BrowserWindow
     },
   });
-
+    window.maximize();
+    window.show();
 
 
   // This loads the html page we bundled with webpack to display

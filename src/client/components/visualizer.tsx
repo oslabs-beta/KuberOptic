@@ -72,7 +72,7 @@ const far = 5000;
 
 const Visualizer = () => {
 
-  let [store, setStore] = useContext(StoreContext);
+ let [store, setStore] = useContext(StoreContext);
   
   useEffect(() => {
     
@@ -389,7 +389,7 @@ const Visualizer = () => {
 
   return (
     <>
-    
+        
       <SideBar/>
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
