@@ -8,14 +8,14 @@ let input = {};
 const gcpDeploy = () =>{
     const [Store, setStore] = useContext(StoreContext);
     const handleType = (event) => {
-        input['clusterType'] = event.currentTarget.value;      
+        input['clusterType'] = event.currentTarget.value;
     }
     const handleName = (event) => {
-        input['name'] = event.currentTarget.value;      
+        input['name'] = event.currentTarget.value;
     }
     const handleLoc = (event) => {
 
-       input['zone'] = event.currentTarget.value;      
+       input['zone'] = event.currentTarget.value;
     }
     const handleBack = ()=>{
     setStore({...Store, gcpDeployPage:false})
@@ -28,7 +28,7 @@ const gcpDeploy = () =>{
         create(Store.credentials, input['zone'], input)
         setStore({...Store, gcpDeployPage:false})
     }
-    
+
     return (
     <div>
         <div className="inputPageDeploy">
@@ -56,7 +56,7 @@ const gcpDeploy = () =>{
         <option value='europe-west2-a'>europe-west2-a</option>
         <option value='us-west1-a'>us-west1-a</option>
         </select>
-        
+
         </div>
 
         <div id='buts'>
@@ -66,8 +66,8 @@ const gcpDeploy = () =>{
         </div>
 
         <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
-        
-        <div id="clicker" tabIndex={1} >     
+
+        <div id="clicker" tabIndex={1} >
            <p>
            <strong>Affordable</strong> <br/>
            </p>
@@ -80,7 +80,7 @@ const gcpDeploy = () =>{
             Boot disk size: 30GB <br/>
         </div>
 
-        <div id="clicker" tabIndex={1} >     
+        <div id="clicker" tabIndex={1} >
            <p>
            <strong>Standard</strong> <br/>
            </p>
@@ -92,8 +92,8 @@ const gcpDeploy = () =>{
             Stackdriver Logging and Monitoring: Disabled <br/>
             Boot disk size: 100GB <br/>
         </div>
-       
-        <div id="clicker" tabIndex={1} >     
+
+        <div id="clicker" tabIndex={1} >
            <p>
            <strong>CPU-Intensive</strong> <br/>
            </p>
@@ -105,8 +105,8 @@ const gcpDeploy = () =>{
             Stackdriver Logging and Monitoring: Enabled <br/>
             Boot disk size: 100GB <br/>
         </div>
-  
-        <div id="clicker" tabIndex={1} >     
+
+        <div id="clicker" tabIndex={1} >
            <p>
            <strong>Memory-Intensive</strong> <br/>
            </p>
@@ -118,8 +118,8 @@ const gcpDeploy = () =>{
             Stackdriver Logging and Monitoring: Enabled <br/>
             Boot disk size: 100GB <br/>
         </div>
-       
-        <div id="clicker" tabIndex={1} >     
+
+        <div id="clicker" tabIndex={1} >
            <p>
            <strong>GPU Accelerated Computing</strong> <br/>
            </p>
@@ -132,7 +132,7 @@ const gcpDeploy = () =>{
             Boot disk size: 100GB <br/>
         </div>
 
-        <div id="clicker" tabIndex={1} >     
+        <div id="clicker" tabIndex={1} >
            <p>
            <strong>Highly available</strong> <br/>
            </p>
@@ -146,7 +146,7 @@ const gcpDeploy = () =>{
         </div>
 
         </div>
-        
+
     </div>
         )
 }

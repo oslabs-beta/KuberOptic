@@ -197,8 +197,8 @@ const Visualizer = () => {
 
         function zoomHandler(d3_transform) {
           let scale = d3_transform.k;
-          let x = -(d3_transform.x - vizWidth/2) / scale;
-          let y = (d3_transform.y - height/2) / scale;
+          let x = -(d3_transform.x - vizWidth / 2) / scale;
+          let y = (d3_transform.y - height / 2) / scale;
           let z = getZFromScale(scale);
           camera.position.set(x, y, z);
         }
@@ -236,6 +236,7 @@ const Visualizer = () => {
       function sortIntersectsByDistanceToRay(intersects) {
         return _.sortBy(intersects, "distanceToRay");
       }
+      
       // const pointsContainer = new THREE.Object3D();
       const hoverContainer = new THREE.Object3D();
       const removeHighlights = () => {

@@ -37,14 +37,13 @@ myEmitter.emit('event');
        event.sender.send('clusterClient', res)
       })
      .catch((e)=>console.log(e))
-     getLocal().then(res=>{
-       console.log(res)
-      event.sender.send('clusterClient', res)
-     })
+    //  getLocal().then(res=>{
+    //    console.log(res)
+    //   event.sender.send('clusterClient', res)
+    //  })
      // arg should be the users credentials in the future
      // console.log(arg);
      // event.sender.send('clusterClient', 'yayYaaaaaay')
-     event.returnValue = 'done';
 })
 
 // Even listeners
@@ -59,6 +58,8 @@ app.on('ready', () => {
       nodeIntegration: true // allow node integration on BrowserWindow
     },
   });
+
+
 
   // This loads the html page we bundled with webpack to display
   window.loadURL(`file://${__dirname}/index.html`);
