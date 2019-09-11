@@ -6,23 +6,18 @@ const { ipcRenderer } = require('electron');
 const UploadPage = () => {
 
     const [Store, setStore] = useContext(StoreContext);
-
     ipcRenderer.on('clusterClient', (event: any, arg: any) => {
-        // add argument to store
-        // console.log('change gcp to store to',arg);
-        // console.log('Da Store before', Store);
-        // update gcp data to store
-        Store.gcp = arg;
-        // setStore({...Store, gcp: arg});
-        console.log('Da Store after', Store);
-        event.returnValue = 'done';
-        // console.log(argument);
+
+          setStore({...Store, clusters:arg});
+          event.returnValue = 'done';
+;
     })
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         setStore({...Store, credentials:e.currentTarget.value})
 
     }
+
     const handleBack = ()=>{
       setStore({...Store, landingPageState:false})
     }
@@ -45,9 +40,11 @@ const UploadPage = () => {
           // console.log(`this is landing page ${Store.landingPageState}`)
         }
     }
+
     const handleLoc = (event) => {
       setStore({...Store, gcploc: event.currentTarget.value});
     }
+    
     return <div>{Store.uploadPageState ? <DisplayContainer /> :
         <div className='uploadDiv'>
             <div>
@@ -55,11 +52,13 @@ const UploadPage = () => {
               <div className='kubUploadText'>Google Cloud Platform</div>
             </div>
 
-        <input className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
-        <button className='uploadButt' onClick={handleSubmit}> Submit </button>
-        <button className = 'backButton' onClick={handleBack}>  Back  </button>
-
-        <select className='loc' onChange={handleLoc}>
+        <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
+        <div id="uploadDivForSubmitandBackButts">
+        <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
+        &nbsp;
+        <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+        </div>
+        <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
         <option value='us-central1-a'>us-central1-a</option>
         <option value='us-central1-b'>us-central1-b</option>
         <option value='us-central1-c'>us-central1-c</option>

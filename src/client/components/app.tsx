@@ -9,13 +9,15 @@ import { StoreContextProvider } from '../../../store';
 import Visualizer from './visualizer'
 import Deploy from './gcpDeploy';
 import 'tachyons';
+import UploadPage from './UploadPage';
+import UploadPage2 from './UploadPage2';
 
 function App() {
   return (
     <StoreContextProvider>
   <div className='app'>
-    <LandingPage />
-
+    <LandingPage/>
+    
   </div>
 
   </StoreContextProvider>
