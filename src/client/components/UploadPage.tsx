@@ -3,41 +3,47 @@ import { useState, useEffect, useContext } from 'react';
 import DisplayContainer from './DisplayContainer';
 import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
+require('events').EventEmitter.defaultMaxListeners = 20;
+
 const UploadPage = () => {
+  
+  const [Store, setStore] = useContext(StoreContext);
+  ipcRenderer.on('clusterClient', (event: any, arg: any) => {
+    //logic incase we have more than one cluster already rendered    
+  if(Store.clusters != null){
+    let newClusters = Store.clusters;
+    if(Store.clusters.length === Store.clusterCount){
+      arg.forEach(el=>{
+          newClusters.push(el)
+        })
+      }
+      setStore({...Store, clusters:newClusters})
+  }
+  else{
+    setStore({...Store, clusters:arg, clusterCount:1});
 
-    const [Store, setStore] = useContext(StoreContext);
-    ipcRenderer.on('clusterClient', (event: any, arg: any) => {
-
-          setStore({...Store, clusters:arg});
-          event.returnValue = 'done';
-;
-    })
+  }
+  // setStore({...Store, clusters:arg});
+  event.returnValue = 'done';
+  })
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-        setStore({...Store, credentials:e.currentTarget.value})
-
+      setStore({...Store, credentials:e.currentTarget.value})
     }
-
+    
     const handleBack = ()=>{
       setStore({...Store, landingPageState:false})
     }
-
+    
     const handleSubmit = () => {
-        // console.log(Store.credentials);
-        const creds = JSON.parse(Store.credentials); // strings need to be in double quotes
-        //console.log('type of creds: ', creds);
+     const creds = JSON.parse(Store.credentials); 
         if(typeof creds !== 'object'){
           console.log('Enter a JSON object from GCP');
           console.log('locStore: ', Store.gcploc)
-          // document.getElementsByClassName('uploadInput')[0].innerHTML = '';
-          // setStore({...Store, credentials: ''})
         }
         else{
           ipcRenderer.send('asynchronous-message', creds)
-          // console.log(Store.credentials)
-          // console.log(Store.uploadPageState)
           setStore({...Store, uploadPageState: true});
-          // console.log(`this is landing page ${Store.landingPageState}`)
         }
     }
 
@@ -59,6 +65,7 @@ const UploadPage = () => {
         <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
         </div>
         <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
+        <option>Select A Location</option>
         <option value='us-central1-a'>us-central1-a</option>
         <option value='us-central1-b'>us-central1-b</option>
         <option value='us-central1-c'>us-central1-c</option>
@@ -67,7 +74,6 @@ const UploadPage = () => {
         <option value='southamerica-east1-c'>southamerica-east1-c</option>
         <option value='europe-west2-a'>europe-west2-a</option>
         <option value='us-west1-a'>us-west1-a</option>
-
         </select>
 
         </div>
