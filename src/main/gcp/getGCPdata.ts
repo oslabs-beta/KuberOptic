@@ -1,62 +1,36 @@
 const container = require('@google-cloud/container');
-const GOOGLE_APPLICATION_CREDENTIALS = {};
 
-//const containeranalysis = require('@google-cloud/containeranalysis');
-
-// const client = new containeranalysis.v1beta1.GrafeasV1Beta1Client({
-//   // optional auth parameters.
-// });
-
-// // Iterate over all elements.
-// const formattedParent = client.projectPath('kubernati');
-
-;
-
+// quickstart takes in the GCP credientials object and a timezone, defaults to central1-a if not specified
 async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us-central1-a') {
     const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
+
     const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
     const request:object = {
       projectId,
       zone
     };
-    const [response] = await client.listClusters(request);
-    const clusters:any = response.clusters;
+    //response returns an object that has all the info we need
+  const [response] = await client.listClusters(request);
+  const clusters:any = response.clusters;
 
    const clusterArray = [];
 
    clusters.forEach(cluster=>{
      let gcpDat:object = {};
-     let clusterDat = {};
-      for(let prop in cluster){
-      if(prop!== 'masterAuth' && prop!== 'masterAuthorizedNetworksConfig'){
-        if(prop == 'nodePools' || prop == 'networkConfig' || prop == 'endpoint'){
-            clusterDat[prop] = cluster[prop]
-        }
-        }
-      }
-      gcpDat["clusterData"] = clusterDat;
-      //console.log('clusterName is :', cluster.name);
+
+      gcpDat["endpoint"] = cluster.endpoint
       gcpDat["clusterName"] = cluster.name;
-      //console.log('cluster description is :' , cluster.description);
       gcpDat["clusterDescription"] = cluster.description;
-      //console.log( cluster.name ,' created time is :', cluster.createTime);
       gcpDat["creationTime"] = cluster.createTime;
-      //console.log( cluster.name ,' status :', cluster.status);
       gcpDat["clusterStatus"] = cluster.status;
-      //console.log('currentNodeCount is :', cluster.currentNodeCount);
       gcpDat["nodeCount"] = cluster.currentNodeCount;
-      //console.log('location is :' , cluster.location);
       gcpDat["location"] = cluster.location;
       cluster.nodePools.forEach((node, i)=>{
-        gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
+      gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
          `MachineType: ${node.config.machineType}`]
       })
       clusterArray.push(gcpDat)
-     })
-
-    // console.log(clusters[0].nodePools[0].instanceGroupUrls)
-    // console.log(cluster.nodePools[1])
-  //  console.log(clusterArray);
+  })
   return clusterArray;
 }
 
@@ -65,9 +39,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
   GOOGLE_APPLICATION_CREDENTIALS = JSON.parse(GOOGLE_APPLICATION_CREDENTIALS);
   const projectId:string = GOOGLE_APPLICATION_CREDENTIALS["project_id"];
   let cluster:object ={};
-  console.log(`we're invoking create input is:` , input)
-  console.log('gcptype: ', GOOGLE_APPLICATION_CREDENTIALS["project_id"])
-
+  
   if(input['clusterType'] == 'affordable'){
     cluster = {
       "name": input['name'],
@@ -430,6 +402,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
       "location": input['zone']
     }
   }
+
   if(input['clusterType'] == 'highly_available'){
     cluster = {
       "name": input['name'],
@@ -505,6 +478,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
       "location": input['zone']
     }
   }
+  //--------------After knowing input configuration----------\\
   const request:object = {
     projectId,
     zone,
@@ -513,22 +487,10 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
   client.createCluster(request)
   .then(responses => {
     var response = responses[0];
-    // doThingsWith(response)
-    console.log(response)
   })
   .catch(err => {
     console.error(err);
   });
 }
 
-// function test1(){
-//   console.log('test1')
-// }
-// function test2(){
-//   console.log('test2')
-// }
-//create(GOOGLE_APPLICATION_CREDENTIALS)
-// quickstart(GOOGLE_APPLICATION_CREDENTIALS);
 export default [quickstart,create];
-
-// export default [test1, test2]

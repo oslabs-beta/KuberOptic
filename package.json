@@ -14,7 +14,7 @@
     "lint": "eslint --ignore-path .gitignore '**/*.{ts,tsx}' ",
     "lint:fix": "npm run lint --fix",
     "test": "jest",
-    "package-mac": "electron-packager . kuberoptic --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds",
+    "package-mac": "electron-packager . kuberoptic --overwrite --platform=darwin --arch=x64 --icon=src/client/assets/credsPage/kub.icns --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/kuberoptic-darwin-x64/kuberoptic.app kuberoptic --out=release-builds --overwrite"
   },
   "repository": {
@@ -120,6 +120,7 @@
     "three": "^0.107.0",
     "three-orbitcontrols": "^2.102.2",
     "ts-node": "^8.3.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "util": "^0.12.1"
   }
 }
