@@ -46,11 +46,6 @@ const commonConfig = {
   //   }),
   // ],
   resolve: {
-    alias: {
-      '@': srcPaths('src'),
-      '@main': srcPaths('src/main'),
-      '@renderer': srcPaths('src/client'),
-    },
     extensions: ['.js', '.json', '.ts', '.tsx'],
   },
   module: {
