@@ -1,11 +1,6 @@
 import React, { useState, createContext } from 'react';
-import { any } from 'prop-types';
-// import { any } from 'prop-types';
-// import { checkPropTypes } from 'prop-types';
-
 
 export const StoreContext = createContext(null);
-
 
 export const StoreContextProvider = (props: any) => {
   
@@ -14,19 +9,21 @@ export const StoreContextProvider = (props: any) => {
       uploadPageState: false,
       uploadPageState2:false,
       gcpDeployPage:false,
-      credentials: {},
+      credentials: {}, //google
       clusters: null,
       gcploc:null,
       clusterCount:0,
-      })
+      awsKey:null,
+      awsSecret:null,
+      awsClusterName:null,
+      awsLocation:null
+    })
 
-
-
-    return (
+      return (
       <StoreContext.Provider value={[Store, setStore]}>
           {props.children}
       </StoreContext.Provider>
-     )
+    )
 }
 
 export default StoreContext;

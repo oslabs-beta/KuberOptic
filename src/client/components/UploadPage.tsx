@@ -36,18 +36,14 @@ const UploadPage = () => {
     }
     
     const handleSubmit = () => {
-      // console.log(Store.credentials);
-      const creds = JSON.parse(Store.credentials); // strings need to be in double quotes
+     const creds = JSON.parse(Store.credentials); 
         if(typeof creds !== 'object'){
           console.log('Enter a JSON object from GCP');
           console.log('locStore: ', Store.gcploc)
         }
         else{
           ipcRenderer.send('asynchronous-message', creds)
-          // console.log(Store.credentials)
-          console.log(Store.uploadPageState)
           setStore({...Store, uploadPageState: true});
-          // console.log(`this is landing page ${Store.landingPageState}`)
         }
     }
 
@@ -78,7 +74,6 @@ const UploadPage = () => {
         <option value='southamerica-east1-c'>southamerica-east1-c</option>
         <option value='europe-west2-a'>europe-west2-a</option>
         <option value='us-west1-a'>us-west1-a</option>
-
         </select>
 
         </div>

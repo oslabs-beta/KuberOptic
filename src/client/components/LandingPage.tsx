@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import UploadPage from './UploadPage';
 import UploadPage2 from './UploadPage2'
 import {StoreContext} from '../../../store';
-const { ipcRenderer } = require('electron');
 
 const LandingPage = () => {
   const [Store, setStore] = useContext(StoreContext);
@@ -21,11 +20,10 @@ const LandingPage = () => {
        Store.landingPageState2 ? <UploadPage2/> :
         <div className='mainDiv'>
           <div><img className='kubLogo' src={require('../assets/credsPage/kub.png')}/></div>
-          <div className='text'>The All Seeing Kubernati</div>
+          <div className='text'> KuberOptic: The Kubernetes Visualizer </div>
         <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
-        {/* <img className='logo1' src={require("../assets/credsPage/azure2.png")} onClick={myFunctionG}/> */}
-        <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
-        </div>
+      <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
+      </div>
     }
     </div>
     )

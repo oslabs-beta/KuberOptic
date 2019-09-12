@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import {StoreContext} from '../../../store'
 const [quickstart, create] = require('../../main/gcp/getGCPdata').default
 import 'tachyons'
@@ -21,10 +21,6 @@ const gcpDeploy = () =>{
     setStore({...Store, gcpDeployPage:false})
     }
     const handleSubmit = () =>{
-        console.log('-----------')
-        console.log('input is ',input)
-        console.log('-----------')
-        console.log('storeloc ', input['zone']);
         create(Store.credentials, input['zone'], input)
         setStore({...Store, gcpDeployPage:false})
     }
