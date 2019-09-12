@@ -1,7 +1,12 @@
 module.exports = {
   verbose: true,
-  // setupFiles: ['./setupTests.js'], // for enzyme
-  // moduleFileExtensions: ['ts','tsx','js','json','jsx','node'], //ts in front
+  globals: {
+    'ts-jest': {
+      diagnostics: false,
+    }
+  },
+  // setupFiles: ['./setupEnzyme.js'], // for enzyme
+  moduleFileExtensions: ['ts','tsx','js','json','jsx','node'], //ts in front
   moduleDirectories: ['node_modules'],
   modulePaths: ['<rootDir>'],
   transform: {

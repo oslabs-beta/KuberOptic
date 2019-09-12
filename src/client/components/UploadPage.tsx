@@ -10,17 +10,20 @@ const UploadPage = () => {
   const [Store, setStore] = useContext(StoreContext);
   ipcRenderer.on('clusterClient', (event: any, arg: any) => {
     //logic incase we have more than one cluster already rendered    
-  // if(Store.clusters != null){
-  //   let newClusters = Store.clusters;
-  //   newClusters.push(arg)
-  //   console.log("Store:", Store)
-  //   setStore({...Store, clusters:newClusters})
-  // }
-  // else{
-  //   console.log("Store  null:", Store)
-  //   setStore({...Store, clusters:arg});
-  // }
-  setStore({...Store, clusters:arg});
+  if(Store.clusters != null){
+    let newClusters = Store.clusters;
+    if(Store.clusters.length === Store.clusterCount){
+      arg.forEach(el=>{
+          newClusters.push(el)
+        })
+      }
+      setStore({...Store, clusters:newClusters})
+  }
+  else{
+    setStore({...Store, clusters:arg, clusterCount:1});
+
+  }
+  // setStore({...Store, clusters:arg});
   event.returnValue = 'done';
   })
 
@@ -59,11 +62,14 @@ const UploadPage = () => {
               <div className='kubUploadText'>Google Cloud Platform</div>
             </div>
 
-        <input className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
-  
-        <button className='uploadButt' onClick={handleSubmit}> Submit </button>
-        <button className = 'backButton' onClick={handleBack}>  Back  </button>
-        <select className='loc' onChange={handleLoc}>
+        <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
+        <div id="uploadDivForSubmitandBackButts">
+        <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
+        &nbsp;
+        <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+        </div>
+        <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
+        <option>Select A Location</option>
         <option value='us-central1-a'>us-central1-a</option>
         <option value='us-central1-b'>us-central1-b</option>
         <option value='us-central1-c'>us-central1-c</option>

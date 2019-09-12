@@ -17,6 +17,7 @@ export const StoreContextProvider = (props: any) => {
       credentials: {},
       clusters: null,
       gcploc:null,
+      clusterCount:0,
       })
 
 

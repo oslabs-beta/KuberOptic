@@ -19,11 +19,11 @@ const LandingPage = () => {
       <div>
       {Store.landingPageState ? <UploadPage /> :
        Store.landingPageState2 ? <UploadPage2/> :
-        <div>
+        <div className='mainDiv'>
           <div><img className='kubLogo' src={require('../assets/credsPage/kub.png')}/></div>
           <div className='text'>The All Seeing Kubernati</div>
         <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
-        <img className='logo1' src={require("../assets/credsPage/azure2.png")} onClick={myFunctionG}/>
+        {/* <img className='logo1' src={require("../assets/credsPage/azure2.png")} onClick={myFunctionG}/> */}
         <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
         </div>
     }

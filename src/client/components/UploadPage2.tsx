@@ -50,12 +50,30 @@ const UploadPage = () => {
               <div className='kubUploadText'>The All Seeing Kubernati</div>
             </div>
         <input className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
-        <button className='uploadButt' onClick={handleSubmit}>Submit</button>
-        <button className = 'backButton' onClick={handleBack}>  Back  </button>
+        <div id="uploadPage2SubmitandBackButts">
+        <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
+        &nbsp;
+        <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+        </div>
         {/* <select className='loc' onChange={handleLoc}>
-        <option value='us-central1-a'>us-central1-a</option>
-        <option value='us-central1-b'>us-central1-b</option>
-        <option value='us-central1-c'>us-central1-c</option>
+        <option value='US East (N.Virginia)'>us-central1-a</option>
+        <option value='US East (Ohio)'>us-central1-b</option>
+        <option value='US West (N. California)'>us-central1-c</option>
+        <option value='US West (Oregon)'>us-central1-c</option>
+        <option value='Asia Pacific (Hong Kong)'>us-central1-c</option>
+        <option value='Asia Pacific (Mumbai)'>us-central1-c</option>
+        <option value='Asia Pacific (Seoul)'>us-central1-c</option>
+        <option value='Asia Pacific (Singapore)'>us-central1-c</option>
+        <option value='Asia Pacific (Sydney)'>us-central1-c</option>
+        <option value='Asia Pacific (Tokyo)'>us-central1-c</option>
+        <option value='Canada (Central)'>us-central1-c</option>
+        <option value='EU (Frankfurt)'>us-central1-c</option>
+        <option value='EU (Ireland)'>us-central1-c</option>
+        <option value='EU (London)'>us-central1-c</option>
+        <option value='EU (Paris)'>us-central1-c</option>
+        <option value='EU (Stockholm)'>us-central1-c</option>
+        <option value='Middle East (Bahrain)'>us-central1-c</option>
+        <option value='South America (Sao Paulo)'>us-central1-c</option>
         </select> */}
         
         </div>

@@ -32,10 +32,10 @@ const gcpDeploy = () =>{
     return (
     <div>
         <div className="inputPageDeploy">
-        <input className='pa3 ba bg-lighest-blue' type="text" onChange={handleName} placeholder="cluster name"/>
+        <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name"/>
         <div>
 
-        <select className='clusterType bg-silver tc ' onChange={handleType}>
+        <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
         <option selected>Choose a cluster type</option>
         <option value='affordable'>affordable</option>
         <option value='standard'>standard</option>
@@ -45,7 +45,7 @@ const gcpDeploy = () =>{
         <option value='highly available'>highly available</option>
         </select>
 
-        <select className='loc' onChange={handleLoc}>
+        <select id='deployLoc' className='loc' onChange={handleLoc}>
         <option selected>Choose a location to host</option>
         <option value='us-central1-a'>us-central1-a</option>
         <option value='us-central1-b'>us-central1-b</option>
@@ -60,8 +60,8 @@ const gcpDeploy = () =>{
         </div>
 
         <div id='buts'>
-        <button className='uploadButtD' onClick={handleSubmit}> Submit </button>
-        <button className = 'backButtonD' onClick={handleBack}>  Back  </button>
+        <button id="deploySubmit" className='uploadButtD' onClick={handleSubmit}> Submit </button>
+        <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
         </div>
         </div>
 

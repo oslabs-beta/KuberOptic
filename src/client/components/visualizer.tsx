@@ -44,7 +44,7 @@ const far = 5000;
 
 const Visualizer = () => {
 
-  let [store, setStore] = useContext(StoreContext);
+ let [store, setStore] = useContext(StoreContext);
   
   useEffect(() => {
     if(store.clusters){
@@ -58,10 +58,10 @@ const Visualizer = () => {
 
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
-      const testSprite = new THREE.TextureLoader().load(".././src/client/assets/visualizerPage/Basic_hexagon.svg")
-      const circleSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png')
+      const circleSprite = new THREE.TextureLoader().load(".././src/client/assets/visualizerPage/Basic_hexagon.svg")
+      const testSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png')
       //const colorArray = ["#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00", "#6a3d9a"]
-      const colorArray = ['orange', 'blue', 'green']
+      const colorArray = ['skyblue', 'blue', 'lightblue', 'skyblue', 'blue', 'lightblue', ]
       const colorArray2 = ['red']
       /* Testing to make random elements appear  */
       const randomPosition = (offset:number, radius?: number ) => {
@@ -360,7 +360,7 @@ const Visualizer = () => {
 
   return (
     <>
-    
+        
       <SideBar/>
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
