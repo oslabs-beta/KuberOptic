@@ -40,19 +40,19 @@
     margin-bottom: 4px;
   }
   #group-tip {
-    display: none; 
-    position: absolute; 
-    pointer-events: none; 
-    font-size: 14px; 
-    width: 250px; 
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    font-size: 14px;
+    width: 250px;
     color: black;
-    text-align: center; 
-    line-height: 1; 
-    padding: 6px; 
-    background: white; 
+    text-align: center;
+    line-height: 1;
+    padding: 6px;
+    background: white;
     font-family: sans-serif;
   }
-/*   
+/*
   .app {
     height: 100vh;
     background-color: rgb(0, 0, 0);
@@ -64,6 +64,7 @@
     margin-left: 290px;
     font-size: 20px;
   }
+
 
   .displayContainer {
     color: aquamarine;
@@ -167,7 +168,7 @@
     flex-direction: column;
     float:left;
   }
-  
+
 
   .buts{
     display:flex;

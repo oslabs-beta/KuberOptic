@@ -2,3 +2,4 @@
 /dist
 /creds.json
 .DS_store
+/release-builds 

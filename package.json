@@ -1,18 +1,21 @@
 {
   "name": "kubernati",
   "version": "1.0.0",
+  "productName": "KuberOptic",
   "description": "An Electron app for developers to visualize their Kubernetes clusters in real-time",
-  "main": "main.js",
+  "main": "dist/main.bundle.js",
   "scripts": {
     "start": "electron ./dist/main.bundle.js",
     "dev": "electron ./dist/main.bundle.js",
     "prod": "rimraf dist && cross-env NODE_ENV=production webpack --progress --colors",
     "build": "tsc && cp ./src/client/index.html",
     "build:watch": "npm run build -- --watch",
-    "build:mac": "electron-builder build --mac --x64",
-    "lint": "eslint --ignore-path .gitignore",
+    "build:mwl": "npm run compile && electron-builder",
+    "lint": "eslint --ignore-path .gitignore '**/*.{ts,tsx}' ",
     "lint:fix": "npm run lint --fix",
-    "test": "jest"
+    "test": "jest",
+    "package-mac": "electron-packager . kuberoptic --overwrite --platform=darwin --arch=x64 --icon=src/client/assets/credsPage/kub.icns --prune=true --out=release-builds",
+    "create-installer-mac": "electron-installer-dmg ./release-builds/kuberoptic-darwin-x64/kuberoptic.app kuberoptic --out=release-builds --overwrite"
   },
   "repository": {
     "type": "git",
@@ -55,10 +58,12 @@
     "electron-connect-webpack-plugin": "^0.1.1",
     "electron-devtools-installer": "^2.2.4",
     "electron-installer-dmg": "^3.0.0",
+    "electron-packager": "^14.0.6",
     "electron-prebuilt": "^1.4.13",
     "electron-react-devtools": "^0.5.3",
     "electron-reload": "^1.5.0",
     "electron-reload-webpack-plugin": "^2.0.4",
+    "electron-webpack": "^2.7.4",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",
