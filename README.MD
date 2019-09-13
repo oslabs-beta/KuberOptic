@@ -15,8 +15,8 @@ KuberOptic provides a tool that allows developers to visualize the structure of 
 First we need a cluster to visualize. We could use minikube to set up a simple cluster. This api will automatically scan for whether a cluster is deployed locally and visualize it.
 
 [Kubernetes Documentation](https://kubernetes.io/docs/tasks/tools/install-minikube/)
-
-###Reading clusters from cloud services
+***
+### Reading clusters from cloud services
 ***
 ### GCP
 First create a google developer account and start a project through GCP. Find your credentials on Google and then enter them with the corresponding time zone on the upload page. The credientials you get from Google should be in a JSON in the forn of GOOGLE_APPLICATION_CREDIENTIALS. Your deployed cluster through GCP will now be visualized in real time.
@@ -28,9 +28,9 @@ First create a google developer account and start a project through GCP. Find yo
 ```
 gcloud auth application-default login
 ```
-####Input Project credentials
+#### Input Project credentials
 ![](src/client/assets/credsPage/puttingCreds.gif)
-
+***
 #### Deployment (GCP) 
 ![](src/client/assets/credsPage/deploymentGCP.gif)
 ***
