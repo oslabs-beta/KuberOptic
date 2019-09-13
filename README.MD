@@ -1,6 +1,6 @@
 # KuberOptic
-###
-[KuberOptic](kuberoptic.com)
+### 
+kuberoptic.com
 ***
 ![](src/client/assets/credsPage/kubernatiGif.gif)
 ### A visualization and deployment tool for your Kubernetes cluster
