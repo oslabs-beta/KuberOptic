@@ -1,5 +1,6 @@
 # KuberOptic
 ![](src/client/assets/credsPage/kub.png)
+###
 ![](src/client/assets/credsPage/kubernatiGif.gif)
 ### A visualization and deployment tool for your Kubernetes cluster
 KuberOptic provides a tool that allows developers to visualize the structure of their clusters, including the nodes, pods, and containers. At each level of a cluster, KuberOptic gives you monitoring analytics that describe the health of your application. KuberOptic also allows you to deploy new clusters onto the cloud.
