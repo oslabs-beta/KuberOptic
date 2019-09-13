@@ -28,10 +28,10 @@ First create a google developer account and start a project through GCP. Find yo
 ```
 gcloud auth application-default login
 ```
-**Input Project credentials**
+####Input Project credentials
 ![](src/client/assets/credsPage/puttingCreds.gif)
 
-### Deployment (GCP) ###
+#### Deployment (GCP) 
 ![](src/client/assets/credsPage/deploymentGCP.gif)
 ***
 ### AWS <reading cluster>
