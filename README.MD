@@ -25,7 +25,7 @@ gcloud auth application-default login
 ```
 **Input Project credentials**
 ```
-![Alt Text](http://g.recordit.co/zod2dKGSyE.gif)
+![alt text](http://g.recordit.co/zod2dKGSyE.gif)
 ```
 ***
 ### AWS
