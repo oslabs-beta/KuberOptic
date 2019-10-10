@@ -69,4 +69,8 @@ const links = {
   dockerGraphQL: `https://medium.com/maxime-heckel/building-a-graphql-wrapper-for-the-docker-api-2109f2b9c202`,
   dockerDocs: `https://docs.docker.com/engine/api/v1.40/#`,
   GoogleCloid: `https://console.cloud.google.com/home/dashboard?folder=&organizationId=&project=lexical-period-255501`
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fc0a574617292e3697bef98211a06a1e0fe1316b
