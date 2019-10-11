@@ -68,9 +68,12 @@ const links = {
   AWS: `https://aws.amazon.com/kubernetes/`, // or https://aws.amazon.com/eks/
   dockerGraphQL: `https://medium.com/maxime-heckel/building-a-graphql-wrapper-for-the-docker-api-2109f2b9c202`,
   dockerDocs: `https://docs.docker.com/engine/api/v1.40/#`,
-  GoogleCloid: `https://console.cloud.google.com/home/dashboard?folder=&organizationId=&project=lexical-period-255501`
-<<<<<<< HEAD
+  GoogleCloid: `https://console.cloud.google.com/home/dashboard?folder=&organizationId=&project=lexical-period-255501`,
+
+  Jimmy: {
+    deployment,
+    ingress,
+    service,
+    video: 'https://youtu.be/SC7lLm6QAb8',
+  }
 }
-=======
-}
->>>>>>> fc0a574617292e3697bef98211a06a1e0fe1316b
