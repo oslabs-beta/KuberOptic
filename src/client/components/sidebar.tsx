@@ -1,3 +1,14 @@
+/**
+ * ************************************
+ *
+ * @module  sidebar.tsx
+ * @author
+ * @date
+ * @description sidebar to be used inside visualizer.tsx
+ *
+ * ************************************
+ */
+
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import {StoreContext} from '../../../store'

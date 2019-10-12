@@ -1,5 +1,16 @@
+/**
+ * ************************************
+ *
+ * @module  visualizer.tsx
+ * @author
+ * @date
+ * @description visualization component of the app
+ *
+ * ************************************
+ */
+
 import * as THREE from 'three'
-import React, { useEffect, useRef, useContext }from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
 import SideBar from './sidebar';
@@ -43,11 +54,10 @@ const far = 3000;
 
 
 const Visualizer = () => {
-
- let [store, setStore] = useContext(StoreContext);
+  let [store, setStore] = useContext(StoreContext);
   
   useEffect(() => {
-    if(store.clusters){
+    if (store.clusters) {
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
       ref.current.appendChild(renderer.domElement);
@@ -57,10 +67,10 @@ const Visualizer = () => {
 
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
-      const circleSprite = new THREE.TextureLoader().load(".././src/client/assets/visualizerPage/Basic_hexagon.svg")
-      const testSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png')
-      const colorArray = ['skyblue', 'blue', 'lightblue', 'skyblue', 'blue', 'lightblue', ]
-      const colorArray2 = ['red']
+      const circleSprite = new THREE.TextureLoader().load(".././src/client/assets/visualizerPage/Basic_hexagon.svg");
+      const testSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png');
+      const colorArray = ['skyblue', 'blue', 'lightblue', 'skyblue', 'blue', 'lightblue', ];
+      const colorArray2 = ['red'];
       /* Testing to make random elements appear  */
       
       const randomPosition = (offset:number, radius?: number ) => {
@@ -76,7 +86,7 @@ const Visualizer = () => {
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [2400*i -2400,1]
+        const position = [2400*i -2400,1]; // what is the purpose of these numbers?
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
@@ -93,11 +103,11 @@ const Visualizer = () => {
       //omfg it works
       store.clusters.forEach(((cluster,i)=>{
         for(let j = 0; j < cluster.nodeCount; j++){
-        const name2 = `Point` + j;
-        const position = randomPosition(pointInfo[i].position[0], 300);
-        const group = 0;
-        const point2 = {position, name2, group}
-        pointInfo2.push(point2)
+          const name2 = `Point` + j;
+          const position = randomPosition(pointInfo[i].position[0], 300); // what is the purpose of 300?
+          const group = 0;
+          const point2 = {position, name2, group};
+          pointInfo2.push(point2);
         }
       }))
 
@@ -109,13 +119,14 @@ const Visualizer = () => {
       const colors2 = [];
       
       for (const point of generatedPoints) {
-        const vertex = new THREE.Vector3(point.position[0], point.position[1])
+        const vertex = new THREE.Vector3(point.position[0], point.position[1]);
         pointsGeometry.vertices.push(vertex);
         const color = new THREE.Color(colorArray[point.group]);
         colors.push(color);
       }
-     for (const point2 of generatedPoints2) {
-        const vertex = new THREE.Vector3(point2.position[0], point2.position[1])
+
+      for (const point2 of generatedPoints2) {
+        const vertex = new THREE.Vector3(point2.position[0], point2.position[1]);
         pointsGeometry2.vertices.push(vertex);
         const color = new THREE.Color(colorArray2[point2.group]);
         colors2.push(color);
@@ -130,12 +141,12 @@ const Visualizer = () => {
         vertexColors: THREE.VertexColors, map: testSprite, transparent: true,});
         //this where the shape is created
      
-        const points = new THREE.Points(pointsGeometry, pointsMaterial);
+      const points = new THREE.Points(pointsGeometry, pointsMaterial);
       const points2 = new THREE.Points(pointsGeometry2, pointsMaterial2);
       const scene = new THREE.Scene();
      
       scene.add(points);
-      scene.add(points2)
+      scene.add(points2);
       scene.background = new THREE.Color('black');
 
       function toRadians (angle) {
@@ -159,31 +170,31 @@ const Visualizer = () => {
         return cameraZPosition;
       }
 
-        function zoomHandler(d3_transform) {
-          let scale = d3_transform.k;
-          let x = -(d3_transform.x - vizWidth / 2) / scale;
-          let y = (d3_transform.y - height / 2) / scale;
-          let z = getZFromScale(scale);
-          camera.position.set(x, y, z);
-        }
+      function zoomHandler(d3_transform) {
+        let scale = d3_transform.k;
+        let x = -(d3_transform.x - vizWidth / 2) / scale;
+        let y = (d3_transform.y - height / 2) / scale;
+        let z = getZFromScale(scale);
+        camera.position.set(x, y, z);
+      }
 
-        let zoom = d3.zoom()
+      let zoom = d3.zoom()
         .scaleExtent([getScaleFromZ(far), getScaleFromZ(near)])
         .on('zoom', () =>  {
           let d3_transform = d3.event.transform;
           zoomHandler(d3_transform);
         });
-          //d3 White space in the browser
-          const view = d3.select(renderer.domElement);
-          function setUpZoom() {
-            view.call(zoom);
-            const initialScale = getScaleFromZ(far);
-            const initialTransform = d3.zoomIdentity.translate(vizWidth / 2, height / 2).scale(initialScale);
-            zoom.transform(view, initialTransform);
-            camera.position.set(0, 0, far);
-          }
+        //d3 White space in the browser
+      const view = d3.select(renderer.domElement);
+      function setUpZoom() {
+        view.call(zoom);
+        const initialScale = getScaleFromZ(far);
+        const initialTransform = d3.zoomIdentity.translate(vizWidth / 2, height / 2).scale(initialScale);
+        zoom.transform(view, initialTransform);
+        camera.position.set(0, 0, far);
+      }
 
-          setUpZoom();
+      setUpZoom();
 
       const animate = function () {
         requestAnimationFrame(animate);
@@ -192,7 +203,7 @@ const Visualizer = () => {
       animate();
 
       const mouseToThree = (mouseX?: number, mouseY?: number) => {
-        return new THREE.Vector3( mouseX / vizWidth * 2 - 1, - (mouseY / height) * 2 + 1, 1)
+        return new THREE.Vector3( mouseX / vizWidth * 2 - 1, - (mouseY / height) * 2 + 1, 1);
       }
 
       function sortIntersectsByDistanceToRay(intersects) {
@@ -237,23 +248,25 @@ const Visualizer = () => {
         toolTip.style.top = tooltipState.top + 'px';
         pointTip.innerText = tooltipState.name;
         pointTip.style.background = colorArray[tooltipState.group];
-        pStatus.current.textContent = tooltipState.clusterStatus //+ tooltipState.creationTime + tooltipState.location + tooltipState.nodeCount;
+        pStatus.current.textContent = tooltipState.clusterStatus; //+ tooltipState.creationTime + tooltipState.location + tooltipState.nodeCount;
         pTime.current.textContent = tooltipState.creationTime;
         pLocation.current.textContent = tooltipState.location;
         pNode.current.textContent = tooltipState.nodeCount;
         pendpoint.current.textContent = tooltipState.endpoint;
       }
+
       const updateTooltip2 = () => {
         groupTip.style.display = grouptipState.display;
         groupTip.style.left = grouptipState.left + 'px';
         groupTip.style.top = grouptipState.top + 'px';
         pointTip.innerText = grouptipState.name;
         pointTip.style.background = colorArray[grouptipState.group];
-        pStatus.current.textContent = grouptipState.clusterStatus //+ grouptipState.creationTime + grouptipState.location + grouptipState.nodeCount;
+        pStatus.current.textContent = grouptipState.clusterStatus; //+ grouptipState.creationTime + grouptipState.location + grouptipState.nodeCount;
         pTime.current.textContent = grouptipState.creationTime;
         pLocation.current.textContent = grouptipState.location;
         pNode.current.textContent = grouptipState.nodeCount;
       }
+
       function showTooltip(mousePosition, datum) {
         const tooltipWidth = 120;
         let xOffset = -tooltipWidth / 2;
@@ -270,6 +283,7 @@ const Visualizer = () => {
         tooltipState.endpoint = datum.endpoint
         updateTooltip();
       }
+
       function showTooltip2(mousePosition, datum) {
         grouptipState.display = "block";
         grouptipState.left = 0;
@@ -342,17 +356,23 @@ const Visualizer = () => {
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
           <div ref={divRefTwo} id="point-tip" />
-          <div> status: <span ref={pStatus}/> 
+          
+          <div> 
+            status: <span ref={pStatus}/> 
           </div>
+          
           <div>
             Time Created: <span ref={pTime}/>
           </div>
+          
           <div>
             Cluster Location: <span ref={pLocation}/>
           </div>
+          
           <div>
             nodeCount:<span ref={pNode}/>
           </div>
+          
           <div>
             Endpoint: <span ref={pendpoint}/>
           </div>
