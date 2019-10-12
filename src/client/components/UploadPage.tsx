@@ -58,7 +58,7 @@ const UploadPage = () => {
               <div className='kubUploadText'>Google Cloud Platform</div>
             </div>
 
-        <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Cluster Info"/>
+        <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info"/>
         <div id="uploadDivForSubmitandBackButts">
         <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
         &nbsp;

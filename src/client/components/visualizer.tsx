@@ -9,8 +9,8 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 const vizWidth = width;
 const fov = 100;
-const near = 50;
-const far = 5000;
+const near = 920;
+const far = 3000;
 
 
 // -----------fakeStore----------- if needed to test
