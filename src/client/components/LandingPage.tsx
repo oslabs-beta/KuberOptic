@@ -1,23 +1,37 @@
+/**
+ * ************************************
+ *
+ * @module  LandingPage.tsx
+ * @author
+ * @date
+ * @description start page of app, allows to choose between GCP or AWS as a source of clusters to visualize
+ *
+ * ************************************
+ */
+
 import React, { useState, useEffect, useContext } from 'react';
 import UploadPage from './UploadPage';
-import UploadPage2 from './UploadPage2'
-import {StoreContext} from '../../../store';
+import UploadPage2 from './UploadPage2';
+import { StoreContext } from '../../../store';
 
 const LandingPage = () => {
   const [Store, setStore] = useContext(StoreContext);
 
+  // function to get to the Google Cloud Platform upload page
   const myFunctionG = () => {
-      console.log(Store.landingPageState);
-      setStore({...Store, landingPageState: true})
+    console.log(Store.landingPageState);
+    setStore({...Store, landingPageState: true});
   }
+
+  // function to get to the Amazon Web Services upload page
   const myFunctionA = () => {
     console.log(Store.landingPageState2);
-    setStore({...Store, landingPageState2: true})
+    setStore({...Store, landingPageState2: true});
   }
     return (
       <div id="displays">
       {Store.landingPageState ? <UploadPage /> :
-       Store.landingPageState2 ? <UploadPage2/> :
+        Store.landingPageState2 ? <UploadPage2/> :
         <div className='mainDiv'>
           <img className='kubLogo' src={require('../assets/credsPage/kub.png')}/>
           <h3 className='text'> KuberOptic: The Kubernetes Visualizer </h3>
@@ -28,7 +42,7 @@ const LandingPage = () => {
       </div>
     }
     </div>
-    )
+  )
 }
 
 

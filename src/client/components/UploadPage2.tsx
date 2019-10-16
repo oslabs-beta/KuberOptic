@@ -1,3 +1,14 @@
+/**
+ * ************************************
+ *
+ * @module  UploadPage2.tsx
+ * @author
+ * @date
+ * @description upload page for clusters from Amazon Web Services
+ *
+ * ************************************
+ */
+
 import * as React from 'react';
 import { useContext } from 'react';
 import DisplayContainer from './DisplayContainer';
@@ -5,34 +16,35 @@ import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
 
 const UploadPage = () => {
+  const [Store, setStore] = useContext(StoreContext);
 
-    const [Store, setStore] = useContext(StoreContext);
+  ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
+    setStore({...Store, gcp: arg});
+  });
 
-    ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
-        setStore({...Store, gcp: arg});
-    })
+  const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
+    setStore({...Store, awsKey:e.currentTarget.value});
+  };
 
-    const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
-        setStore({...Store, awsKey:e.currentTarget.value})
-    }
-    const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
-      setStore({...Store, awsKey:e.currentTarget.value})
-    }
-    const handleName = (e: React.FormEvent<HTMLInputElement>) => {
-      setStore({...Store, awsKey:e.currentTarget.value})
-    }
-    const handleBack = ()=>{
-      setStore({...Store, landingPageState2:false})
-    }
-    const handleSubmit = () => {
-        const creds = JSON.parse(Store.credentials);
-         if(typeof creds !== 'object'){
-          console.log('Enter a JSON object from GCP');
-        }
-        else{
-          ipcRenderer.send('asynchronous-message2', creds)
-          setStore({...Store, uploadPageState: true});
-       }
+  const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
+    setStore({...Store, awsKey:e.currentTarget.value});
+  };
+
+  const handleName = (e: React.FormEvent<HTMLInputElement>) => {
+    setStore({...Store, awsKey:e.currentTarget.value});
+  };
+
+  const handleBack = ()=>{
+    setStore({...Store, landingPageState2:false});
+  };
+
+  const handleSubmit = () => {
+    const creds = JSON.parse(Store.credentials);
+    if (typeof creds !== 'object') {
+      console.log ('Enter a JSON object from GCP'); // I think this is supposed to say AWS instead of GCP  -Tim
+    } else {
+      ipcRenderer.send('asynchronous-message2', creds);
+      setStore({...Store, uploadPageState: true});
     }
     return (
       <>
@@ -45,6 +57,7 @@ const UploadPage = () => {
         <input className='uploadInput' type="text" onChange={handleKey} placeholder="awsKey"/>
         <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret"/>
         <input className='uploadInput' type="text" onChange={handleName} placeholder="ClusterName"/>
+
         <div id="uploadPage2SubmitandBackButts">
         <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
         <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>

@@ -1,3 +1,14 @@
+/**
+ * ************************************
+ *
+ * @module  UploadPage.tsx
+ * @author
+ * @date
+ * @description upload page for clusters from Google Cloud Platform
+ *
+ * ************************************
+ */
+
 import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import DisplayContainer from './DisplayContainer';
@@ -6,8 +17,8 @@ const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
 
 const UploadPage = () => {
-  
   const [Store, setStore] = useContext(StoreContext);
+
   ipcRenderer.on('clusterClient', (event: any, arg: any) => {
     //logic incase we have more than one cluster already rendered
     if(Store.clusterCount < arg.length){
@@ -19,13 +30,13 @@ const UploadPage = () => {
     event.returnValue = 'done';
   })
 
-    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-      setStore({...Store, credentials:e.currentTarget.value})
-    }
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    setStore({...Store, credentials:e.currentTarget.value});
+  };
     
-    const handleBack = ()=>{
-      setStore({...Store, landingPageState:false})
-    }
+  const handleBack = () => {
+    setStore({...Store, landingPageState:false});
+  };
     
     const handleSubmit = () => {
      const creds = JSON.parse(Store.credentials); 
@@ -39,8 +50,12 @@ const UploadPage = () => {
         }
     }
 
-    const handleLoc = (event) => {
-      setStore({...Store, gcploc: event.currentTarget.value});
+    if (typeof creds !== 'object') {
+      console.log('Enter a JSON object from GCP');
+      console.log('locStore: ', Store.gcploc);
+    } else {
+      ipcRenderer.send('asynchronous-message', creds);
+      setStore({...Store, uploadPageState: true});
     }
     
     return (

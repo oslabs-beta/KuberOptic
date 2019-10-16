@@ -19,9 +19,9 @@ First we need a cluster to visualize. We could use minikube to set up a simple c
 ### Reading clusters from cloud services
 ***
 ### GCP
-First create a google developer account and start a project through GCP. Find your credentials on Google and then enter them with the corresponding time zone on the upload page. The credientials you get from Google should be in a JSON in the forn of GOOGLE_APPLICATION_CREDIENTIALS. Your deployed cluster through GCP will now be visualized in real time.
+First create a google developer account for Google Cloud Platform (GCP) and start a project through GCP. Find your credentials on Google and then enter them with the corresponding time zone on the upload page. The credentials you get from Google should be in a JSON in the form of GOOGLE_APPLICATION_credentials. Your deployed cluster through GCP will now be visualized in real time.
 **Prequisites**
-- Google Developer account
+- Google Developer account for Google Cloud Platform (GCP - https://cloud.google.com/)
 - Create a project on GCP
 
 **Configuring GCP through command line**

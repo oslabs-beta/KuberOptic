@@ -1,3 +1,14 @@
+/**
+ * ************************************
+ *
+ * @module  gcpDeploy.tsx
+ * @author
+ * @date
+ * @description page to determine deployment settings? Possibly making a post-style request to GCP to create a cluster
+ *
+ * ************************************
+ */
+
 import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
@@ -5,6 +16,8 @@ const [quickstart, create] = require('../../main/gcp/getGCPdata').default
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
 import 'tachyons'
+
+// various inputs will be stored in this object and will be submitted when you call handleSubmit
 let input = {};
 
 const gcpDeploy = () =>{
@@ -88,96 +101,101 @@ const gcpDeploy = () =>{
         </div>
 
         <div id='buts'>
-        <button id="deploySubmit" className='uploadButtD' onClick={handleSubmit}> Submit </button>
-        <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
+          <button id="deploySubmit" className='uploadButtD' onClick={handleSubmit}> Submit </button>
+          <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
         </div>
 
         <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
 
+      <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
         <div id="clicker" tabIndex={1} >
            <p>
-           <strong>Affordable</strong> <br/>
+            <strong>Affordable</strong><br/>
            </p>
         </div>
+
         <div id="hiddenAf">
-            Good for starting your first cluster for lightweight apps <br/>
-            Machine type:g1-small <br/>
-            Autoscaling:Disabled <br/>
-            Stackdriver Logging and Monitoring: Disabled <br/>
-            Boot disk size: 30GB <br/>
+          Good for starting your first cluster for lightweight apps <br/>
+          Machine type:g1-small <br/>
+          Autoscaling:Disabled <br/>
+          Stackdriver Logging and Monitoring: Disabled <br/>
+          Boot disk size: 30GB <br/>
         </div>
 
         <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>Standard</strong> <br/>
-           </p>
+          <p>
+            <strong>Standard</strong> <br/>
+          </p>
         </div>
+
         <div id="hiddenAf">
-            Continuous integration, web serving, backend<br/>
-            Machine type:n1-standard <br/>
-            Autoscaling:Disabled <br/>
-            Stackdriver Logging and Monitoring: Disabled <br/>
-            Boot disk size: 100GB <br/>
+          Continuous integration, web serving, backend<br/>
+          Machine type:n1-standard <br/>
+          Autoscaling:Disabled <br/>
+          Stackdriver Logging and Monitoring: Disabled <br/>
+          Boot disk size: 100GB <br/>
         </div>
 
         <div id="clicker" tabIndex={1} >
-           <p>
+          <p>
            <strong>CPU-Intensive</strong> <br/>
-           </p>
+          </p>
         </div>
+
         <div id="hiddenAf">
-            Web crawling or anything that requires more cpu<br/>
-            Machine type:n1-highcpu-4 <br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
+          Web crawling or anything that requires more cpu<br/>
+          Machine type:n1-highcpu-4 <br/>
+          Autoscaling:True <br/>
+          Stackdriver Logging and Monitoring: Enabled <br/>
+          Boot disk size: 100GB <br/>
         </div>
 
         <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>Memory-Intensive</strong> <br/>
-           </p>
+          <p>
+            <strong>Memory-Intensive</strong> <br/>
+          </p>
         </div>
+
         <div id="hiddenAf">
-            Databases, analytics, anything that takes memory<br/>
-            Machine type:n1-highmem-2 <br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
+          Databases, analytics, anything that takes memory<br/>
+          Machine type:n1-highmem-2 <br/>
+          Autoscaling:True <br/>
+          Stackdriver Logging and Monitoring: Enabled <br/>
+          Boot disk size: 100GB <br/>
         </div>
 
         <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>GPU Accelerated Computing</strong> <br/>
-           </p>
+          <p>
+            <strong>GPU Accelerated Computing</strong> <br/>
+          </p>
         </div>
+
         <div id="hiddenAf">
-            Machine Learning, video transcoding, scientific computations<br/>
-            Machine type:n1-highmem-2 + GPU<br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
+          Machine Learning, video transcoding, scientific computations<br/>
+          Machine type:n1-highmem-2 + GPU<br/>
+          Autoscaling:True <br/>
+          Stackdriver Logging and Monitoring: Enabled <br/>
+          Boot disk size: 100GB <br/>
         </div>
 
         <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>Highly available</strong> <br/>
-           </p>
-        </div>
-        <div id="hiddenAf">
-            Most demanding requirements<br/>
-            Machine type:n1-highmem-2 + GPU <br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
+          <p>
+            <strong>Highly available</strong> <br/>
+          </p>
         </div>
 
+        <div id="hiddenAf">
+          Most demanding requirements<br/>
+          Machine type:n1-highmem-2 + GPU <br/>
+          Autoscaling:True <br/>
+          Stackdriver Logging and Monitoring: Enabled <br/>
+          Boot disk size: 100GB <br/>
         </div>
         </div>
 
 
     </div>
-        )
+  )
 }
 
 export default gcpDeploy;
