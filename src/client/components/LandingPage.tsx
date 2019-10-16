@@ -15,14 +15,16 @@ const LandingPage = () => {
     setStore({...Store, landingPageState2: true})
   }
     return (
-      <div>
+      <div id="displays">
       {Store.landingPageState ? <UploadPage /> :
        Store.landingPageState2 ? <UploadPage2/> :
         <div className='mainDiv'>
-          <div><img className='kubLogo' src={require('../assets/credsPage/kub.png')}/></div>
-          <div className='text'> KuberOptic: The Kubernetes Visualizer </div>
-        <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
-      <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
+          <img className='kubLogo' src={require('../assets/credsPage/kub.png')}/>
+          <h3 className='text'> KuberOptic: The Kubernetes Visualizer </h3>
+          <div className= "awsAndGcpLogos">
+            <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
+            <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
+          </div>
       </div>
     }
     </div>

@@ -34,9 +34,11 @@ const UploadPage = () => {
           setStore({...Store, uploadPageState: true});
        }
     }
-    return <div>{Store.uploadPageState ? <DisplayContainer /> :
+    return (
+      <>
+        {Store.uploadPageState ? <DisplayContainer /> :
         <div className='uploadDiv'>
-            <div>
+            <div className="awsImageContainer">
               <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
               <div className='kubUploadText'>Amazon Web Services</div>
             </div>
@@ -45,13 +47,12 @@ const UploadPage = () => {
         <input className='uploadInput' type="text" onChange={handleName} placeholder="ClusterName"/>
         <div id="uploadPage2SubmitandBackButts">
         <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
-        &nbsp;
         <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
         </div>
-        
-        
         </div>
-}</div>
+        }   
+      </>
+    )
 }
 
 export default UploadPage;

@@ -1,12 +1,12 @@
 import * as THREE from 'three'
-import React, { useEffect, useRef, useContext }from 'react'
+import React, { useEffect, useRef, useContext, useLayoutEffect }from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
 import SideBar from './sidebar';
 import {StoreContext} from '../../../store';
 
-const width = window.innerWidth;
-const height = window.innerHeight;
+const width = window.innerWidth * .74;
+const height = window.innerHeight * .98;
 const vizWidth = width;
 const fov = 100;
 const near = 920;
@@ -45,9 +45,9 @@ const far = 3000;
 const Visualizer = () => {
 
  let [store, setStore] = useContext(StoreContext);
-  
-  useEffect(() => {
-    if(store.clusters){
+ useEffect(() => {
+   console.log('clusters if not null', store.clusters)
+    if(store.clusters != null){
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
       ref.current.appendChild(renderer.domElement);
@@ -91,7 +91,7 @@ const Visualizer = () => {
 
       //for each cluster we must put nodes inside
       //omfg it works
-      store.clusters.forEach(((cluster,i)=>{
+      store.clusters.forEach((cluster, i)=>{
         for(let j = 0; j < cluster.nodeCount; j++){
         const name2 = `Point` + j;
         const position = randomPosition(pointInfo[i].position[0], 300);
@@ -99,7 +99,7 @@ const Visualizer = () => {
         const point2 = {position, name2, group}
         pointInfo2.push(point2)
         }
-      }))
+      })
 
       const generatedPoints = pointInfo;
       const generatedPoints2 = pointInfo2;
@@ -185,7 +185,7 @@ const Visualizer = () => {
 
           setUpZoom();
 
-      const animate = function () {
+      function animate () {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
       };
@@ -323,7 +323,9 @@ const Visualizer = () => {
         updateTooltip();
       }
     }
-  })
+  });
+
+  console.log('end of useEffect', store.clusters)
 
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
@@ -337,7 +339,7 @@ const Visualizer = () => {
   const pendpoint = useRef<HTMLSpanElement>(null)
 
   return (
-    <>
+    <div>
     <SideBar/>
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
@@ -358,7 +360,7 @@ const Visualizer = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
     );
 };
 

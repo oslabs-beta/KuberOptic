@@ -2,34 +2,55 @@ import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
 const [quickstart, create] = require('../../main/gcp/getGCPdata').default
+const { ipcRenderer } = require('electron');
+require('events').EventEmitter.defaultMaxListeners = 25;
 import 'tachyons'
 let input = {};
 
 const gcpDeploy = () =>{
-    const [Store, setStore] = useContext(StoreContext);
+  const [Store, setStore] = useContext(StoreContext);
+  ipcRenderer.on('newClusters', (event: any, arg: any) => {
+    //logic incase we have more than one cluster already rendered
+    if(Store.clusters.length < arg.length){
+      let newClusters = [];
+      arg.forEach(el=> newClusters.push(el))
+      setStore({...Store, clusters: newClusters, clusterCount: newClusters.length, gcpDeployPage:false, uploadPageState: true})
+    }
+    else setStore({...Store, clusters: arg, clusterCount: arg.length, gcpDeployPage:false, uploadPageState: true});
+    event.returnValue = 'done';
+  })
+
+    
     const handleType = (event) => {
-        input['clusterType'] = event.currentTarget.value;
+      input['clusterType'] = event.currentTarget.value;
     }
     const handleName = (event) => {
-        input['name'] = event.currentTarget.value;
+      input['name'] = event.currentTarget.value;
     }
     const handleLoc = (event) => {
-
-       input['zone'] = event.currentTarget.value;
+      const location = event.currentTarget.value
+      setStore({...Store, gcploc: location})
+      input['zone'] = location;
     }
     const handleBack = ()=>{
-    setStore({...Store, gcpDeployPage:false})
+      setStore({...Store, gcpDeployPage:false, uploadPageState: true})
     }
+    const handleNodeCount = (event) => {
+      input['count'] = event.currentTarget.value;
+    }
+
     const handleSubmit = () =>{
-        create(Store.credentials, input['zone'], input)
-        setStore({...Store, gcpDeployPage:false})
+      create(Store.credentials, input['zone'], input)
+      const creds = JSON.parse(Store.credentials)
+      setStore({...Store, gcpDeployPage:false, uploadPageState: true})
+      ipcRenderer.send('getNewClusters', creds, Store.gcploc);
     }
 
     return (
-    <div>
+    <div id="deployWrapper">
         <div className="inputPageDeploy">
         <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name"/>
-        <div>
+        <div id="deployDropDowns">
 
         <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
         <option selected>Choose a cluster type</option>
@@ -54,11 +75,21 @@ const gcpDeploy = () =>{
         </select>
 
         </div>
+        <div className="nodeCountDropDown">
+        <select id='nodeCounter' className='clusterType' onChange={handleNodeCount}>
+        <option selected>Nodes in the cluster</option>
+        <option value='1'>1</option>
+        <option value='2'>2</option>
+        <option value='3'>3</option>
+        <option value='4'>4</option>
+        <option value='5'>5</option>
+        </select>
+
+        </div>
 
         <div id='buts'>
         <button id="deploySubmit" className='uploadButtD' onClick={handleSubmit}> Submit </button>
         <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
-        </div>
         </div>
 
         <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
@@ -142,6 +173,8 @@ const gcpDeploy = () =>{
         </div>
 
         </div>
+        </div>
+
 
     </div>
         )

@@ -6,12 +6,13 @@ import Visualizer from './visualizer'
 
 const DisplayContainer = () => {
   const [Store, setStore] = useContext(StoreContext)
-
-    return (<div>{ Store.gcpDeployPage ? <Deploy/>:
-        <div className='displayContainer'>
-        <Visualizer />
-        </div>
-    }
+  console.log(Store)
+    return (
+      <div className='displayContainer'>
+      { Store.gcpDeployPage ?
+      <Deploy/> : 
+      <Visualizer />
+      }
     </div>
     )
 }
