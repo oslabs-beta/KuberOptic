@@ -52,27 +52,25 @@ const UploadPage = () => {
           setStore({...Store, uploadPageState: true});
       //  }
     }
-  };
-
-  // if uploadPageState is true, then show DisplayContainer
-  // else display main upload page content (for GCP)
-  return <div>{Store.uploadPageState ? <DisplayContainer /> :
-      <div className='uploadDiv'>
-        <div>
-          <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
-          <div className='kubUploadText'>Amazon Web Services</div>
-        </div>
-
+    return (
+      <>
+        {Store.uploadPageState ? <DisplayContainer /> :
+        <div className='uploadDiv'>
+            <div className="awsImageContainer">
+              <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
+              <div className='kubUploadText'>Amazon Web Services</div>
+            </div>
         <input className='uploadInput' type="text" onChange={handleKey} placeholder="awsKey"/>
         <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret"/>
         <input className='uploadInput' type="text" onChange={handleName} placeholder="clusterName"/>
         <div id="uploadPage2SubmitandBackButts">
-          <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
-          &nbsp;
-          <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+        <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
+        <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
         </div>
-      </div>
-  }</div>
+        </div>
+        }   
+      </>
+    )
 }
 
 export default UploadPage;

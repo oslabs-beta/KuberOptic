@@ -17,15 +17,12 @@ import Visualizer from './visualizer'
 
 const DisplayContainer = () => {
   const [Store, setStore] = useContext(StoreContext)
-
-  // if gcpDeployPage is true, display Deploy
-  // else display Visualizer
-  return (
-    <div>
-      { Store.gcpDeployPage ? <Deploy/>:
-        <div className='displayContainer'>
-          <Visualizer />
-        </div>
+  console.log(Store)
+    return (
+      <div className='displayContainer'>
+      { Store.gcpDeployPage ?
+      <Deploy/> : 
+      <Visualizer />
       }
     </div>
   ) // maybe go back and remove these parentheses later; don't think they're necessary -Tim

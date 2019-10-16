@@ -9,25 +9,29 @@ let dat = new Date()
  async function getLocal() {
     const res = await fetchLocal();
     console.log('getting fetch Local at -------' , '    ', dat.getTime())
-    return res
+    return res;
  }
 
- async function getGcp(GOOGLE_APPLICATION_CREDENTIALS) {
-    const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS);
+ async function getGcp(GOOGLE_APPLICATION_CREDENTIALS, ZONE) {
+    const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS, ZONE);
     let dat = new Date()
     console.log('fetchGetgcp -------' , '    ', dat.getTime())
     return res;
  }
 
- ipcMain.on('asynchronous-message', (event: any, arg: any) => {
-    getLocal().then(res=>{
-       event.sender.send('clusterClient', res)      
-    }).catch((e)=>console.log(e))
-    getGcp(arg).then(res=>{
-       event.sender.send('clusterClient', res)
-      })
-     .catch((e)=>console.log(e))
-  })
+ipcMain.on('asynchronous-message', (event: any, arg1: any, arg2: any) => {
+  getLocal().then(res=>{
+    event.sender.send('clusterClient', res)      
+  }).catch((e)=>console.log(e))
+  getGcp(arg1, arg2).then(res=>{
+    event.sender.send('clusterClient', res)
+  }).catch((e)=>console.log(e))
+})
+ipcMain.on('getNewClusters', (event: any, arg1: any, arg2: any) => {
+  getGcp(arg1, arg2).then(res=>{
+    event.sender.send('newClusters', res)
+  }).catch((e)=>console.log(e))
+})
   //
   ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
    fetchAws(arg).then(res=>{

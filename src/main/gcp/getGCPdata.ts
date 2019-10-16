@@ -1,10 +1,12 @@
 const container = require('@google-cloud/container');
 
 // quickstart takes in the GCP credientials object and a timezone, defaults to central1-a if not specified
-async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us-central1-a') {
+async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string) {
     const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
-
     const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
+
+    if (zone == null) zone = 'us-central1-a'
+
     const request:object = {
       projectId,
       zone 
@@ -34,11 +36,12 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
   return clusterArray;
 }
 
-async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-central1-a', input:object = {'clusterType':'affordable', 'name':'deployCluster', 'zone':'us-central1-a'}){
+async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-central1-a', input:object = {'clusterType':'affordable', 'name':'deployCluster', 'zone':'us-central1-a', 'count':'1'}){
   const client:any = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
   GOOGLE_APPLICATION_CREDENTIALS = JSON.parse(GOOGLE_APPLICATION_CREDENTIALS);
   const projectId:string = GOOGLE_APPLICATION_CREDENTIALS["project_id"];
   let cluster:object ={};
+  let clusterCount = Number(input['count'])
   
   if(input['clusterType'] == 'affordable'){
     cluster = {
@@ -77,7 +80,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "imageType": "COS",
             "diskType": "pd-standard"
           },
-          "initialNodeCount": 1,
+          "initialNodeCount": clusterCount,
           "autoscaling": {},
           "management": {
             "autoUpgrade": true,
@@ -142,7 +145,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "diskType": "pd-standard",
             "shieldedInstanceConfig": {}
           },
-          "initialNodeCount": 3,
+          "initialNodeCount": clusterCount,
           "autoscaling": {},
           "management": {
             "autoUpgrade": true,
@@ -207,7 +210,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "diskType": "pd-standard",
             "shieldedInstanceConfig": {}
           },
-          "initialNodeCount": 3,
+          "initialNodeCount": clusterCount,
           "autoscaling": {
             "enabled": true,
             "minNodeCount": 1,
@@ -276,7 +279,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "diskType": "pd-standard",
             "shieldedInstanceConfig": {}
           },
-          "initialNodeCount": 3,
+          "initialNodeCount": clusterCount,
           "autoscaling": {
             "enabled": true,
             "minNodeCount": 1,
@@ -345,7 +348,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "diskType": "pd-standard",
             "shieldedInstanceConfig": {}
           },
-          "initialNodeCount": 3,
+          "initialNodeCount": clusterCount,
           "autoscaling": {},
           "management": {
             "autoUpgrade": true,
@@ -376,7 +379,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "diskType": "pd-standard",
             "shieldedInstanceConfig": {}
           },
-          "initialNodeCount": 1,
+          "initialNodeCount": clusterCount,
           "autoscaling": {},
           "management": {
             "autoUpgrade": true,
@@ -441,7 +444,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "diskType": "pd-standard",
             "shieldedInstanceConfig": {}
           },
-          "initialNodeCount": 3,
+          "initialNodeCount": clusterCount,
           "autoscaling": {
             "enabled": true,
             "minNodeCount": 1,
@@ -484,13 +487,14 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
     zone,
     cluster
   }
-  client.createCluster(request)
+  await client.createCluster(request)
   .then(responses => {
-    var response = responses[0];
+    var response = responses[0].status;
   })
   .catch(err => {
     console.error(err);
   });
+    
 }
 
 export default [quickstart,create];

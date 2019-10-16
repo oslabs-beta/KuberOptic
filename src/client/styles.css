@@ -7,20 +7,33 @@
   display:block;
 }
   #leCanvas{
-    float:left;
+    float: right;
+    width: 74%;
+    height:100%;
+  }
+  /* canvas {
+    height: 100%;
     width: 100%;
-    height:500px;
-    /* border: black; */
-    /* border-radius: 10px; */
+  } */
+  .buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
   }
   #leSidebar{
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     height:100%;
-    widows: 200px;
+    width: 26%;
     float:left;
+    padding-top: 10px;
     background-color: rgb(0, 26, 255);
     border:red 10px;
     border-radius: 10px;
+    min-width: 216px;
+    min-height: 280px;
   }
   #tool-tip {
     display: none;
@@ -52,31 +65,38 @@
     background: white;
     font-family: sans-serif;
   }
-/*
+
   .app {
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     background-color: rgb(0, 0, 0);
-  } */
+  }
 
   .text {
     color: aqua;
     margin-top: 20px;
-    margin-left: 290px;
     font-size: 20px;
+    width: 400px;
+    align-content: center;
+    text-align: center;
   }
 
 
   .displayContainer {
     color: aquamarine;
+    width: 100%;
+    height: 100%;
   }
-
+  #deployWrapper {
+    height: 100%;
+    width:100%;
+  }
 
   .kubLogo {
     transform: rotate(360deg);
     height: 300px;
     width: 300px;
-    margin-top: 25px;
-    margin-left: 240px;
+    margin: 50px auto;
     color: rgb(254, 254, 255);
     animation: rotation 2.5s infinite linear;
   }
@@ -84,10 +104,8 @@
 
   .logo {
     transform: rotate(360deg);
-    height: 100px;
-    width: 100px;
-    margin-top: 35px;
-    margin-left: 225px;
+    height: 125px;
+    width: 125px;
     background-color: oldlace;
     border: solid 5px black;
     border-radius: 20px;
@@ -96,10 +114,8 @@
 
   .logo1 {
     transform: rotate(360deg);
-    height: 100px;
-    width: 100px;
-    margin-top: 35px;
-    margin-left: 130px;
+    height: 125px;
+    width: 125px;
     border: solid 10px black;
     border-radius: 20px;
     /* animation: rotation 4s infinite linear; */
@@ -107,10 +123,8 @@
 
   .logo2 {
     transform: rotate(360deg);
-    height: 100px;
-    width: 100px;
-    margin-top: 35px;
-    margin-left: 130px;
+    height: 125px;
+    width: 125px;
     /* animation: rotation 4s infinite linear; */
     background-color: red;
     border: solid 5px black;
@@ -128,23 +142,26 @@
 
   .uploadInput {
     height: 70px;
-    width: 250px;
+    width: 300px;
     border: dodgerblue solid 5px;
     border-radius: 5px;
     color: black;
     background-color: rgb(255, 255, 255);
-    margin-left: 250px;
-    margin-top: 30px;
     font-size: 30px;
     font-family: sans-serif;
+    margin-top: 10px;
+  }
+  .buttonHolder {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 
   .uploadButt {
     height: 50px;
-    width: 75px;
+    width: 100px;
     border: dodgerblue solid 5px;
     border-radius: 5px;
-    margin-left: 30px;
     margin-top: 30px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
@@ -153,7 +170,7 @@
     }
   .backButton{
     height: 50px;
-    width: 75px;
+    width: 100px;
     border: dodgerblue solid 5px;
     border-radius: 5px;
     margin-top: 30px;
@@ -163,16 +180,30 @@
     background-color: rgb(255, 255, 255);
   }
 
-  .inputDeployPage{
-    display:flex;
+  .inputPageDeploy{
+    display: flex;
     flex-direction: column;
-    float:left;
+    width: 500px;
+    height: 100%;
+    margin: 0px auto;
+    padding-top: 50px;
+  }
+  #displays {
+    width: 100%;
+    height: 100%;
+  }
+  .awsAndGcpLogos {
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 
-
-  .buts{
-    display:flex;
-    align-items: flex-end;
+  #buts{
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 20px;
+    padding-top: 20px;
   }
   #clicker {
     background-color:lightblue;
@@ -187,15 +218,9 @@
     display:block;
   }
   .loc{
-    /* height:20px;
-    width:200px;
-    font-size:15px; */
     height: 50px;
-    width: 175px;
     border: dodgerblue solid 5px;
     border-radius: 5px;
-    margin-left: 30px;
-    margin-top: 30px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
     font-size: 15px;
@@ -206,25 +231,45 @@
     width:200px;
     font-size:15px;
   }
+  .gcpImageContainer{
+    box-sizing: border-box;
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
     .uploadDiv {
-      height: 100vh;
+      height: 100%;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+      margin: 0px auto;
     }
     .kubUpload {
-    transform: rotate(360deg);
-    height: 100px;
-    width: 100px;
-    margin-top: 60px;
-    margin-left: 325px;
+    /* transform: rotate(360deg); */
+    height: 125px;
+    width: 175px;
+    margin: 10px auto;
+    /* margin-top: 60px; */
+    /* margin-left: 325px; */
     color: rgb(254, 254, 255);
     /* animation: rotation 1s infinite linear; */
   }
 
   .kubUploadText {
-    height: 100px;
-    width: 200px;
-    margin-top: 15px;
+    height: 50px;
+    font-size: 31px;
+    width: 295px;
+    margin: 15px auto;
     color: aquamarine;
-    margin-left: 285px;
+  }
+
+  .locationDropDown {
+    padding-top: 20px;
   }
 
   #root {
@@ -235,13 +280,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 
   .mainDiv {
-
-    margin-right: 200px;
+    width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding-top: 50px;
   }
-
 
   .vizDiv {
     height: 100%;
@@ -258,6 +308,7 @@
     font-weight: bold;
     font-size: 15px;
     background-color: rgb(255, 2, 213);
+    justify-content: space-evenly;
   }
 
   .clusterType {
@@ -278,8 +329,6 @@
     width: 175px;
     border: dodgerblue solid 5px;
     border-radius: 5px;
-    /* margin-left: 30px;
-    margin-top: 30px; */
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
     font-size: 15px;
@@ -287,43 +336,106 @@
   }
 
   #deployLoc {
+    width: 49%;
     margin-bottom: 5px;
+    margin-left: 2px;
   }
 
   #infobox{
-    display:flex;
+    display: flex;
     flex-direction: column;
-    float:right;
-    /* margin-top: 50px; */
-    width: 450px;
+    margin-top: 50px;
+    width: 500px;
+    margin: 0px auto;
+    color: black;
   }
-
-  #deployBack {
-    margin-left: 30px;
+  .clusterTitle {
+    margin-bottom: -35px;
+    margin-top: -20px;
   }
-
-  #deploySubmit {
-    margin-left: 40px;
+  .clusterInformation {
+    margin-bottom: -10px;
   }
 
   #deployChooseClustType{
-    margin-left: 40px;
+    width: 49%;
+    margin-bottom: 5px;
+    margin-left: 2px;
   }
 
   #deployClustName {
-    margin-left: 42px;
-    width: 375px;
+    margin: 50px auto;
+    width: 400px;
+  }
+  #deployDropDowns {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 
   #uploadDivForSubmitandBackButts {
-    margin-left: 275px;
+    display: flex;
+    flex-direction: column;
   }
+  
   #uploadSelectMenu {
-    margin-left: 230px;
     width: 300px;
   }
 
   #uploadPage2SubmitandBackButts {
-    margin-top: 50px;
-    margin-left: 275px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
+
+  .clusterDeets {
+  color: black;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: space-around;
+  margin: 10px auto;
+  background-color: darkgoldenrod;
+  width: 92%;
+  overflow-y: scroll;
+}
+
+.cluster {
+  display: flex;
+  flex-direction: column;
+  background-color: cornsilk;
+  justify-content: space-evenly;
+  align-content: center;
+  margin: 5px auto;
+  max-height: 115px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.2);
+  width: 80%;
+}
+.deployedTitle {
+  width: 90%;
+  margin: 5px auto;
+  color: black;
+}
+.awsImageContainer {
+  box-sizing: border-box;
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+.nodeCountDropDown {
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+} 
+.count {
+  width: 49%;
+  margin-bottom: 5px;
+}
