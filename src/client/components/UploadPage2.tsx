@@ -1,3 +1,14 @@
+/**
+ * ************************************
+ *
+ * @module  UploadPage2.tsx
+ * @author
+ * @date
+ * @description upload page for clusters from Amazon Web Services
+ *
+ * ************************************
+ */
+
 import * as React from 'react';
 import { useContext } from 'react';
 import DisplayContainer from './DisplayContainer';
@@ -5,9 +16,11 @@ import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
 
 const UploadPage = () => {
+  const [Store, setStore] = useContext(StoreContext);
 
-    const [Store, setStore] = useContext(StoreContext);
-
+  ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
+    setStore({...Store, gcp: arg});
+  });
     ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
 
         setStore({...Store, clusters: arg, clusterCount: 1});
@@ -39,24 +52,27 @@ const UploadPage = () => {
           setStore({...Store, uploadPageState: true});
       //  }
     }
-    return <div>{Store.uploadPageState ? <DisplayContainer /> :
-        <div className='uploadDiv'>
-            <div>
-              <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
-              <div className='kubUploadText'>Amazon Web Services</div>
-            </div>
+  };
+
+  // if uploadPageState is true, then show DisplayContainer
+  // else display main upload page content (for GCP)
+  return <div>{Store.uploadPageState ? <DisplayContainer /> :
+      <div className='uploadDiv'>
+        <div>
+          <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
+          <div className='kubUploadText'>Amazon Web Services</div>
+        </div>
+
         <input className='uploadInput' type="text" onChange={handleKey} placeholder="awsKey"/>
         <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret"/>
         <input className='uploadInput' type="text" onChange={handleName} placeholder="clusterName"/>
         <div id="uploadPage2SubmitandBackButts">
-        <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
-        &nbsp;
-        <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+          <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
+          &nbsp;
+          <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
         </div>
-        
-        
-        </div>
-}</div>
+      </div>
+  }</div>
 }
 
 export default UploadPage;
