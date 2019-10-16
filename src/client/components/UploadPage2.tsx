@@ -21,30 +21,36 @@ const UploadPage = () => {
   ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
     setStore({...Store, gcp: arg});
   });
+    ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
 
-  const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
-    setStore({...Store, awsKey:e.currentTarget.value});
-  };
+        setStore({...Store, clusters: arg, clusterCount: 1});
+    })
 
-  const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
-    setStore({...Store, awsKey:e.currentTarget.value});
-  };
-
-  const handleName = (e: React.FormEvent<HTMLInputElement>) => {
-    setStore({...Store, awsKey:e.currentTarget.value});
-  };
-
-  const handleBack = ()=>{
-    setStore({...Store, landingPageState2:false});
-  };
-
-  const handleSubmit = () => {
-    const creds = JSON.parse(Store.credentials);
-    if (typeof creds !== 'object') {
-      console.log ('Enter a JSON object from GCP'); // I think this is supposed to say AWS instead of GCP  -Tim
-    } else {
-      ipcRenderer.send('asynchronous-message2', creds);
-      setStore({...Store, uploadPageState: true});
+    const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
+      console.log(e.currentTarget.value)  
+      setStore({...Store, awsKey:e.currentTarget.value})
+    }
+    const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
+      console.log(e.currentTarget.value)  
+      setStore({...Store, secretKey:e.currentTarget.value})
+    }
+    const handleName = (e: React.FormEvent<HTMLInputElement>) => {
+      console.log(e.currentTarget.value)  
+      setStore({...Store, clusterName:e.currentTarget.value})
+    }
+    const handleBack = ()=>{
+      setStore({...Store, landingPageState2:false})
+    }
+    const handleSubmit = () => {
+        // const creds = JSON.parse(Store.credentials);
+        const arg = {name: Store.clusterName}
+      //    if(typeof creds !== 'object'){
+      //     console.log('Enter a JSON object from GCP');
+      //   }
+      //   else{
+          ipcRenderer.send('asynchronous-message2', arg)
+          setStore({...Store, uploadPageState: true});
+      //  }
     }
   };
 
@@ -59,8 +65,7 @@ const UploadPage = () => {
 
         <input className='uploadInput' type="text" onChange={handleKey} placeholder="awsKey"/>
         <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret"/>
-        <input className='uploadInput' type="text" onChange={handleName} placeholder="ClusterName"/>
-
+        <input className='uploadInput' type="text" onChange={handleName} placeholder="clusterName"/>
         <div id="uploadPage2SubmitandBackButts">
           <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
           &nbsp;

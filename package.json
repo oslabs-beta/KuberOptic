@@ -82,6 +82,8 @@
     "style-loader": "^1.0.0",
     "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.4",
+    "ts-node": "^8.4.1",
+    "ts-node-dev": "^1.0.0-pre.43",
     "tsconfig-paths": "^3.8.0",
     "typescript": "^3.5.3",
     "url-loader": "^2.1.0",
@@ -102,7 +104,7 @@
     "@types/d3": "^5.7.2",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/react-router-dom": "^4.3.5",
-    "aws-sdk": "^2.524.0",
+    "aws-sdk": "^2.548.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "bootstrap": "^4.3.1",
@@ -119,7 +121,6 @@
     "tachyons": "^4.11.1",
     "three": "^0.107.0",
     "three-orbitcontrols": "^2.102.2",
-    "ts-node": "^8.3.0",
     "underscore": "^1.9.1",
     "util": "^0.12.1"
   }

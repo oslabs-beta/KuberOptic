@@ -1,33 +1,60 @@
-// const AWS = require('aws-sdk')
+import { cluster } from "d3";
 
-// let eks = new AWS.EKS({region: 'us-east-1'});
+const AWS = require('aws-sdk')
 
-// // AWS.config.getCredentials((err) => {
-// //     if (err) {
-// //     console.log(err)
-// //     } else {
-// //       console.log('Access key:', AWS.config.credentials.accessKeyId);
-// //       console.log('Secret access key:', AWS.config.credentials.secretAccessKey);
-// //       console.log('Region', process.env.AWS_REGION);
-// //     }
-// //   })
+let eks = new AWS.EKS({region: 'us-west-2'});
 
-// //-------------function to get clusters-------------\\
-// async function quickstart(params){
-//  eks.describeCluster(params, function(err, data) {
+// AWS.config.getCredentials((err) => {
 //     if (err) {
-//       console.log(err, err.stack);
-//     } // an error occurred  
-//     else{
-//     console.log('awsDat["clusterName"]=',data.cluster.name);           // successful response
-//     console.log('awsDat["endpoint"]=',data.cluster.endpoint)
-//     console.log('awsDat["creationTime"]=',data.cluster.createdAt);
-//     console.log('awsDat["clusterStatus"]=',data.cluster.status);
-//     console.log('awsDat["nodeCount"]=','1');
-//     console.log('awsDat["location"]=','us-east-1'); 
-//     return data;
-//     }     
+//     console.log(err)
+//     } else {
+//       // console.log(AWS.config)
+//       // console.log(eks)
+//       console.log('Access key:', AWS.config.credentials.accessKeyId);
+//       console.log('Secret access key:', AWS.config.credentials.secretAccessKey);
+//       console.log('Region', eks.config.region);
+//     }
 //   })
-// }
 
-// export default quickstart;
+
+console.log(eks)
+
+//-------------function to get clusters-------------\\
+async function quickstart(params){
+ const clusterData = await new Promise((resolve, reject) => {
+  eks.describeCluster(params, function(err, data) {
+    // const clusters:any = data
+    const clusterArray = [];  
+    if (err) {
+        console.log(err, err.stack);
+      } // an error occurred  
+      else{
+        // console.log(data)
+        let awsDat = {};
+      
+        awsDat["clusterName"]= data.cluster.name           // successful response
+        awsDat["endpoint"]= data.cluster.endpoint
+        awsDat["creationTime"]= data.cluster.createdAt
+        awsDat["clusterStatus"]= data.cluster.status
+        awsDat["nodeCount"]= '3'
+        awsDat["location"]= eks.config.region
+        // console.log(awsDat)
+        // return data;
+        clusterArray.push(awsDat)
+        resolve(clusterArray);
+      }     
+      // clusterArray.push(awsDat)
+    })
+ })
+ 
+ return clusterData;
+ 
+}
+
+// console.log(clusterArray)
+
+
+// AWS.config.getCredentials();
+// quickstart({name: 'test'});
+
+export default quickstart;
