@@ -62,5 +62,5 @@ const exec = util.promisify(require('child_process').exec);
     console.log('hello')
   })
   // console.log("dog: ", dog)
-}  
+
 // quickstart()

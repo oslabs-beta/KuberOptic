@@ -40,22 +40,17 @@ const UploadPage = () => {
     
     const handleSubmit = () => {
      const creds = JSON.parse(Store.credentials); 
-        if(typeof creds !== 'object'){
-          console.log('Enter a JSON object from GCP');
-          console.log('locStore: ', Store.gcploc)
-        }
-        else{
-          ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
-          setStore({...Store, uploadPageState: true });
-        }
+      if(typeof creds !== 'object'){
+        console.log('Enter a JSON object from GCP');
+        console.log('locStore: ', Store.gcploc)
+      }
+      else{
+        ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
+        setStore({...Store, uploadPageState: true });
+      }
     }
-
-    if (typeof creds !== 'object') {
-      console.log('Enter a JSON object from GCP');
-      console.log('locStore: ', Store.gcploc);
-    } else {
-      ipcRenderer.send('asynchronous-message', creds);
-      setStore({...Store, uploadPageState: true});
+    const handleLoc = (event) => {
+      setStore({...Store, gcploc: event.currentTarget.value});
     }
     
     return (

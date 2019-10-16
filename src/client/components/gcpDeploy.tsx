@@ -60,7 +60,7 @@ const gcpDeploy = () =>{
     }
 
     return (
-    <div id="deployWrapper">
+      <div id="deployWrapper">
         <div className="inputPageDeploy">
         <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name"/>
         <div id="deployDropDowns">
@@ -104,8 +104,6 @@ const gcpDeploy = () =>{
           <button id="deploySubmit" className='uploadButtD' onClick={handleSubmit}> Submit </button>
           <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
         </div>
-
-        <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
 
       <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
         <div id="clicker" tabIndex={1} >
@@ -192,8 +190,7 @@ const gcpDeploy = () =>{
           Boot disk size: 100GB <br/>
         </div>
         </div>
-
-
+      </div>
     </div>
   )
 }
