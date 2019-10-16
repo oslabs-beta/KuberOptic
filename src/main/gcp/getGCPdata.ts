@@ -7,7 +7,7 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string='us
     const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
     const request:object = {
       projectId,
-      zone
+      zone 
     };
     //response returns an object that has all the info we need
   const [response] = await client.listClusters(request);
