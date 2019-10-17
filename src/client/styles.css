@@ -9,7 +9,8 @@
   #leCanvas{
     float: right;
     width: 74%;
-    height:100%;
+    height:99.5%;
+    border-style: inset;
   }
   /* canvas {
     height: 100%;
@@ -25,15 +26,16 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height:100%;
+    align-content: center;
+    height:99.5%;
     width: 26%;
     float:left;
     padding-top: 10px;
     background-color: rgb(0, 26, 255);
-    border:red 10px;
-    border-radius: 10px;
+    border: rgba(67, 84, 105, 1) 3px;
     min-width: 216px;
     min-height: 280px;
+    border-style: inset;
   }
   #tool-tip {
     display: none;
@@ -86,6 +88,8 @@
     color: aquamarine;
     width: 100%;
     height: 100%;
+    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+    border-style: outset;
   }
   #deployWrapper {
     height: 100%;
@@ -97,18 +101,20 @@
     height: 300px;
     width: 300px;
     margin: 50px auto;
+    border-radius: 50%;
     color: rgb(254, 254, 255);
-    animation: rotation 2.5s infinite linear;
+    animation: rotation 8s infinite linear;
   }
 
 
   .logo {
     transform: rotate(360deg);
-    height: 125px;
+    height: 105px;
     width: 125px;
     background-color: oldlace;
     border: solid 5px black;
     border-radius: 20px;
+    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
     /* animation: rotation 4s infinite linear; */
   }
 
@@ -123,12 +129,13 @@
 
   .logo2 {
     transform: rotate(360deg);
-    height: 125px;
+    height: 105px;
     width: 125px;
     /* animation: rotation 4s infinite linear; */
     background-color: red;
     border: solid 5px black;
     border-radius: 20px;
+    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
   }
 
   @keyframes rotation {
@@ -266,6 +273,7 @@
     width: 295px;
     margin: 15px auto;
     color: aquamarine;
+    text-align: center;
   }
 
   .locationDropDown {
@@ -309,6 +317,8 @@
     font-size: 15px;
     background-color: rgb(255, 2, 213);
     justify-content: space-evenly;
+    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+    border-style: outset;
   }
 
   .clusterType {
@@ -348,6 +358,8 @@
     width: 500px;
     margin: 0px auto;
     color: black;
+    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+    border-style: outset;
   }
   .clusterTitle {
     margin-bottom: -35px;
@@ -401,6 +413,8 @@
   background-color: darkgoldenrod;
   width: 92%;
   overflow-y: scroll;
+  box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+  border-style: outset;
 }
 
 .cluster {
@@ -414,6 +428,7 @@
   border-radius: 10px;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.2);
   width: 80%;
+  box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
 }
 .deployedTitle {
   width: 90%;
@@ -438,4 +453,19 @@ justify-content: space-evenly;
 .count {
   width: 49%;
   margin-bottom: 5px;
+}
+.landingTitle {
+  display: flex;
+  flex-direction: column;
+  color: aqua;
+  width: 400px;
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin-bottom: -10px;
+  margin-top: -40px;
+  text-align: center;
 }

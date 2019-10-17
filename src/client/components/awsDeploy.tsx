@@ -1,7 +1,7 @@
 /**
  * ************************************
  *
- * @module  gcpDeploy.tsx
+ * @module  awsDeploy.tsx
  * @author
  * @date
  * @description page to determine deployment settings? Possibly making a post-style request to GCP to create a cluster
@@ -12,7 +12,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
-const [quickstart, create] = require('../../main/gcp/getGCPdata').default
+// const [quickstart, create] = require('../../main/aws/getAWSdata').default
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
 import 'tachyons'
@@ -20,16 +20,16 @@ import 'tachyons'
 // various inputs will be stored in this object and will be submitted when you call handleSubmit
 let input = {};
 
-const gcpDeploy = () =>{
+const awsDeploy = () =>{
+
   const [Store, setStore] = useContext(StoreContext);
-  
-  ipcRenderer.on('newClusters', (event: any, arg: any) => {
+  ipcRenderer.on('newClusters2', (event: any, arg: any) => {
     if(Store.clusters.length < arg.length){
       let newClusters = [];
-      arg.forEach(el=> newClusters.push(el))
-      setStore({...Store, clusters: newClusters, clusterCount: newClusters.length, gcpDeployPage:false, uploadPageState: true})
+      arg.forEach(el => newClusters.push(el))
+      setStore({...Store, clusters: newClusters, clusterCount: newClusters.length, awsDeployPage:false, uploadPageState2: true})
     }
-    else setStore({...Store, clusters: arg, clusterCount: arg.length, gcpDeployPage:false, uploadPageState: true});
+    else setStore({...Store, clusters: arg, clusterCount: arg.length, awsDeployPage:false, uploadPageState2: true});
     event.returnValue = 'done';
   })
 
@@ -42,21 +42,21 @@ const gcpDeploy = () =>{
   }
   const handleLoc = (event) => {
     const location = event.currentTarget.value
-    setStore({...Store, gcploc: location})
+    setStore({...Store, awsLocation: location})
     input['zone'] = location;
   }
   const handleBack = ()=>{
-    setStore({...Store, gcpDeployPage:false, uploadPageState: true})
+    setStore({...Store, awsDeployPage:false, uploadPageState2: true})
   }
   const handleNodeCount = (event) => {
     input['count'] = event.currentTarget.value;
   }
 
   const handleSubmit = () =>{
-    create(Store.credentials, input['zone'], input)
-    const creds = JSON.parse(Store.credentials)
-    setStore({...Store, gcpDeployPage:false, uploadPageState: true})
-    ipcRenderer.send('getNewClusters', creds, Store.gcploc);
+    // create(Store.credentials, input['zone'], input)
+    // const creds = JSON.parse(Store.credentials)
+    setStore({...Store, awsDeployPage:false, uploadPageState2: true})
+    // ipcRenderer.send('getNewClusters2', creds, Store.gcploc);
   }
 
   return (
@@ -66,13 +66,13 @@ const gcpDeploy = () =>{
       <div id="deployDropDowns">
 
       <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
-      <option selected>Choose GCP cluster type</option>
+      <option selected>Choose AWS cluster type</option>
       <option value='affordable'>affordable</option>
-      <option value='standard'>standard</option>
+      {/* <option value='standard'>standard</option>
       <option value='cpuIntensive'>cpuIntensive</option>
       <option value='memoryIntensive'>memoryIntensive</option>
       <option value='gpuAcceleratedComputing'>gpuAcceleratedComputing</option>
-      <option value='highly available'>highly available</option>
+      <option value='highly available'>highly available</option> */}
       </select>
 
       <select id='deployLoc' className='loc' onChange={handleLoc}>
@@ -195,4 +195,4 @@ const gcpDeploy = () =>{
   )
 }
 
-export default gcpDeploy;
+export default awsDeploy;

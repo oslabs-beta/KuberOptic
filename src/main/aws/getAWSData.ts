@@ -1,9 +1,6 @@
 import { cluster } from "d3";
 
 const AWS = require('aws-sdk')
-
-let eks = new AWS.EKS({region: 'us-west-2'});
-
 // AWS.config.getCredentials((err) => {
 //     if (err) {
 //     console.log(err)
@@ -16,45 +13,33 @@ let eks = new AWS.EKS({region: 'us-west-2'});
 //     }
 //   })
 
-
-console.log(eks)
-
 //-------------function to get clusters-------------\\
 async function quickstart(params){
- const clusterData = await new Promise((resolve, reject) => {
-  eks.describeCluster(params, function(err, data) {
-    // const clusters:any = data
-    const clusterArray = [];  
-    if (err) {
-        console.log(err, err.stack);
-      } // an error occurred  
-      else{
-        // console.log(data)
-        let awsDat = {};
+  let eks = new AWS.EKS({region: 'us-east-2'});
+  const clusterData = await new Promise((resolve, reject) => {
+    eks.describeCluster(params, function(err, data) {
+      const clusterArray = [];  
+      if (err) console.log(err, err.stack);
+      let awsDat = {};
       
-        awsDat["clusterName"]= data.cluster.name           // successful response
-        awsDat["endpoint"]= data.cluster.endpoint
-        awsDat["creationTime"]= data.cluster.createdAt
-        awsDat["clusterStatus"]= data.cluster.status
-        awsDat["nodeCount"]= '3'
-        awsDat["location"]= eks.config.region
-        // console.log(awsDat)
-        // return data;
-        clusterArray.push(awsDat)
-        resolve(clusterArray);
-      }     
-      // clusterArray.push(awsDat)
+      awsDat["clusterName"]= data.cluster.name           // successful response
+      awsDat["endpoint"]= data.cluster.endpoint
+      awsDat["creationTime"]= data.cluster.createdAt
+      awsDat["clusterStatus"]= data.cluster.status
+      awsDat["nodeCount"]= '3'
+      awsDat["location"]= eks.config.region
+      // console.log(awsDat)
+      // return data;
+      clusterArray.push(awsDat)
+      resolve(clusterArray);
     })
+      // clusterArray.push(awsDat)
  })
- 
  return clusterData;
- 
 }
-
-// console.log(clusterArray)
-
-
 // AWS.config.getCredentials();
 // quickstart({name: 'test'});
+
+// export default [quickstart, create]; //if functionality to deploy is possible
 
 export default quickstart;

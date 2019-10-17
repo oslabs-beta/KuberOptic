@@ -11,8 +11,9 @@
 
 import * as React from 'react';
 import Deploy from './gcpDeploy';
+import AWSDeploy from './awsDeploy';
 import { useContext } from 'react';
-import {StoreContext} from '../../../store';
+import { StoreContext } from '../../../store';
 import Visualizer from './visualizer'
 
 const DisplayContainer = () => {
@@ -21,8 +22,10 @@ const DisplayContainer = () => {
     return (
       <div className='displayContainer'>
       { Store.gcpDeployPage ?
-      <Deploy/> : 
-      <Visualizer />
+        <Deploy/> : 
+        Store.awsDeployPage ?
+        <AWSDeploy/> :
+        <Visualizer />
       }
     </div>
   ) // maybe go back and remove these parentheses later; don't think they're necessary -Tim

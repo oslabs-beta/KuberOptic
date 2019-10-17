@@ -33,13 +33,23 @@ ipcMain.on('getNewClusters', (event: any, arg1: any, arg2: any) => {
   }).catch((e)=>console.log(e))
 })
   //
-  ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
-   fetchAws(arg).then(res=>{
-      event.sender.send('clusterClient2', res)
-      console.log('res in aws: ', res)
-     })
-    .catch((e)=>console.log(e))
- })
+ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
+  fetchAws(arg).then(res=>{
+    event.sender.send('clusterClient2', res)
+    console.log('res in aws: ', res)
+    })
+  .catch((e)=>console.log(e))
+})
+
+ipcMain.on('getNewClusters2', (event: any, arg: any) => {
+  fetchAws(arg).then(res=>{
+    event.sender.send('newClusters2', res)
+    console.log('res in aws: ', res)
+    })
+  .catch((e)=>console.log(e))
+})
+
+
 app.on('ready', () => {
   // This creates a window on startup
   const window = new BrowserWindow({  
