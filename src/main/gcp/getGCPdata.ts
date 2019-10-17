@@ -2,36 +2,35 @@ const container = require('@google-cloud/container');
 
 // quickstart takes in the GCP credientials object and a timezone, defaults to central1-a if not specified
 async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string) {
-    const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
-    const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
+  const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
+  const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
+  if (zone == null) zone= 'us-central1-a'
 
-    if (zone == null) zone = 'us-central1-a'
-
-    const request:object = {
-      projectId,
-      zone 
-    };
+  const request:object = {
+    projectId,
+    zone 
+  };
     //response returns an object that has all the info we need
   const [response] = await client.listClusters(request);
   const clusters:any = response.clusters;
 
-   const clusterArray = [];
+  const clusterArray = [];
 
-   clusters.forEach(cluster=>{
-     let gcpDat:object = {};
+  clusters.forEach(cluster=>{
+    let gcpDat:object = {};
 
-      gcpDat["endpoint"] = cluster.endpoint
-      gcpDat["clusterName"] = cluster.name;
-      gcpDat["clusterDescription"] = cluster.description;
-      gcpDat["creationTime"] = cluster.createTime;
-      gcpDat["clusterStatus"] = cluster.status;
-      gcpDat["nodeCount"] = cluster.currentNodeCount;
-      gcpDat["location"] = cluster.location;
-      cluster.nodePools.forEach((node, i)=>{
-      gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
-         `MachineType: ${node.config.machineType}`]
-      })
-      clusterArray.push(gcpDat)
+    gcpDat["endpoint"] = cluster.endpoint
+    gcpDat["clusterName"] = cluster.name;
+    gcpDat["clusterDescription"] = cluster.description;
+    gcpDat["creationTime"] = cluster.createTime;
+    gcpDat["clusterStatus"] = cluster.status;
+    gcpDat["nodeCount"] = cluster.currentNodeCount;
+    gcpDat["location"] = cluster.location;
+    cluster.nodePools.forEach((node, i)=>{
+    gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
+        `MachineType: ${node.config.machineType}`]
+    })
+    clusterArray.push(gcpDat)
   })
   return clusterArray;
 }
@@ -497,4 +496,4 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
     
 }
 
-export default [quickstart,create];
+export default [quickstart, create];

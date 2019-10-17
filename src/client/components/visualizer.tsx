@@ -16,7 +16,7 @@ import * as _ from 'underscore';
 import SideBar from './sidebar';
 import {StoreContext} from '../../../store';
 
-const width = window.innerWidth * .74;
+const width = window.innerWidth * .735;
 const height = window.innerHeight * .98;
 const vizWidth = width;
 const fov = 100;
@@ -57,7 +57,6 @@ const Visualizer = () => {
 
  let [store, setStore] = useContext(StoreContext);
  useEffect(() => {
-   console.log('clusters if not null', store.clusters)
     if(store.clusters != null){
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
@@ -339,8 +338,6 @@ const Visualizer = () => {
       }
     }
   });
-
-  console.log('end of useEffect', store.clusters)
 
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
