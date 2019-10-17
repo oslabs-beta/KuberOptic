@@ -32,7 +32,7 @@ const UploadPage = () => {
     }
     const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
       console.log(e.currentTarget.value)  
-      setStore({...Store, secretKey:e.currentTarget.value})
+      setStore({...Store, awsSecret:e.currentTarget.value})
     }
     const handleName = (e: React.FormEvent<HTMLInputElement>) => {
       console.log(e.currentTarget.value)  
@@ -43,13 +43,10 @@ const UploadPage = () => {
     }
     const handleSubmit = () => {
         // const creds = JSON.parse(Store.credentials);
-        const arg = {name: Store.clusterName}
-      //    if(typeof creds !== 'object'){
-      //     console.log('Enter a JSON object from GCP');
-      //   }
-      //   else{
-          ipcRenderer.send('asynchronous-message2', arg)
-          setStore({...Store, uploadPageState: true});
+        const arg = {name: Store.clusterName, accessKeyId: Store.awsKey, secretAccessKey: Store.awsSecret, region: "us-east-2"}
+         
+        ipcRenderer.send('asynchronous-message2', arg)
+        setStore({...Store, uploadPageState: true});
       //  }
     }
     return (

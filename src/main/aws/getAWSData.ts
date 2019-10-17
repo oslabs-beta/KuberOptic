@@ -1,29 +1,23 @@
-import { cluster } from "d3";
+import fs from 'fs';
 
 const AWS = require('aws-sdk')
 
-let eks = new AWS.EKS({region: 'us-west-2'});
-
-// AWS.config.getCredentials((err) => {
-//     if (err) {
-//     console.log(err)
-//     } else {
-//       // console.log(AWS.config)
-//       // console.log(eks)
-//       console.log('Access key:', AWS.config.credentials.accessKeyId);
-//       console.log('Secret access key:', AWS.config.credentials.secretAccessKey);
-//       console.log('Region', eks.config.region);
-//     }
-//   })
-
-
-console.log(eks)
-
-//-------------function to get clusters-------------\\
+let nodes = Math.ceil(Math.random()*5)
+      
+      //-------------function to get clusters-------------\\
 async function quickstart(params){
- const clusterData = await new Promise((resolve, reject) => {
-  eks.describeCluster(params, function(err, data) {
-    // const clusters:any = data
+  let credentials = {accessKeyId: params.accessKeyId, secretAccessKey: params.secretAccessKey, region: params.region};
+  fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
+
+  AWS.config.loadFromPath('./credentials.json');
+        
+  let eks = new AWS.EKS({region: 'us-east-2'});
+
+  let nameObj = {name: params.name}
+
+  const clusterData = await new Promise((resolve, reject) => {
+  
+    eks.describeCluster(nameObj, function(err, data) {
     const clusterArray = [];  
     if (err) {
         console.log(err, err.stack);
@@ -36,10 +30,8 @@ async function quickstart(params){
         awsDat["endpoint"]= data.cluster.endpoint
         awsDat["creationTime"]= data.cluster.createdAt
         awsDat["clusterStatus"]= data.cluster.status
-        awsDat["nodeCount"]= '3'
+        awsDat["nodeCount"]= nodes
         awsDat["location"]= eks.config.region
-        // console.log(awsDat)
-        // return data;
         clusterArray.push(awsDat)
         resolve(clusterArray);
       }     
@@ -49,6 +41,17 @@ async function quickstart(params){
  
  return clusterData;
  
+ 
+}
+
+async function createCluster(params) {
+  let credentials = {accessKeyId: params.accessKeyId, secretAccessKey: params.secretAccessKey, region: params.region};
+  fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
+
+  AWS.config.loadFromPath('./credentials.json');
+
+  let eks = new AWS.EKS({region: 'us-east-2'});
+
 }
 
 // console.log(clusterArray)
