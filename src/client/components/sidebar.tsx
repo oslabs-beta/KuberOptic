@@ -31,16 +31,25 @@ const SideBar = () =>{
       landingPageState2:false, 
       landingPageState:false,
       uploadPageState:false,
-      uploadPageState2:false, 
-      credentials: {}, 
-      clusters: null, 
-      clusterCount: 0,
-      gcploc: null
+      uploadPageState2:false,
     })
   }
 
   if(Store.clusterCount && Store.uploadPageState2) {
-    clusters = alert('amazon sucks!')
+    clusters = Store.clusters.map(clust => {
+      return (
+      <div className ="cluster">
+        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
+        <center className="clusterInformation"><p>
+            Status: <em>{clust.clusterStatus}</em>
+            <br></br>
+            Nodes: <em>{clust.nodeCount}</em>
+            <br></br>
+            Location: <em>{clust.location}</em>
+        </p></center>
+      </div>
+      )
+    })
   }
 
   if (Store.clusterCount && Store.uploadPageState) {

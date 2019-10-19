@@ -1,6 +1,6 @@
 const fetchLocal = require('./local/local').default
 const [fetchGCP, create] = require('./gcp/getGCPdata').default;
-const fetchAws = require('./aws/getAWSData').default
+const [fetchAws, createAWS] = require('./aws/getAWSData').default
 const { app, ipcMain, BrowserWindow } = require('electron');
 // const electron = require('electron')
 // require('events').EventEmitter.defaultMaxListeners = 15;
