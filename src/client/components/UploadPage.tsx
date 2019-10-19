@@ -10,9 +10,10 @@
  */
 
 import * as React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import DisplayContainer from './DisplayContainer';
 import { StoreContext } from '../../../store';
+import GCPDeploy from './gcpDeploy';
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
 
@@ -21,8 +22,8 @@ const UploadPage = () => {
 
   ipcRenderer.on('clusterClient', (event: any, arg: any) => {
     //logic incase we have more than one cluster already rendered
-    if(Store.clusterCount < arg.length){
-      let newClusters = [];
+    if(Store.clusterCount){
+      let newClusters = Store.clusters;
       arg.forEach(el=> newClusters.push(el))
       setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
     }
@@ -37,56 +38,63 @@ const UploadPage = () => {
   const handleBack = () => {
     setStore({...Store, landingPageState:false});
   };
-    
-    const handleSubmit = () => {
-     const creds = JSON.parse(Store.credentials); 
-      if(typeof creds !== 'object'){
-        console.log('Enter a JSON object from GCP');
-        console.log('locStore: ', Store.gcploc)
-      }
-      else{
-        ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
-        setStore({...Store, uploadPageState: true });
-      }
+  
+  const handleLoc = (event) => {
+    setStore({...Store, gcploc: event.currentTarget.value});
+  }
+  
+  const handleSubmit = () => {
+    const creds = JSON.parse(Store.credentials); 
+    if(typeof creds !== 'object'){
+      console.log('Enter a JSON object from GCP');
+      console.log('locStore: ', Store.gcploc)
     }
-    const handleLoc = (event) => {
-      setStore({...Store, gcploc: event.currentTarget.value});
+    else{
+      // ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
+      // setStore({...Store, uploadPageState: true });
+      setStore({...Store, gcpDeployPage: true });
     }
+  }
     
-    return (
-      <>
-        { Store.uploadPageState ? 
-        <DisplayContainer /> :
+  return (
+    // <>
+    //   { Store.uploadPageState ? 
+    //   <DisplayContainer /> :
+<>
+        { Store.gcpDeployPage ? <GCPDeploy/> :
         <div className='uploadDiv'>
-            <div className="gcpImageContainer">
-              <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
-              <div className='kubUploadText'>Google Cloud Platform</div>
-            </div>
+        <div className="gcpImageContainer">
+        <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
+        <div className='kubUploadText'>Google Cloud Platform</div>
+      </div>
 
-          <div id="uploadDivForSubmitandBackButts">
-            <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info"/>
-            <div className="buttonHolder">
-              <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
-              <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
-            </div>
-          </div>
-          <div className="locationDropDown">
-            <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
-            <option>Select A Location</option>
-            <option value='us-central1-a'>us-central1-a</option>
-            <option value='us-central1-b'>us-central1-b</option>
-            <option value='us-central1-c'>us-central1-c</option>
-            <option value='southamerica-east1-a'>southamerica-east1-a</option>
-            <option value='southamerica-east1-b'>southamerica-east1-b</option>
-            <option value='southamerica-east1-c'>southamerica-east1-c</option>
-            <option value='europe-west2-a'>europe-west2-a</option>
-            <option value='us-west1-a'>us-west1-a</option>
-            </select>
+        <div id="uploadDivForSubmitandBackButts">
+          <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info" required={true}></input>
+          <div className="buttonHolder">
+            <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
+            <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
           </div>
         </div>
+        </div>
+
         }
-      </>
-    )
+          
+        {/* <div className="locationDropDown">
+          <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
+          <option>Select Zone</option>
+          <option value='us-central1-a'>us-central 1-a</option>
+          <option value='us-central1-b'>us-central 1-b</option>
+          <option value='us-central1-c'>us-central 1-c</option>
+          <option value='southamerica-east1-a'>southamerica-east 1-a</option>
+          <option value='southamerica-east1-b'>southamerica-east 1-b</option>
+          <option value='southamerica-east1-c'>southamerica-east 1-c</option>
+          <option value='europe-west2-a'>europe-west 2-a</option>
+          <option value='us-west1-a'>us-west 1-a</option>
+          </select>
+        </div> */}
+      {/* </div> */}
+    </>
+  )
 }
 
 export default UploadPage;

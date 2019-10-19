@@ -10,17 +10,19 @@
  */
 
 import * as React from 'react';
-import LandingPage from './LandingPage';
+import DisplayContainer from './DisplayContainer';
 import '../styles.css';
 import { StoreContextProvider } from '../../../store';;
 import 'tachyons'; // tachyons is a styling tool - figure out if this is being used or not
+// import LandingPage from './LandingPage';
 
 function App() {
   // wraps the LandingPage inside the StoreContextProvider, which provides access to state
   return (
     <StoreContextProvider>
       <div className='app'>
-        <LandingPage/>
+        <DisplayContainer/>
+        {/* <LandingPage/> */}
       </div>
     </StoreContextProvider>
   );
