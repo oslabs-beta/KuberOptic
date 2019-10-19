@@ -15,12 +15,12 @@ import DisplayContainer from './DisplayContainer';
 import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
 
-const UploadPage = () => {
+const UploadPage2 = () => {
   const [Store, setStore] = useContext(StoreContext);
 
-  ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
-    setStore({...Store, gcp: arg});
-  });
+  // ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
+  //   setStore({...Store, gcp: arg});
+  // });
     ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
 
         setStore({...Store, clusters: arg, clusterCount: 1});
@@ -70,4 +70,4 @@ const UploadPage = () => {
     )
 }
 
-export default UploadPage;
+export default UploadPage2;

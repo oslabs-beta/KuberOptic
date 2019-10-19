@@ -35,7 +35,6 @@ async function quickstart(params){
         clusterArray.push(awsDat)
         resolve(clusterArray);
       }     
-      // clusterArray.push(awsDat)
     })
  })
  
@@ -44,15 +43,15 @@ async function quickstart(params){
  
 }
 
-async function createCluster(params) {
-  let credentials = {accessKeyId: params.accessKeyId, secretAccessKey: params.secretAccessKey, region: params.region};
-  fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
+// async function createCluster(params) {
+//   let credentials = {accessKeyId: params.accessKeyId, secretAccessKey: params.secretAccessKey, region: params.region};
+//   fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
 
-  AWS.config.loadFromPath('./credentials.json');
+//   AWS.config.loadFromPath('./credentials.json');
 
-  let eks = new AWS.EKS({region: 'us-east-2'});
+//   let eks = new AWS.EKS({region: 'us-east-2'});
 
-}
+// }
 
 // console.log(clusterArray)
 
