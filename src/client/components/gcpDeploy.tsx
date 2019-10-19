@@ -24,8 +24,8 @@ const gcpDeploy = () =>{
   const [Store, setStore] = useContext(StoreContext);
   
   ipcRenderer.on('newClusters', (event: any, arg: any) => {
-    if(Store.clusters.length < arg.length){
-      let newClusters = [];
+    if(Store.clusterCount){
+      let newClusters = Store.clusters;
       arg.forEach(el=> newClusters.push(el))
       setStore({...Store, clusters: newClusters, clusterCount: newClusters.length, gcpDeployPage:false, uploadPageState: true})
     }
@@ -56,13 +56,13 @@ const gcpDeploy = () =>{
     create(Store.credentials, input['zone'], input)
     const creds = JSON.parse(Store.credentials)
     setStore({...Store, gcpDeployPage:false, uploadPageState: true})
-    ipcRenderer.send('getNewClusters', creds, Store.gcploc);
+    // ipcRenderer.send('getNewClusters', creds, Store.gcploc);
   }
 
   return (
     <div id="deployWrapper">
       <div className="inputPageDeploy">
-      <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name"/>
+      <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name" required={true}></input>
       <div id="deployDropDowns">
 
       <select id="deployChooseClustType" className='clusterType' onChange={handleType}>

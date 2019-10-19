@@ -12,7 +12,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
-// const [quickstart, create] = require('../../main/aws/getAWSdata').default
+const [fetchAws, createAWS] = require('../../main/aws/getAWSData').default
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
 import 'tachyons'
@@ -43,7 +43,7 @@ const awsDeploy = () =>{
   const handleLoc = (event) => {
     const location = event.currentTarget.value
     setStore({...Store, awsLocation: location})
-    input['zone'] = location;
+    input['region'] = location;
   }
   const handleBack = ()=>{
     setStore({...Store, awsDeployPage:false, uploadPageState2: true})
@@ -53,10 +53,11 @@ const awsDeploy = () =>{
   }
 
   const handleSubmit = () =>{
-    // create(Store.credentials, input['zone'], input)
-    // const creds = JSON.parse(Store.credentials)
+    input['accessKeyId'] = Store.awsKey
+    input['secretAccessKey'] = Store.awsSecret
+    createAWS(input)
     setStore({...Store, awsDeployPage:false, uploadPageState2: true})
-    // ipcRenderer.send('getNewClusters2', creds, Store.gcploc);
+    // ipcRenderer.send('getNewClusters2', );
   }
 
   return (
@@ -77,14 +78,14 @@ const awsDeploy = () =>{
 
       <select id='deployLoc' className='loc' onChange={handleLoc}>
       <option selected>Choose a location to host</option>
-      <option value='us-central1-a'>us-central1-a</option>
-      <option value='us-central1-b'>us-central1-b</option>
-      <option value='us-central1-c'>us-central1-c</option>
-      <option value='southamerica-east1-a'>southamerica-east1-a</option>
-      <option value='southamerica-east1-b'>southamerica-east1-b</option>
-      <option value='southamerica-east1-c'>southamerica-east1-c</option>
-      <option value='europe-west2-a'>europe-west2-a</option>
-      <option value='us-west1-a'>us-west1-a</option>
+      <option value='us-east-1'>us-east-1</option>
+      <option value='us-east-2'>us-east-2</option>
+      <option value='us-west-1'>us-west-1</option>
+      <option value='us-west-2'>us-west-2</option>
+      <option value='ap-east-1'>ap-east-1</option>
+      <option value='ap-south-1'>ap-south-1</option>
+      <option value='ap-northeast-1'>ap-northeast-1</option>
+      <option value='ap-northeast-2'>ap-northeast-2</option>
       </select>
 
       </div>

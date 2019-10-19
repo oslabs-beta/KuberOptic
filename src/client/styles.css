@@ -72,6 +72,7 @@
     height: 100%;
     width: 100%;
     background-color: rgb(0, 0, 0);
+    font-family: 'Nunito', sans-serif;
   }
 
   .text {
@@ -81,6 +82,8 @@
     width: 400px;
     align-content: center;
     text-align: center;
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
   }
 
 
@@ -155,8 +158,8 @@
     color: black;
     background-color: rgb(255, 255, 255);
     font-size: 30px;
-    font-family: sans-serif;
     margin-top: 10px;
+    font-family: 'Nunito', sans-serif;
   }
   .buttonHolder {
     display: flex;
@@ -268,12 +271,13 @@
   }
 
   .kubUploadText {
-    height: 50px;
-    font-size: 31px;
+    height: auto;
     width: 295px;
     margin: 15px auto;
     color: aquamarine;
     text-align: center;
+    font-family: 'Amatic SC', cursive;
+    font-size: 60px;
   }
 
   .locationDropDown {
@@ -468,4 +472,6 @@ justify-content: space-evenly;
   margin-bottom: -10px;
   margin-top: -40px;
   text-align: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 80px;
 }

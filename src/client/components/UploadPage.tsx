@@ -21,8 +21,8 @@ const UploadPage = () => {
 
   ipcRenderer.on('clusterClient', (event: any, arg: any) => {
     //logic incase we have more than one cluster already rendered
-    if(Store.clusterCount < arg.length){
-      let newClusters = [];
+    if(Store.clusterCount){
+      let newClusters = Store.clusters;
       arg.forEach(el=> newClusters.push(el))
       setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
     }
@@ -65,7 +65,7 @@ const UploadPage = () => {
           </div>
 
         <div id="uploadDivForSubmitandBackButts">
-          <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info"/>
+          <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info" required={true}></input>
           <div className="buttonHolder">
             <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
             <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
@@ -74,14 +74,14 @@ const UploadPage = () => {
         <div className="locationDropDown">
           <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
           <option>Select Zone</option>
-          <option value='us-central1-a'>us-central1-a</option>
-          <option value='us-central1-b'>us-central1-b</option>
-          <option value='us-central1-c'>us-central1-c</option>
-          <option value='southamerica-east1-a'>southamerica-east1-a</option>
-          <option value='southamerica-east1-b'>southamerica-east1-b</option>
-          <option value='southamerica-east1-c'>southamerica-east1-c</option>
-          <option value='europe-west2-a'>europe-west2-a</option>
-          <option value='us-west1-a'>us-west1-a</option>
+          <option value='us-central1-a'>us-central 1-a</option>
+          <option value='us-central1-b'>us-central 1-b</option>
+          <option value='us-central1-c'>us-central 1-c</option>
+          <option value='southamerica-east1-a'>southamerica-east 1-a</option>
+          <option value='southamerica-east1-b'>southamerica-east 1-b</option>
+          <option value='southamerica-east1-c'>southamerica-east 1-c</option>
+          <option value='europe-west2-a'>europe-west 2-a</option>
+          <option value='us-west1-a'>us-west 1-a</option>
           </select>
         </div>
       </div>
