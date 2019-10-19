@@ -13,6 +13,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import DisplayContainer from './DisplayContainer';
 import { StoreContext } from '../../../store';
+import GCPDeploy from './gcpDeploy';
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
 
@@ -49,20 +50,23 @@ const UploadPage = () => {
       console.log('locStore: ', Store.gcploc)
     }
     else{
-      ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
-      setStore({...Store, uploadPageState: true });
+      // ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
+      // setStore({...Store, uploadPageState: true });
+      setStore({...Store, gcpDeployPage: true });
     }
   }
     
   return (
-    <>
-      { Store.uploadPageState ? 
-      <DisplayContainer /> :
-      <div className='uploadDiv'>
-          <div className="gcpImageContainer">
-            <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
-            <div className='kubUploadText'>Google Cloud Platform</div>
-          </div>
+    // <>
+    //   { Store.uploadPageState ? 
+    //   <DisplayContainer /> :
+<>
+        { Store.gcpDeployPage ? <GCPDeploy/> :
+        <div className='uploadDiv'>
+        <div className="gcpImageContainer">
+        <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
+        <div className='kubUploadText'>Google Cloud Platform</div>
+      </div>
 
         <div id="uploadDivForSubmitandBackButts">
           <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info" required={true}></input>
@@ -71,7 +75,11 @@ const UploadPage = () => {
             <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
           </div>
         </div>
-        <div className="locationDropDown">
+        </div>
+
+        }
+          
+        {/* <div className="locationDropDown">
           <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
           <option>Select Zone</option>
           <option value='us-central1-a'>us-central 1-a</option>
@@ -83,9 +91,8 @@ const UploadPage = () => {
           <option value='europe-west2-a'>europe-west 2-a</option>
           <option value='us-west1-a'>us-west 1-a</option>
           </select>
-        </div>
-      </div>
-      }
+        </div> */}
+      {/* </div> */}
     </>
   )
 }

@@ -11,7 +11,12 @@
 
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
+import LandingPage from './LandingPage'
 import {StoreContext} from '../../../store'
+import UploadPage from './UploadPage';
+import UploadPage2 from './UploadPage2';
+import GCPDeploy from './gcpDeploy';
+import AWSDeploy from './awsDeploy';
 
 const SideBar = () =>{
   const [Store, setStore] = useContext(StoreContext);
@@ -71,17 +76,20 @@ const SideBar = () =>{
 
   return(
       <div id='leSidebar'>
-        <div className="buttons">
-          <button className="SB" onClick={handleDeploy}> Deploy! </button>
-          <button className="SB" onClick ={handleBack}> Back </button>
+        { Store.uploadPageState ?
+        <div>
+        <UploadPage/> 
+        {/* <GCPDeploy/>  */}
+        </div> :
+          Store.uploadPageState2 ?
+          <div>
+        <UploadPage2/> 
+        {/* <AWSDeploy/> */}
         </div>
-        <center className="deployedTitle"><h3>Deployed Clusters</h3></center>
-        { Store.clusterCount > 0 &&
-        <div className="clusterDeets"> 
-          {clusters} 
-        </div>
+        : 
+        <LandingPage/>
         }
-    </div>
+       </div>
   )
 }
 

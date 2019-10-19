@@ -13,11 +13,11 @@ import * as THREE from 'three'
 import React, { useEffect, useRef, useContext, useLayoutEffect }from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
-import SideBar from './sidebar';
+// import SideBar from './sidebar';
 import {StoreContext} from '../../../store';
 
-const width = window.innerWidth * .735;
-const height = window.innerHeight * .98;
+const width = window.innerWidth;
+const height = window.innerHeight;
 const vizWidth = width;
 const fov = 100;
 const near = 920;
@@ -351,8 +351,8 @@ const Visualizer = () => {
   const pendpoint = useRef<HTMLSpanElement>(null)
 
   return (
-    <div>
-    <SideBar/>
+    // <div>
+    // <SideBar/>
       <div ref={ref} id="leCanvas">
         <div ref={divRefOne} id="tool-tip">
           <div ref={divRefTwo} id="point-tip" />
@@ -378,7 +378,7 @@ const Visualizer = () => {
           </div>
         </div>
       </div>
-    </div>
+    // </div>
     );
 };
 

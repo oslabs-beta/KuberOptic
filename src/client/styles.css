@@ -36,6 +36,7 @@
     min-width: 216px;
     min-height: 280px;
     border-style: inset;
+    z-index: 100000;
   }
   #tool-tip {
     display: none;

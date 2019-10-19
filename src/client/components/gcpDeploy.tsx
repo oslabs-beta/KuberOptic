@@ -55,12 +55,13 @@ const gcpDeploy = () =>{
   const handleSubmit = () =>{
     create(Store.credentials, input['zone'], input)
     const creds = JSON.parse(Store.credentials)
-    setStore({...Store, gcpDeployPage:false, uploadPageState: true})
+    // setStore({...Store, gcpDeployPage:false, uploadPageState: true})
     // ipcRenderer.send('getNewClusters', creds, Store.gcploc);
   }
 
   return (
     <div id="deployWrapper">
+      {/* <GetCluster/> */}
       <div className="inputPageDeploy">
       <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name" required={true}></input>
       <div id="deployDropDowns">
