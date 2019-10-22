@@ -11,90 +11,67 @@
 
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
-import LandingPage from './LandingPage'
 import {StoreContext} from '../../../store'
 import UploadPage from './UploadPage';
 import UploadPage2 from './UploadPage2';
-import GCPDeploy from './gcpDeploy';
-import AWSDeploy from './awsDeploy';
+
 
 const SideBar = () =>{
   const [Store, setStore] = useContext(StoreContext);
-  let clusters;
 
-  const handleDeploy = () =>{
-    if(Store.uploadPageState) {
-    setStore({...Store, gcpDeployPage:true})
-    }
-    if(Store.uploadPageState2) {
-    setStore({...Store, awsDeployPage:true})
-    }
-  }
-  const handleBack = ()=>{
-    setStore({
-      ...Store, 
-      landingPageState2:false, 
-      landingPageState:false,
-      uploadPageState:false,
-      uploadPageState2:false,
-    })
+  const myFunctionG = () => {
+    console.log(Store.uploadPageState);
+    setStore({...Store, 
+      uploadPageState: true,
+    });
   }
 
-  // note: using in-line styling (e.g. 'center', 'em') is generally bad practice
-  // it is better to style these things in a CSS sheet
-  // also, I don't think these things work for React components
-  if(Store.clusterCount && Store.uploadPageState2) {
-    clusters = Store.clusters.map(clust => {
-      return (
-      <div className ="cluster">
-        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center> 
-        <center className="clusterInformation"><p>
-            Status: <em>{clust.clusterStatus}</em>
-            <br></br>
-            Nodes: <em>{clust.nodeCount}</em>
-            <br></br>
-            Location: <em>{clust.location}</em>
-        </p></center>
-      </div>
-      )
-    })
+  // function to get to the Amazon Web Services upload page
+  const myFunctionA = () => {
+    console.log(Store.uploadPageState2);
+    setStore({...Store, 
+      uploadPageState2: true,
+    });
   }
 
-  // note: using in-line styling (e.g. 'center', 'em') is generally bad practice
-  // it is better to style these things in a CSS sheet
-  if (Store.clusterCount && Store.uploadPageState) {
-    clusters = Store.clusters.map(clust => {
-      return (
-      <div className ="cluster">
-        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
-        <center className="clusterInformation"><p>
-            Status: <em>{clust.clusterStatus}</em>
-            <br></br>
-            Nodes: <em>{clust.nodeCount}</em>
-            <br></br>
-            Location: <em>{clust.location}</em>
-        </p></center>
-      </div>
-      )
-    })
-  }
+//rendering of summary of deployed clusters might need to move into gcp deploy page
+  // if(Store.clusterCount && Store.uploadPageState2) {
+  //   clusters = Store.clusters.map(clust => {
+  //     return (
+  //     <div className ="cluster">
+  //       <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
+  //       <center className="clusterInformation"><p>
+  //           Status: <em>{clust.clusterStatus}</em>
+  //           <br></br>
+  //           Nodes: <em>{clust.nodeCount}</em>
+  //           <br></br>
+  //           Location: <em>{clust.location}</em>
+  //       </p></center>
+  //     </div>
+  //     )
+  //   })
+  // }
 
   // if uploadPageState is true, display UploadPage
   // else if uploadPageState2 is true, display UploadPage2
   // else display LandingPage
   return(
     <div id='leSidebar'>
-      { Store.uploadPageState ?
-        <div>
-          <UploadPage/>
-          {/* <GCPDeploy/>  */}
-        </div> :
-          Store.uploadPageState2 ?
-            <div>
-              <UploadPage2/> 
-              {/* <AWSDeploy/> */}
-            </div> : 
-              <LandingPage/>
+      { Store.uploadPageState ? <UploadPage/> :
+        Store.uploadPageState2 ? <UploadPage2/> :
+        <div id="displays">
+          <div className='mainDiv'>
+            <img className='kubLogo' src={'https://i.gifer.com/4P4X.gif'}/>
+            <div className="landingTitle">
+              <h1 className='title'>KuberOptic</h1>
+              <h3 className='text'>The Kubernetes Visualizer</h3>
+            </div>
+            <div className= "awsAndGcpLogos">
+              <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
+              <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
+            </div>
+          </div>
+        </div>
       }
     </div>
   )

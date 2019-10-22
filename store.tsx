@@ -7,6 +7,7 @@ export const StoreContextProvider = (props: any) => {
   
   const [Store, setStore] = useState({
     landingPageState: false,
+    landingPageState2: false,
     uploadPageState: false,
     uploadPageState2:false,
     gcpDeployPage:false,

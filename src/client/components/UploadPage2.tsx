@@ -11,7 +11,7 @@
 
 import * as React from 'react';
 import { useContext } from 'react';
-import DisplayContainer from './DisplayContainer';
+// import DisplayContainer from './DisplayContainer';
 import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
 
@@ -44,8 +44,18 @@ const UploadPage = () => {
   }
 
   const handleBack = ()=>{
-    setStore({...Store, landingPageState2: false})
-  }
+    setStore({
+      ...Store,
+      uploadPageState:false, 
+      uploadPageState2:false,
+      landingPageState: false,
+      landingPageState2: false,
+      credentials: null,
+      clusterCount: 0,
+      clusters: null, 
+      showVisual: false
+    });
+  };
 
   const handleSubmit = () => {
     if(typeof Store.awsSecret !== 'string' || typeof Store.awsKey !== 'string'){
