@@ -34,10 +34,11 @@ const UploadPage = () => {
       clusters: null
     });
   };
-  
+
+  // functionalilty for pressing 'submit' button
   const handleSubmit = () => {
     const creds = JSON.parse(Store.credentials); 
-    if(typeof creds !== 'object'){
+    if (typeof creds !== 'object') {
       console.log('Enter a JSON object from GCP');
       console.log('locStore: ', Store.gcploc)
     }

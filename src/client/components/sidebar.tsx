@@ -52,6 +52,9 @@ const SideBar = () =>{
   //   })
   // }
 
+  // if uploadPageState is true, display UploadPage
+  // else if uploadPageState2 is true, display UploadPage2
+  // else display LandingPage
   return(
     <div id='leSidebar'>
       { Store.uploadPageState ? <UploadPage/> :
