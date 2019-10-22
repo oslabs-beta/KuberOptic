@@ -12,8 +12,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { StoreContext } from '../../../store';
-// import GCPDeploy from './gcpDeploy';
-// require('events').EventEmitter.defaultMaxListeners = 25;
 import Checkbox from './subcomponents/Checkbox';
 
 const GcpGetClusters = () => {
