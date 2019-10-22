@@ -14,8 +14,9 @@ import { useContext } from 'react';
 import {StoreContext} from '../../../store'
 const [quickstart, create] = require('../../main/gcp/getGCPdata').default
 const { ipcRenderer } = require('electron');
+
 require('events').EventEmitter.defaultMaxListeners = 25;
-// import GetGCP from './getGCP'
+import GetGCP from './GcpGetClusters';
 import 'tachyons'
 
 // various inputs will be stored in this object and will be submitted when you call handleSubmit
@@ -84,7 +85,8 @@ const gcpDeploy = () =>{
 
   return (
     <div id="deployWrapper">
-      {/* <GetGCP/> */}
+      <GetGCP/>
+      
       <div className="inputPageDeploy">
         <h3 className="deployTitle">Deploy New GCP Cluster:</h3>
           <input id="deployClustName" 
