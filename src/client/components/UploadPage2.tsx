@@ -64,8 +64,8 @@ const UploadPage = () => {
   }
 
   return (
-    // <>
-    //   {Store.uploadPageState2 ? <DisplayContainer /> :
+    <>
+      {Store.uploadPageState2 ? <DisplayContainer /> :
       <div className='uploadDiv'>
         <div className="awsImageContainer">
           <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
@@ -79,8 +79,8 @@ const UploadPage = () => {
           <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>Back</button>
         </div>
       </div>
-    //   }   
-    // </>
+      }   
+    </>
   )
 }
 
