@@ -36,6 +36,7 @@
     min-width: 216px;
     min-height: 280px;
     border-style: inset;
+    z-index: 100000;
   }
   #tool-tip {
     display: none;
@@ -228,6 +229,7 @@
     display:block;
   }
   .loc{
+    /* used in UploadPage */
     height: 50px;
     border: dodgerblue solid 5px;
     border-radius: 5px;
@@ -396,7 +398,12 @@
   }
   
   #uploadSelectMenu {
-    width: 300px;
+    /* used in UploadPage */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
   }
 
   #uploadPage2SubmitandBackButts {
