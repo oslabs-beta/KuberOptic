@@ -19,17 +19,6 @@ export default function Checkboxes(props) {
   // checked: Store.gpcloc['some-location']
   // handleChange: handleLocation function
 
-
-  // original code from Material-UI below
-  // I will instead pass down the state and functions from the parent
-  // const [state, setState] = React.useState({
-  //   checked: false,
-  // });
-
-  // const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setState({ ...state, [name]: event.target.checked });
-  // };
-
   return (
     <div>
       <FormControlLabel

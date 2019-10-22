@@ -74,25 +74,10 @@ const UploadPage = () => {
         checked={Store[location]}
         handleChange={handleLocation}
         value={location}
-        // maybe add a 'className' here
+        // maybe add a 'className' here, if needed
       />
     );
   });
-
-  // STILL NEED TO FINISH THIS AHH
-  // original things - figure out how to link checkboxes to form
-  // <select id='deployLoc' className='loc' onChange={handleLocation}>
-  //   <option selected>Choose a location to host</option>
-  //   <option value='us-central1-a'>us-central1-a</option>
-  //   <option value='us-central1-b'>us-central1-b</option>
-  //   <option value='us-central1-c'>us-central1-c</option>
-  //   <option value='southamerica-east1-a'>southamerica-east1-a</option>
-  //   <option value='southamerica-east1-b'>southamerica-east1-b</option>
-  //   <option value='southamerica-east1-c'>southamerica-east1-c</option>
-  //   <option value='europe-west2-a'>europe-west2-a</option>
-  //   <option value='us-west1-a'>us-west1-a</option>
-  // </select>
-
 
   // functionalilty for pressing 'submit' button
   const handleSubmit = () => {
@@ -110,9 +95,6 @@ const UploadPage = () => {
 
 
   return (
-    // <>
-    //   { Store.uploadPageState ? 
-    //   <DisplayContainer /> :
     <>
       { Store.gcpDeployPage ? <GCPDeploy/> :
         <div className='uploadDiv'>
@@ -134,23 +116,6 @@ const UploadPage = () => {
           </div>
         </div>
       }
-
-
-          
-        {/* <div className="locationDropDown">
-          <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
-          <option>Select Zone</option>
-          <option value='us-central1-a'>us-central 1-a</option>
-          <option value='us-central1-b'>us-central 1-b</option>
-          <option value='us-central1-c'>us-central 1-c</option>
-          <option value='southamerica-east1-a'>southamerica-east 1-a</option>
-          <option value='southamerica-east1-b'>southamerica-east 1-b</option>
-          <option value='southamerica-east1-c'>southamerica-east 1-c</option>
-          <option value='europe-west2-a'>europe-west 2-a</option>
-          <option value='us-west1-a'>us-west 1-a</option>
-          </select>
-        </div> */}
-      {/* </div> */}
     </>
   )
 }

@@ -19,11 +19,12 @@ import SideBar from './sidebar';
 // import LandingPage from './LandingPage';
 
 const DisplayContainer = () => {
-  const [Store, setStore] = useContext(StoreContext)
-    return (
-      <div className='displayContainer'>
-        <SideBar/>
-        <Visualizer/>
+  const [Store, setStore] = useContext(StoreContext);
+
+  return (
+    <div className='displayContainer'>
+      <SideBar/>
+      <Visualizer/>
       {/* { Store.gcpDeployPage ?
         <Deploy/> : 
         Store.awsDeployPage ?
@@ -31,7 +32,7 @@ const DisplayContainer = () => {
         <Visualizer />
       } */}
     </div>
-  ) // maybe go back and remove these parentheses later; don't think they're necessary -Tim
-}
+  );
+};
 
 export default DisplayContainer;
