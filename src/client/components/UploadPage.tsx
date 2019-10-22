@@ -27,8 +27,8 @@ const UploadPage = () => {
       ...Store,
       uploadPageState:false, 
       uploadPageState2:false,
-      landingPageState: false,
-      landingPageState2: false,
+      // landingPageState: false,
+      // landingPageState2: false,
       credentials: null,
       clusterCount: 0,
       clusters: null

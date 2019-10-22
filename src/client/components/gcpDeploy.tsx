@@ -35,16 +35,16 @@ const gcpDeploy = () =>{
   }
   const handleLoc = (event) => {
     const location = event.currentTarget.value
-    setStore({...Store, gcploc: location})
+    // setStore({...Store, gcploc: location})
     input['zone'] = location;
   }
   const handleBack = () => {
     return setStore({
       ...Store,
       uploadPageState:false, 
-      uploadPageState2:false,
-      landingPageState: false,
-      landingPageState2: false,
+      // uploadPageState2:false,
+      // landingPageState: false,
+      // landingPageState2: false,
       gcpDeployPage:false,
       credentials: null,
       clusterCount: 0,
@@ -87,7 +87,6 @@ const gcpDeploy = () =>{
       {/* <GetGCP/> */}
       <div className="inputPageDeploy">
         <h3 className="deployTitle">Deploy New GCP Cluster:</h3>
-        <form>
           <input id="deployClustName" 
           name="name"
           className='clusterType' 
@@ -176,7 +175,6 @@ const gcpDeploy = () =>{
             <button id="deploySubmit" className='uploadButtD' onClick={handleDeploy}> Deploy </button>
             <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
           </div>
-        </form>
       </div>
     </div>
   )
