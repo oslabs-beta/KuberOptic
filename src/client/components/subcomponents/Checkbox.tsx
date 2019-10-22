@@ -2,8 +2,8 @@
  * ************************************
  *
  * @module  Checkbox.tsx
- * @author
- * @date
+ * @author Timothy Mai 
+ * @date 10/21/19
  * @description creates a checkbox component
  *
  * ************************************

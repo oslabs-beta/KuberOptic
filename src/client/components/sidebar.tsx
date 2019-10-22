@@ -40,11 +40,14 @@ const SideBar = () =>{
     })
   }
 
+  // note: using in-line styling (e.g. 'center', 'em') is generally bad practice
+  // it is better to style these things in a CSS sheet
+  // also, I don't think these things work for React components
   if(Store.clusterCount && Store.uploadPageState2) {
     clusters = Store.clusters.map(clust => {
       return (
       <div className ="cluster">
-        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
+        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center> 
         <center className="clusterInformation"><p>
             Status: <em>{clust.clusterStatus}</em>
             <br></br>
@@ -57,6 +60,8 @@ const SideBar = () =>{
     })
   }
 
+  // note: using in-line styling (e.g. 'center', 'em') is generally bad practice
+  // it is better to style these things in a CSS sheet
   if (Store.clusterCount && Store.uploadPageState) {
     clusters = Store.clusters.map(clust => {
       return (

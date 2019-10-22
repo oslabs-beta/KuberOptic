@@ -23,6 +23,7 @@ const UploadPage = () => {
 
   ipcRenderer.on('clusterClient', (event: any, arg: any) => {
     //logic incase we have more than one cluster already rendered
+    // this was from the original team - check if this still works or not
     if(Store.clusterCount){
       let newClusters = Store.clusters;
       arg.forEach(el=> newClusters.push(el))
@@ -75,6 +76,7 @@ const UploadPage = () => {
         handleChange={handleLocation}
         value={location}
         // maybe add a 'className' here, if needed
+        // original class name: .loc
       />
     );
   });
@@ -93,7 +95,6 @@ const UploadPage = () => {
     }
   }
 
-
   return (
     <>
       { Store.gcpDeployPage ? <GCPDeploy/> :
@@ -103,6 +104,10 @@ const UploadPage = () => {
             <div className='kubUploadText'>Google Cloud Platform</div>
           </div>
 
+          <div id='uploadSelectMenu'>
+            {deployLocations}
+          </div>
+
           <div id="uploadDivForSubmitandBackButts">
             <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info" required={true}></input>
             <div className="buttonHolder">
@@ -110,10 +115,7 @@ const UploadPage = () => {
               <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
             </div>
           </div>
-
-          <div>
-            {deployLocations}
-          </div>
+          
         </div>
       }
     </>
