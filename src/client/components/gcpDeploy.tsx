@@ -55,13 +55,10 @@ const gcpDeploy = () =>{
     create(Store.credentials, input['zone'], input)
     const creds = JSON.parse(Store.credentials)
     setStore({...Store,
-      gcpDeployPage:true, 
+      gcpDeployPage:false, 
       uploadPageState: true
     })
     ipcRenderer.send('getNewClusters', creds, Store.gcploc);
-    // document.getElementById('deployChooseClustType').innerHTML= '';
-    // document.getElementById('deployClustName').value = '';
-    // document.getElementById('nodeCounter').innerHTML = '';
   }
 
   ipcRenderer.on('newClusters', (event: any, arg: any) => {
@@ -73,12 +70,14 @@ const gcpDeploy = () =>{
         ...Store,
         clusters: newClusters,
         clusterCount: newClusters.length,
+        gcpDeployPage:true,
        })
     }
     else setStore({
       ...Store,
        clusters: arg, 
        clusterCount: arg.length,
+       gcpDeployPage:true,
        });
     event.returnValue = 'done';
   })
@@ -88,12 +87,14 @@ const gcpDeploy = () =>{
       {/* <GetGCP/> */}
       <div className="inputPageDeploy">
         <h3 className="deployTitle">Deploy New GCP Cluster:</h3>
-        <input id="deployClustName" 
-        className='clusterType' 
-        type="text" 
-        onChange={handleName} 
-        placeholder="cluster name" 
-        required={true}></input>
+        <form>
+          <input id="deployClustName" 
+          name="name"
+          className='clusterType' 
+          type="text" 
+          onChange={handleName} 
+          placeholder="cluster name" 
+          required={true}></input>
 
         <div id="deployDropDowns">
           <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
@@ -170,10 +171,12 @@ const gcpDeploy = () =>{
             </form> 
           </div>
 
-        <div id='buts'>
-          <button id="deploySubmit" className='uploadButtD' onClick={handleDeploy}> Deploy </button>
-          <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
-        </div>
+
+          <div id='buts'>
+            <button id="deploySubmit" className='uploadButtD' onClick={handleDeploy}> Deploy </button>
+            <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
+          </div>
+        </form>
       </div>
     </div>
   )
