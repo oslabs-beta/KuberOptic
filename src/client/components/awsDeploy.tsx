@@ -20,12 +20,22 @@ const awsDeploy = () =>{
     }
 
     const handleLoc = (e) => {
-
-      setStore({...Store, awsDeployRegion: event.currentTarget.value})
+      setStore({...Store, awsDeployRegion: e.currentTarget.value})
       //  input['zone'] = event.currentTarget.value;
     }
     const handleBack = ()=>{
-    setStore({...Store, awsDeployPage:false})
+      return setStore({
+        ...Store,
+        uploadPageState2:false, 
+        clusterCount:0,
+        awsKey:null,
+        awsSecret:null,
+        awsClusterName: [],
+        awsLocation:null,
+        awsDeployPage: false,
+        awsDeployName: null,
+        awsDeployRegion: null
+      });
     }
     const handleSubmit = () =>{
         create(Store.credentials, input['zone'], input)
@@ -63,27 +73,19 @@ const awsDeploy = () =>{
     }
 
     return (
-    <div>
+    <div className="deployWrapper">
       <div className="fetchAWS">
-        <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="Cluster Name"></input>
+        <h3 className="deployTitle">Display AWS Clusters:</h3> 
+        <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="clusterName"></input>
         <div id="uploadPage2SubmitandBackButts">
           <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Node</button>
           <button id="uploadPage2BackButt" className = 'backButton' onClick={handleRemove}>Remove Node</button>
         </div>
       </div>
         <div className="inputPageDeploy">
-        <input className='awsDeployClusterName' type="text" onChange={handleNewName} placeholder="Cluster Name"/>
+        <h3 className="deployTitle">Deploy New AWS Cluster:</h3>
+        <input className='awsDeployClusterName' type="text" onChange={handleNewName} placeholder="clusterName"/>
         <div>
-
-        {/* <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
-        <option selected>Choose a cluster type</option>
-        <option value='affordable'>affordable</option>
-        <option value='standard'>standard</option>
-        <option value='cpuIntensive'>cpuIntensive</option>
-        <option value='memoryIntensive'>memoryIntensive</option>
-        <option value='gpuAcceleratedComputing'>gpuAcceleratedComputing</option>
-        <option value='highly available'>highly available</option>
-        </select> */}
 
         <select id='deployLoc' className='loc' onChange={handleLoc}>
         <option selected>Choose a location to host</option>
@@ -100,90 +102,7 @@ const awsDeploy = () =>{
         <button id="uploadPage2Submit" className="uploadButt">Delete Node</button>
         <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
         </div>
-        </div>
-
-        {/* <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
-
-        <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>Affordable</strong> <br/>
-           </p>
-        </div>
-        <div id="hiddenAf">
-            Good for starting your first cluster for lightweight apps <br/>
-            Machine type:g1-small <br/>
-            Autoscaling:Disabled <br/>
-            Stackdriver Logging and Monitoring: Disabled <br/>
-            Boot disk size: 30GB <br/>
-        </div>
-
-        <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>Standard</strong> <br/>
-           </p>
-        </div>
-        <div id="hiddenAf">
-            Continuous integration, web serving, backend<br/>
-            Machine type:n1-standard <br/>
-            Autoscaling:Disabled <br/>
-            Stackdriver Logging and Monitoring: Disabled <br/>
-            Boot disk size: 100GB <br/>
-        </div>
-
-        <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>CPU-Intensive</strong> <br/>
-           </p>
-        </div>
-        <div id="hiddenAf">
-            Web crawling or anything that requires more cpu<br/>
-            Machine type:n1-highcpu-4 <br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
-        </div>
-
-        <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>Memory-Intensive</strong> <br/>
-           </p>
-        </div>
-        <div id="hiddenAf">
-            Databases, analytics, anything that takes memory<br/>
-            Machine type:n1-highmem-2 <br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
-        </div>
-
-        <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>GPU Accelerated Computing</strong> <br/>
-           </p>
-        </div>
-        <div id="hiddenAf">
-            Machine Learning, video transcoding, scientific computations<br/>
-            Machine type:n1-highmem-2 + GPU<br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
-        </div>
-
-        <div id="clicker" tabIndex={1} >
-           <p>
-           <strong>Highly available</strong> <br/>
-           </p>
-        </div>
-        <div id="hiddenAf">
-            Most demanding requirements<br/>
-            Machine type:n1-highmem-2 + GPU <br/>
-            Autoscaling:True <br/>
-            Stackdriver Logging and Monitoring: Enabled <br/>
-            Boot disk size: 100GB <br/>
-        </div>
-
-        </div> */}
-
+      </div>
     </div>
         )
 }
