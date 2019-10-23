@@ -2,6 +2,7 @@ const fetchLocal = require('./local/local').default
 const [fetchGCP, create] = require('./gcp/getGCPdata').default;
 const [fetchAws, createAWS] = require('./aws/getAWSData').default
 const { app, ipcMain, BrowserWindow } = require('electron');
+import {Store} from '../../store'
 // const electron = require('electron')
 // require('events').EventEmitter.defaultMaxListeners = 15;
 
@@ -35,12 +36,27 @@ ipcMain.on('getNewClusters', (event: any, zone: any, nameTypeCount: any) => {
 })
 
   //
+
+ipcMain.on('aws-login', () => {
+  // setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+})
+
 ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
   fetchAws(arg).then(res=>{
+    console.log('response on main ', res);
     event.sender.send('clusterClient2', res)
-    console.log('res in aws: ', res)
+    // console.log('res in aws: ', res)
+    // console.log('clusters: ', Store.clusters, 'cluster count: ', Store.clusterCount, 'aws cluster names: ', Store.awsClusterName)
     })
   .catch((e)=>console.log(e))
+})
+
+ipcMain.on('create-aws', (event: any, arg: any) => {
+  createAWS(arg).then(res => {
+    console.log('create response on main :', res);
+    event.sender.send('createCluster2', res)
+  })
+  .catch((e) => console.log(e))
 })
 
 ipcMain.on('getNewClusters2', (event: any, arg: any) => {

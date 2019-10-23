@@ -3,6 +3,8 @@ import fs from 'fs';
 const AWS = require('aws-sdk')
 let nodes = Math.ceil(Math.random() * 5)
 
+
+
 //-------------function to get clusters-------------\\
 async function quickstart(params){
 
@@ -20,9 +22,10 @@ async function quickstart(params){
 
   let nameObj = {name: params.name}
 
+  let clusterArray = [];
+
   const clusterData = await new Promise((resolve, reject) => {
     eks.describeCluster(nameObj, function(err, data) {
-      const clusterArray = [];  
       if (err) console.log(err, err.stack); // an error occurred  
       else{
         let awsDat = {};
@@ -39,6 +42,7 @@ async function quickstart(params){
     })
       // clusterArray.push(awsDat)
   })
+  // console.log('clusters: ', Store.clusters, 'cluster count: ', Store.clusterCount, 'aws cluster names: ', Store.awsClusterName)
   return clusterData;
 }
 
@@ -50,7 +54,7 @@ async function createAWS (params) {
       endpointPublicAccess: true,
     },
     roleArn: 'arn:aws:iam::471961211086:user/KuberOptic',
-    version: '1.10'
+    version: '1.14'
   }
   const eks = new AWS.EKS({region: 'us-east-2'});
   const createClusties = await new Promise((resolve, reject) => {
@@ -60,8 +64,11 @@ async function createAWS (params) {
       resolve(data);
     })
   })
+  
   return createClusties;
 }
+
+
 // AWS.config.getCredentials();
 // quickstart({name: 'test'});
 
