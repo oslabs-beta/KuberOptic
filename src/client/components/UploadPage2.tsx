@@ -11,7 +11,7 @@
 
 import * as React from 'react';
 import { useContext } from 'react';
-import DisplayContainer from './DisplayContainer';
+// import DisplayContainer from './DisplayContainer';
 import {StoreContext} from '../../../store';
 const { ipcRenderer } = require('electron');
 import AWSDeploy from './awsDeploy'
@@ -52,7 +52,7 @@ const UploadPage2 = () => {
   //   setStore({...Store, awsClusterName: e.currentTarget.value})
   // }
 
-  const handleBack = () => {
+  const handleBack = ()=>{
     setStore({
       ...Store,
       uploadPageState:false, 
