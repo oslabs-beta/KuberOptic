@@ -10,7 +10,7 @@
  */
 
 import * as React from 'react';
-import LandingPage from './LandingPage';
+import DisplayContainer from './DisplayContainer';
 import '../styles.css';
 import { StoreContextProvider } from '../../../store';;
 import 'tachyons'; // tachyons is a styling tool - figure out if this is being used or not
@@ -20,7 +20,7 @@ function App() {
   return (
     <StoreContextProvider>
       <div className='app'>
-        <LandingPage/>
+        <DisplayContainer/>
       </div>
     </StoreContextProvider>
   );
