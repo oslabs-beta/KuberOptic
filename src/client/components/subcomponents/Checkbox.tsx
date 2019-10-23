@@ -29,7 +29,7 @@ export default function Checkboxes(props) {
             value={props.value}
           />
         }
-        label={props.value}
+        label={props.label}
       />
     </div>
   );

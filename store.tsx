@@ -17,12 +17,13 @@ export const StoreContextProvider = (props: any) => {
       'us-central1-a': false,
       'us-central1-b': false,
       'us-central1-c': false,
+      'us-west1-a': false,
       'southamerica-east1-a': false,
       'southamerica-east1-b': false,
       'southamerica-east1-c': false,
-      'europe-west2-a': false,
-      'us-west1-a': false
+      'europe-west2-a': false
     }, 
+    gcpdeploylocation: null,
     clusterCount:0,
     awsKey:null,
     awsSecret:null,

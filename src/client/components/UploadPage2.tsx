@@ -52,8 +52,7 @@ const UploadPage = () => {
       landingPageState2: false,
       credentials: null,
       clusterCount: 0,
-      clusters: null, 
-      showVisual: false
+      clusters: null
     });
   };
 

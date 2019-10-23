@@ -13,6 +13,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { StoreContext } from '../../../store';
 import GCPDeploy from './gcpDeploy';
+import Deploying from './deploying';
 require('events').EventEmitter.defaultMaxListeners = 25;
 
 const UploadPage = () => {
@@ -47,7 +48,8 @@ const UploadPage = () => {
     
   return (
     <>
-      { Store.gcpDeployPage ? <GCPDeploy/> :
+      { Store.deploying ? <Deploying/> :
+        Store.gcpDeployPage ? <GCPDeploy/> :
       <div className='uploadDiv'>
         <div className="gcpImageContainer">
         <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>

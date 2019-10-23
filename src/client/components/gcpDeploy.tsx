@@ -20,24 +20,24 @@ import GetGCP from './GcpGetClusters';
 import 'tachyons'
 
 // various inputs will be stored in this object and will be submitted when you call handleSubmit
-let input = {};
+let deployVals = {};
 
 const gcpDeploy = () =>{
   const [Store, setStore] = useContext(StoreContext);
 
   const handleName = (event) => {
-    input['name'] = event.currentTarget.value;
+    deployVals['name'] = event.currentTarget.value;
   }
   const handleType = (event) => {
-    input['clusterType'] = event.currentTarget.value;
+    deployVals['clusterType'] = event.currentTarget.value;
   }
   const handleNodeCount = (event) => {
-    input['count'] = event.currentTarget.value;
+    deployVals['count'] = event.currentTarget.value;
   }
   const handleLoc = (event) => {
     const location = event.currentTarget.value
     // setStore({...Store, gcploc: location})
-    input['zone'] = location;
+    deployVals['zone'] = location;
   }
   const handleBack = () => {
     return setStore({
@@ -53,13 +53,13 @@ const gcpDeploy = () =>{
     });
   }
   const handleDeploy = () =>{
-    create(Store.credentials, input['zone'], input)
+    create(Store.credentials, deployVals['zone'], deployVals)
     const creds = JSON.parse(Store.credentials)
     setStore({...Store,
-      gcpDeployPage:false, 
-      uploadPageState: true
+      gcpDeployPage:false,
+      deploying: true,
     })
-    ipcRenderer.send('getNewClusters', creds, Store.gcploc);
+    ipcRenderer.send('getNewClusters', creds, Store.gcpdeploylocation);
   }
 
   ipcRenderer.on('newClusters', (event: any, arg: any) => {
@@ -71,6 +71,7 @@ const gcpDeploy = () =>{
         ...Store,
         clusters: newClusters,
         clusterCount: newClusters.length,
+        deploying: false,
         gcpDeployPage:true,
        })
     }
@@ -78,6 +79,7 @@ const gcpDeploy = () =>{
       ...Store,
        clusters: arg, 
        clusterCount: arg.length,
+       deploying: false,
        gcpDeployPage:true,
        });
     event.returnValue = 'done';

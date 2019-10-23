@@ -92,7 +92,7 @@ const Visualizer = () => {
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [2400*i -2400,1]; // what is the purpose of these numbers?
+        const position = [2400 * i - 2400, 1]; // what is the purpose of these numbers?
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
