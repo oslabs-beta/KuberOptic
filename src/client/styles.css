@@ -187,7 +187,22 @@ canvas {
   flex-direction: row;
   justify-content: space-evenly;
 }
-
+.fetchAWS {
+  height: 30%;
+  width: 100%;
+  padding-top: 50px;
+}
+.awsGetClusterName {
+  width: 90%;
+  margin: 20px 10px auto;
+  height: 40px;
+}
+.awsDeployClusterName {
+  display: flex;
+  width: 90%;
+  height: 40px;
+  margin: 20px auto;
+}
 
 #clicker {
   background-color:lightblue;
@@ -305,9 +320,9 @@ canvas {
 }
 
 #deployLoc {
-  width: 49%;
-  margin-bottom: 5px;
-  margin-left: 2px;
+  display: flex;
+  width: 80%;
+  margin: 10px auto;
 }
 
 #infobox{
@@ -435,6 +450,10 @@ canvas {
   background-color: azure;
 }
 #deployWrapper {
+  height: 100%;
+  width:100%;
+}
+.deployWrapper {
   height: 100%;
   width:100%;
 }
