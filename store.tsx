@@ -26,9 +26,11 @@ export const StoreContextProvider = (props: any) => {
     clusterCount:0,
     awsKey:null,
     awsSecret:null,
-    awsClusterName:null,
+    awsClusterName: [],
     awsLocation:null,
-    awsDeployPage: false
+    awsDeployPage: false,
+    awsDeployName: null,
+    awsDeployRegion: null
   })
 
   return (
