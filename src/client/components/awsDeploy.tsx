@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
-const [quickstart, create] = require('../../main/aws/getAWSData').default
+const [fetchAWS, createAWS] = require('../../main/aws/getAWSData').default
 import 'tachyons'
 const { ipcRenderer } = require('electron');
 let input = {};
@@ -9,7 +9,7 @@ let input = {};
 const awsDeploy = () =>{
     const [Store, setStore] = useContext(StoreContext);
     
-    const handleNewName = (e) => {
+    const handleDeployName = (e) => {
         // input['name'] = event.currentTarget.value;
         setStore({...Store, awsDeployName: e.currentTarget.value})
     }
@@ -21,14 +21,21 @@ const awsDeploy = () =>{
 
     const handleLoc = (e) => {
 
-      setStore({...Store, awsDeployRegion: event.currentTarget.value})
+      setStore({...Store, awsDeployRegion: e.currentTarget.value})
       //  input['zone'] = event.currentTarget.value;
     }
     const handleBack = ()=>{
     setStore({...Store, awsDeployPage:false})
     }
-    const handleSubmit = () =>{
-        create(Store.credentials, input['zone'], input)
+    const handleDeploySubmit = () =>{
+      const arg = {
+        name: Store.awsDeployName,
+        accessKeyId: Store.awsKey,
+        secretAccessKey: Store.awsSecret,
+        region: Store.awsDeployRegion
+      }
+        // create(Store.credentials, input['zone'], input)
+
         setStore({...Store, awsDeployPage: true})
     }
 
@@ -41,6 +48,7 @@ const awsDeploy = () =>{
       }
       ipcRenderer.send('asynchronous-message2', arg)
       setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+      createAWS(arg)
       }
 
 
@@ -67,12 +75,12 @@ const awsDeploy = () =>{
       <div className="fetchAWS">
         <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="Cluster Name"></input>
         <div id="uploadPage2SubmitandBackButts">
-          <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Node</button>
-          <button id="uploadPage2BackButt" className = 'backButton' onClick={handleRemove}>Remove Node</button>
+          <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Cluster</button>
+          <button id="uploadPage2BackButt" className = 'backButton' onClick={handleRemove}>Remove Cluster</button>
         </div>
       </div>
         <div className="inputPageDeploy">
-        <input className='awsDeployClusterName' type="text" onChange={handleNewName} placeholder="Cluster Name"/>
+        <input className='awsDeployClusterName' type="text" onChange={handleDeployName} placeholder="Cluster Name"/>
         <div>
 
         {/* <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
@@ -96,8 +104,8 @@ const awsDeploy = () =>{
         </div>
 
         <div id='buts'>
-        <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Deploy Node</button>
-        <button id="uploadPage2Submit" className="uploadButt">Delete Node</button>
+        <button id="uploadPage2Submit" className='uploadButt' onClick={handleDeploySubmit}>Deploy Cluster</button>
+        <button id="uploadPage2Submit" className="uploadButt">Delete Cluster</button>
         <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
         </div>
         </div>
