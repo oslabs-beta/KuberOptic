@@ -28,11 +28,13 @@ ipcMain.on('asynchronous-message', (event: any, arg1: any, arg2: any) => {
     event.sender.send('clusterClient', res)
   }).catch((e)=>console.log(e))
 })
-ipcMain.on('getNewClusters', (event: any, arg1: any, arg2: any) => {
-  getGcp(arg1, arg2).then(res=>{
+
+ipcMain.on('getNewClusters', (event: any, zone: any, nameTypeCount: any) => {
+  getGcp(zone, nameTypeCount).then(res=>{
     event.sender.send('newClusters', res)
   }).catch((e)=>console.log(e))
 })
+
   //
 
 ipcMain.on('aws-login', () => {

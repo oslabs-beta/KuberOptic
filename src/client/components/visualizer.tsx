@@ -10,19 +10,10 @@
  */
 
 import * as THREE from 'three'
-import React, { useEffect, useRef, useContext, useLayoutEffect }from 'react'
+import React, { useEffect, useRef, useContext }from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
-// import SideBar from './sidebar';
 import {StoreContext} from '../../../store';
-
-const width = window.innerWidth;
-const height = window.innerHeight;
-const vizWidth = width;
-const fov = 100;
-const near = 920;
-const far = 3000;
-
 
 // -----------fakeStore----------- if needed to test
 
@@ -52,14 +43,29 @@ const far = 3000;
 //   }
 // ]
 
-
 const Visualizer = () => {
+  
+  let [store, setStore] = useContext(StoreContext);
 
- let [store, setStore] = useContext(StoreContext);
- useEffect(() => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const vizWidth = width;
+  const fov = 100;
+  const near = 920;
+  const far = 3000;
+  
+  useEffect(() => {
     if(store.clusters != null){
+
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
+      // if (divRefOne.current.hasChildNodes()) {
+      //   while (divRefOne.current.childNodes) {
+      //     //The list is LIVE so it will re-index each call
+      //     let child = divRefOne.current.firstChild
+      //     divRefOne.current.removeChild(child);
+      //   }
+      // }
       ref.current.appendChild(renderer.domElement);
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
       //---------------number of hexagons---------------\\
@@ -86,7 +92,7 @@ const Visualizer = () => {
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [2400*i -2400,1]; // what is the purpose of these numbers?
+        const position = [2400 * i - 2400, 1]; // what is the purpose of these numbers?
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
@@ -337,7 +343,7 @@ const Visualizer = () => {
         updateTooltip();
       }
     }
-  });
+});
 
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
@@ -351,35 +357,34 @@ const Visualizer = () => {
   const pendpoint = useRef<HTMLSpanElement>(null)
 
   return (
-    // <div>
-    // <SideBar/>
-      <div ref={ref} id="leCanvas">
-        <div ref={divRefOne} id="tool-tip">
-          <div ref={divRefTwo} id="point-tip" />
-          
-          <div> 
-            status: <span ref={pStatus}/> 
-          </div>
-          
-          <div>
-            Time Created: <span ref={pTime}/>
-          </div>
-          
-          <div>
-            Cluster Location: <span ref={pLocation}/>
-          </div>
-          
-          <div>
-            nodeCount:<span ref={pNode}/>
-          </div>
-          
-          <div>
-            Endpoint: <span ref={pendpoint}/>
-          </div>
+    <>
+    <div ref={ref} id="leCanvas">
+      <div ref={divRefOne} id="tool-tip">
+        <div ref={divRefTwo} id="point-tip" />
+        
+        <div> 
+          status: <span ref={pStatus}/> 
+        </div>
+        
+        <div>
+          Time Created: <span ref={pTime}/>
+        </div>
+        
+        <div>
+          Cluster Location: <span ref={pLocation}/>
+        </div>
+        
+        <div>
+          nodeCount:<span ref={pNode}/>
+        </div>
+        
+        <div>
+          Endpoint: <span ref={pendpoint}/>
         </div>
       </div>
-    // </div>
-    );
+    </div>
+    </>
+  );
 };
 
 export default Visualizer;
