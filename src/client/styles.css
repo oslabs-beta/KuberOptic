@@ -196,6 +196,7 @@
   font-family: sans-serif;
   margin-top: 10px;
 }
+
 .buttonHolder {
   display: flex;
   flex-direction: row;
@@ -225,20 +226,21 @@
   background-color: rgb(255, 255, 255);
 }
 
-.inputPageDeploy{
+/* .inputPageDeploy{
   display: flex;
   flex-direction: column;
   width: 500px;
   height: 100%;
   margin: 0px auto;
   padding-top: 50px;
-}
+} */
+
 #displays {
   width: 100%;
   height: 100%;
 }
 .awsAndGcpLogos {
-  width: 400px;
+  /* width: 400px; */
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -375,13 +377,14 @@
 
 .uploadButtD {
   height: 50px;
-  width: 175px;
+  width: 100px;
   border: dodgerblue solid 5px;
   border-radius: 5px;
+  margin-top: 30px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bold;
   font-size: 15px;
-  background-color: azure;
+  background-color: rgb(255, 255, 255);
 }
 
 #deployLoc {
@@ -414,9 +417,9 @@
   margin-left: 2px;
 }
 
-#deployClustName {
-  margin: 50px auto;
-  width: 400px;
+.awsDeployClusterName {
+  margin: 10px auto;
+  width: 325px;
 }
 #deployDropDowns {
   width: 100%;
@@ -509,4 +512,9 @@
   text-align: center;
   font-family: 'Amatic SC', cursive;
   font-size: 80px;
+}
+
+.awsGetClusterName {
+  margin: 10px auto;
+  width: 325px;
 }

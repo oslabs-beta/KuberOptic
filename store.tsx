@@ -6,18 +6,21 @@ export const StoreContextProvider = (props: any) => {
   
   const [Store, setStore] = useState({
     landingPageState: false,
+    landingPageState2: false,
     uploadPageState: false,
     uploadPageState2:false,
     gcpDeployPage:false,
     credentials: {}, //google
-    clusters: null,
+    clusters: [],
     gcploc:null,
     clusterCount:0,
     awsKey:null,
     awsSecret:null,
-    awsClusterName:null,
+    awsClusterName: [],
     awsLocation:null,
-    awsDeployPage: false
+    awsDeployPage: false,
+    awsDeployName: null,
+    awsDeployRegion: null
   })
 
   return (

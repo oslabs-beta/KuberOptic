@@ -22,14 +22,14 @@ const SideBar = () =>{
   const [Store, setStore] = useContext(StoreContext);
   let clusters;
 
-  const handleDeploy = () =>{
-    if(Store.uploadPageState) {
-    setStore({...Store, gcpDeployPage:true})
-    }
-    if(Store.uploadPageState2) {
-    setStore({...Store, awsDeployPage:true})
-    }
-  }
+  // const handleDeploy = () =>{
+  //   if(Store.uploadPageState) {
+  //   setStore({...Store, gcpDeployPage:true})
+  //   }
+  //   if(Store.uploadPageState2) {
+  //   setStore({...Store, awsDeployPage:true})
+  //   }
+  // }
   const handleBack = ()=>{
     setStore({
       ...Store, 
@@ -44,14 +44,14 @@ const SideBar = () =>{
     clusters = Store.clusters.map(clust => {
       return (
       <div className ="cluster">
-        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
-        <center className="clusterInformation"><p>
+        <h4 className="clusterTitle"><em>{clust.clusterName}</em></h4>
+        <p className="clusterInformation">
             Status: <em>{clust.clusterStatus}</em>
             <br></br>
             Nodes: <em>{clust.nodeCount}</em>
             <br></br>
             Location: <em>{clust.location}</em>
-        </p></center>
+        </p>
       </div>
       )
     })
@@ -61,14 +61,14 @@ const SideBar = () =>{
     clusters = Store.clusters.map(clust => {
       return (
       <div className ="cluster">
-        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
-        <center className="clusterInformation"><p>
+        <h4 className="clusterTitle"><em>{clust.clusterName}</em></h4>
+        <p className="clusterInformation">
             Status: <em>{clust.clusterStatus}</em>
             <br></br>
             Nodes: <em>{clust.nodeCount}</em>
             <br></br>
             Location: <em>{clust.location}</em>
-        </p></center>
+        </p>
       </div>
       )
     })

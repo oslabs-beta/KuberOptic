@@ -3,30 +3,76 @@ import { useContext } from 'react';
 import {StoreContext} from '../../../store'
 const [quickstart, create] = require('../../main/aws/getAWSData').default
 import 'tachyons'
+const { ipcRenderer } = require('electron');
 let input = {};
 
 const awsDeploy = () =>{
     const [Store, setStore] = useContext(StoreContext);
     
-    const handleName = (event) => {
-        input['name'] = event.currentTarget.value;
+    const handleNewName = (e) => {
+        // input['name'] = event.currentTarget.value;
+        setStore({...Store, awsDeployName: e.currentTarget.value})
     }
-    const handleLoc = (event) => {
 
-       input['zone'] = event.currentTarget.value;
+    const handleName = (e: React.FormEvent<HTMLInputElement>) => {
+      console.log(e.currentTarget.value)  
+      setStore({...Store, awsClusterName: e.currentTarget.value})
+    }
+
+    const handleLoc = (e) => {
+
+      setStore({...Store, awsDeployRegion: event.currentTarget.value})
+      //  input['zone'] = event.currentTarget.value;
     }
     const handleBack = ()=>{
     setStore({...Store, awsDeployPage:false})
     }
     const handleSubmit = () =>{
         create(Store.credentials, input['zone'], input)
-        setStore({...Store, awsDeployPage:false})
+        setStore({...Store, awsDeployPage: true})
+    }
+
+    const handleFetchSubmit = () => {
+      const arg = {
+        name: Store.awsClusterName, 
+        accessKeyId: Store.awsKey, 
+        secretAccessKey: Store.awsSecret, 
+        region: "us-east-2"
+      }
+      ipcRenderer.send('asynchronous-message2', arg)
+      setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+      }
+
+
+    const handleRemove = () => {
+      //make copy of clusters array via slice
+      console.log('clusters: ', Store.clusters)
+      let clusterArrCopy = Store.clusters.slice();
+      //go through all elements of copy clusters array
+      for (let i = 0; i < clusterArrCopy.length; i++) {
+          //if you find one where the name matches, splice out from copied array
+        if (clusterArrCopy[i].clusterName === Store.awsClusterName) {
+          clusterArrCopy.splice(i, 1)
+          clusterArrCopy = clusterArrCopy;
+        }
+      }
+      //set store of clusters to copied array 
+      console.log('clusterArrCopy: ', clusterArrCopy)
+      setStore({...Store, clusters: clusterArrCopy, awsDeployPage: true})
+      console.log('clusters: ', Store.clusters)
     }
 
     return (
     <div>
+      <div className="fetchAWS">
+        <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="Cluster Name"></input>
+        <div id="uploadPage2SubmitandBackButts">
+          <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Node</button>
+          <button id="uploadPage2BackButt" className = 'backButton' onClick={handleRemove}>Remove Node</button>
+        </div>
+      </div>
         <div className="inputPageDeploy">
-        <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name"/>
+        <input className='awsDeployClusterName' type="text" onChange={handleNewName} placeholder="Cluster Name"/>
         <div>
 
         {/* <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
@@ -50,8 +96,9 @@ const awsDeploy = () =>{
         </div>
 
         <div id='buts'>
-        <button id="deploySubmit" className='uploadButtD' onClick={handleSubmit}> Submit </button>
-        <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
+        <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Deploy Node</button>
+        <button id="uploadPage2Submit" className="uploadButt">Delete Node</button>
+        <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
         </div>
         </div>
 
