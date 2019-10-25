@@ -55,7 +55,7 @@ const Visualizer = () => {
   const far = 3000;
   
   useEffect(() => {
-    if(store.clusters != null){
+    if(store.clusters.length){
 
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );

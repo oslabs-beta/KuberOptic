@@ -101,6 +101,7 @@ canvas {
   border-radius: 50%;
   color: rgb(254, 254, 255);
   animation: rotation 8s infinite linear;
+  border-style: solid;
 }
 .logo {
   transform: rotate(360deg);

@@ -32,7 +32,7 @@ const UploadPage = () => {
       // landingPageState2: false,
       credentials: null,
       clusterCount: 0,
-      clusters: null
+      clusters: []
     });
   };
 
