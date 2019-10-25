@@ -59,7 +59,7 @@ const gcpDeploy = () =>{
       gcpDeployPage:false,
       deploying: true,
     })
-    ipcRenderer.send('getNewClusters', creds, Store.gcpdeploylocation);
+    // ipcRenderer.send('getNewClusters', creds, Store.gcpdeploylocation);
   }
 
   ipcRenderer.on('newClusters', (event: any, arg: any) => {

@@ -59,13 +59,6 @@ const Visualizer = () => {
 
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
-      // if (divRefOne.current.hasChildNodes()) {
-      //   while (divRefOne.current.childNodes) {
-      //     //The list is LIVE so it will re-index each call
-      //     let child = divRefOne.current.firstChild
-      //     divRefOne.current.removeChild(child);
-      //   }
-      // }
       ref.current.appendChild(renderer.domElement);
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
       //---------------number of hexagons---------------\\
