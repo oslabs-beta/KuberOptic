@@ -33,7 +33,8 @@ export const StoreContextProvider = (props: any) => {
     awsLocation:null,
     awsDeployPage: false,
     awsDeployName: null,
-    awsDeployRegion: null
+    awsDeployRegion: null,
+    visualize: false
   })
 
   return (
