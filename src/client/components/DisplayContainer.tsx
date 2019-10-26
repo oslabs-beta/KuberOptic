@@ -47,8 +47,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // import InboxIcon from '@material-ui/icons/MoveToInbox';
 // import MailIcon from '@material-ui/icons/Mail';
 
-const drawerWidth = 240;
+const drawerWidth = 340; // originally 240
 
+// Material-UI uses "CSS in JS" styling
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -61,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     appBarShift: {
+      // width: `calc(100% - ${drawerWidth}px)`, // original styling
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
       transition: theme.transitions.create(['margin', 'width'], {
