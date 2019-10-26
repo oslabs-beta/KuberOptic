@@ -1,8 +1,9 @@
 const fetchLocal = require('./local/local').default
 const [fetchGCP, create] = require('./gcp/getGCPdata').default;
-const [fetchAws, createAWS] = require('./aws/getAWSData').default
-const { app, ipcMain, BrowserWindow } = require('electron');
-import {Store} from '../../store'
+const [loginAWS, listAWS, fetchAWS, createAWS, deleteAWS] = require('./aws/getAWSData').default
+const { app, ipcMain, BrowserWindow, ipcRenderer } = require('electron');
+import {StoreContext} from '../../store'
+import {awsRegionDisplay} from '../client/components/awsDeployPage'
 // const electron = require('electron')
 // require('events').EventEmitter.defaultMaxListeners = 15;
 
@@ -37,12 +38,21 @@ ipcMain.on('getNewClusters', (event: any, zone: any, nameTypeCount: any) => {
 
   //
 
-ipcMain.on('aws-login', () => {
-  // setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+ipcMain.on('aws-login', (event: any, arg: any) => {
+  loginAWS(arg).then(res=> {
+      console.log('no name, moving to main list-aws. Arg is ', arg)
+      let region = arg.region
+      listAWS(region).then(res => {
+        console.log('listClusters res: ', res)
+        event.sender.send('awsRegionDisplay', res)
+      })
+    // setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+  })
 })
 
 ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
-  fetchAws(arg).then(res=>{
+  // console.log('start of async2')
+  fetchAWS(arg).then(res=>{
     console.log('response on main ', res);
     event.sender.send('clusterClient2', res)
     // console.log('res in aws: ', res)
@@ -52,20 +62,36 @@ ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
 })
 
 ipcMain.on('create-aws', (event: any, arg: any) => {
-  createAWS(arg).then(res => {
+  createAWS(arg).then(res =>{
     console.log('create response on main :', res);
     event.sender.send('createCluster2', res)
   })
   .catch((e) => console.log(e))
 })
 
-ipcMain.on('getNewClusters2', (event: any, arg: any) => {
-  fetchAws(arg).then(res=>{
-    event.sender.send('newClusters2', res)
-    console.log('res in aws: ', res)
-    })
-  .catch((e)=>console.log(e))
+ipcMain.on('delete-aws', (event: any, arg: any) => {
+  console.log('in main delete-aws')
+  deleteAWS(arg).then(res => {
+    event.sender.send('createCluster2', res)
+  })
+  .catch((e) => console.log(e))
 })
+
+ipcMain.on('list-aws', (event: any, arg: any) => {
+  console.log('in main list-aws')
+  listAWS(arg).then(res => {
+    console.log('listClusters res: ', res)
+    event.sender.send('awsRegionDisplay', res)
+  })
+})
+
+// ipcMain.on('getNewClusters2', (event: any, arg: any) => {
+//   fetchAWS(arg).then(res=>{
+//     event.sender.send('newClusters2', res)
+//     console.log('res in aws: ', res)
+//     })
+//   .catch((e)=>console.log(e))
+// })
 
 
 app.on('ready', () => {
