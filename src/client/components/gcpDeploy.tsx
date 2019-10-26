@@ -40,16 +40,32 @@ const gcpDeploy = () =>{
     deployVals['zone'] = location;
   }
   const handleBack = () => {
+    const mainCanvas = document.getElementById('leCanvas');
+    if (mainCanvas.hasChildNodes()) {
+      while (mainCanvas.hasChildNodes()) {
+        let child = mainCanvas.firstChild
+        mainCanvas.removeChild(child);
+      }
+    }
+
     return setStore({
       ...Store,
       uploadPageState:false, 
-      // uploadPageState2:false,
-      // landingPageState: false,
-      // landingPageState2: false,
       gcpDeployPage:false,
       credentials: null,
       clusterCount: 0,
-      clusters: null
+      clusters: [],
+      visualize: false,
+      gcploc: { // GCP location(s)
+        'us-central1-a': false,
+        'us-central1-b': false,
+        'us-central1-c': false,
+        'us-west1-a': false,
+        'southamerica-east1-a': false,
+        'southamerica-east1-b': false,
+        'southamerica-east1-c': false,
+        'europe-west2-a': false
+      }
     });
   }
   const handleDeploy = () =>{
@@ -57,31 +73,32 @@ const gcpDeploy = () =>{
     const creds = JSON.parse(Store.credentials)
     setStore({...Store,
       gcpDeployPage:false,
-      deploying: true,
+      deploying: true
     })
-    ipcRenderer.send('getNewClusters', creds, Store.gcpdeploylocation);
+    ipcRenderer.send('getNewClusters', creds, deployVals['zone']);
   }
 
-  ipcRenderer.on('newClusters', (event: any, arg: any) => {
+  ipcRenderer.on('newClusters', (event: any, singleArr: any) => {
     //logic incase we have more than one cluster already rendered
-    if(Store.clusterCount){
-      let newClusters = Store.clusters;
-      arg.forEach(el=> newClusters.push(el))
-      setStore({
-        ...Store,
+    if(Store.clusterCount) {
+      let newClusters = Store.clusters.concat(singleArr);
+      newClusters = Object.values(newClusters.reduce((allClusts, nextClust) => Object.assign(allClusts, { [nextClust.clusterName] : nextClust}), {}))
+      setStore({...Store,
         clusters: newClusters,
         clusterCount: newClusters.length,
-        deploying: false,
-        gcpDeployPage:true,
+        deploying: false, 
+        gcpDeployPage: true,
+        visualize: true
+       })
+    } else {
+      setStore({...Store,
+        clusters: singleArr,
+        clusterCount: singleArr.length,
+        deploying: false, 
+        gcpDeployPage: true,
+        visualize: true
        })
     }
-    else setStore({
-      ...Store,
-       clusters: arg, 
-       clusterCount: arg.length,
-       deploying: false,
-       gcpDeployPage:true,
-       });
     event.returnValue = 'done';
   })
 

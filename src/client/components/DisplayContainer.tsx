@@ -12,12 +12,17 @@
 import * as React from 'react';
 import Visualizer from './visualizer'
 import SideBar from './sidebar';
+import { useEffect, useRef, useContext }from 'react'
+import {StoreContext} from '../../../store';
+
 
 const DisplayContainer = () => {
+  let [store, setStore] = useContext(StoreContext);
+
   return (
     <div className='displayContainer'>
       <SideBar/>
-      <Visualizer/> 
+  { store.visualize && <Visualizer/> }
     </div>
   )
 }

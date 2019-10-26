@@ -1,5 +1,5 @@
 import React, { useState, createContext } from 'react';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from 'util';//possibly delete as it appears to not be used
 
 export const StoreContext = createContext(null);
 
@@ -8,6 +8,8 @@ export const StoreContextProvider = (props: any) => {
   const [Store, setStore] = useState({
     // landingPageState: false,
     // landingPageState2: false,
+    multiZoneClusters: null,
+    multiZones: null,
     uploadPageState: false,
     uploadPageState2:false,
     gcpDeployPage:false,
@@ -35,7 +37,8 @@ export const StoreContextProvider = (props: any) => {
     awsDisplayRegion: null,
     awsDeployRoleArn: null,
     awsSubnet1: null, 
-    awsSubnet2: null
+    awsSubnet2: null,
+    visualize: false
   })
 
   return (

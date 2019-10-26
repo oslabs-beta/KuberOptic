@@ -1,11 +1,9 @@
 const fetchLocal = require('./local/local').default
 const [fetchGCP, create] = require('./gcp/getGCPdata').default;
 const [loginAWS, listAWS, fetchAWS, createAWS, deleteAWS] = require('./aws/getAWSData').default
-const { app, ipcMain, BrowserWindow, ipcRenderer } = require('electron');
-import {StoreContext} from '../../store'
-import {awsRegionDisplay} from '../client/components/awsDeployPage'
-// const electron = require('electron')
-// require('events').EventEmitter.defaultMaxListeners = 15;
+const { app, ipcMain, BrowserWindow } = require('electron');
+import { StoreContext } from '../../store'
+import { awsRegionDisplay } from '../client/components/awsDeployPage'
 
 let dat = new Date()
  async function getLocal() {
@@ -21,22 +19,41 @@ let dat = new Date()
     return res;
  }
 
-ipcMain.on('asynchronous-message', (event: any, arg1: any, arg2: any) => {
+ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
   getLocal().then(res=>{
     event.sender.send('clusterClient', res)      
   }).catch((e)=>console.log(e))
-  getGcp(arg1, arg2).then(res=>{
+  const returnedClusters = locations.map((zone) => {
+    return new Promise ((resolve, reject) => {
+      getGcp(creds, zone)
+      .then(res => {
+        if (res.length >= 1) {
+          const clusters = []
+          for (let clust of res) {
+            clusters.push(clust)
+          }
+          resolve(clusters)
+        }})
+      .catch((e)=> {
+        console.log(e)
+        reject()
+      })
+    })
+  })
+  Promise.all(returnedClusters)
+  .then(res => {
     event.sender.send('clusterClient', res)
-  }).catch((e)=>console.log(e))
+    console.log('here in promise.all resolve', res) 
+  })
+  .catch((e)=>console.log(e))
 })
 
-ipcMain.on('getNewClusters', (event: any, zone: any, nameTypeCount: any) => {
-  getGcp(zone, nameTypeCount).then(res=>{
+ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
+  getGcp(creds, location).then(res=>{
     event.sender.send('newClusters', res)
   }).catch((e)=>console.log(e))
 })
 
-  //
 
 ipcMain.on('aws-login', (event: any, arg: any) => {
   loginAWS(arg).then(res=> {

@@ -11,6 +11,7 @@
   height:99.5%;
   border-style: inset;
   position: absolute;
+  overflow: hidden;
 }
 canvas {
   width: 100%;
@@ -74,6 +75,7 @@ canvas {
   width: 100%;
   background-color: rgb(0, 0, 0);
   font-family: 'Nunito', sans-serif;
+  overflow: hidden;
 }
 
 .text {
@@ -101,6 +103,7 @@ canvas {
   border-radius: 50%;
   color: rgb(254, 254, 255);
   animation: rotation 8s infinite linear;
+  border-style: solid;
 }
 .logo {
   transform: rotate(360deg);
