@@ -13,6 +13,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { StoreContext } from '../../../store';
 import GCPDeploy from './gcpDeploy';
+import Deploying from './deploying';
 require('events').EventEmitter.defaultMaxListeners = 25;
 
 const UploadPage = () => {
@@ -27,11 +28,11 @@ const UploadPage = () => {
       ...Store,
       uploadPageState:false, 
       uploadPageState2:false,
-      landingPageState: false,
-      landingPageState2: false,
+      // landingPageState: false,
+      // landingPageState2: false,
       credentials: null,
       clusterCount: 0,
-      clusters: null
+      clusters: []
     });
   };
 
@@ -47,7 +48,8 @@ const UploadPage = () => {
     
   return (
     <>
-      { Store.gcpDeployPage ? <GCPDeploy/> :
+      { Store.deploying ? <Deploying/> :
+        Store.gcpDeployPage ? <GCPDeploy/> :
       <div className='uploadDiv'>
         <div className="gcpImageContainer">
         <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>

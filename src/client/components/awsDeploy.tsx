@@ -1,199 +1,110 @@
-/**
- * ************************************
- *
- * @module  awsDeploy.tsx
- * @author
- * @date
- * @description page to determine deployment settings? Possibly making a post-style request to GCP to create a cluster
- *
- * ************************************
- */
-
 import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
-const [fetchAws, createAWS] = require('../../main/aws/getAWSData').default
-const { ipcRenderer } = require('electron');
-require('events').EventEmitter.defaultMaxListeners = 25;
+const [quickstart, create] = require('../../main/aws/getAWSData').default
 import 'tachyons'
-
-// various inputs will be stored in this object and will be submitted when you call handleSubmit
+const { ipcRenderer } = require('electron');
 let input = {};
 
 const awsDeploy = () =>{
-
-  const [Store, setStore] = useContext(StoreContext);
-  ipcRenderer.on('newClusters2', (event: any, arg: any) => {
-    if(Store.clusters.length < arg.length){
-      let newClusters = [];
-      arg.forEach(el => newClusters.push(el))
-      setStore({...Store, clusters: newClusters, clusterCount: newClusters.length, awsDeployPage:false, uploadPageState2: true})
-    }
-    else setStore({...Store, clusters: arg, clusterCount: arg.length, awsDeployPage:false, uploadPageState2: true});
-    event.returnValue = 'done';
-  })
-
+    const [Store, setStore] = useContext(StoreContext);
     
-  const handleType = (event) => {
-    input['clusterType'] = event.currentTarget.value;
-  }
-  const handleName = (event) => {
-    input['name'] = event.currentTarget.value;
-  }
-  const handleLoc = (event) => {
-    const location = event.currentTarget.value
-    setStore({...Store, awsLocation: location})
-    input['region'] = location;
-  }
-  const handleBack = ()=>{
-    setStore({...Store, awsDeployPage:false, uploadPageState2: true})
-  }
-  const handleNodeCount = (event) => {
-    input['count'] = event.currentTarget.value;
-  }
+    const handleNewName = (e) => {
+        // input['name'] = event.currentTarget.value;
+        setStore({...Store, awsDeployName: e.currentTarget.value})
+    }
 
-  const handleSubmit = () =>{
-    input['accessKeyId'] = Store.awsKey
-    input['secretAccessKey'] = Store.awsSecret
-    createAWS(input)
-    setStore({...Store, awsDeployPage:false, uploadPageState2: true})
-    // ipcRenderer.send('getNewClusters2', );
-  }
+    const handleName = (e: React.FormEvent<HTMLInputElement>) => {
+      console.log(e.currentTarget.value)  
+      setStore({...Store, awsClusterName: e.currentTarget.value})
+    }
 
-  return (
-    <div id="deployWrapper">
-      <div className="inputPageDeploy">
-      <input id="deployClustName" className='clusterType' type="text" onChange={handleName} placeholder="cluster name"/>
-      <div id="deployDropDowns">
+    const handleLoc = (e) => {
+      setStore({...Store, awsDeployRegion: e.currentTarget.value})
+      //  input['zone'] = event.currentTarget.value;
+    }
+    const handleBack = ()=>{
+      return setStore({
+        ...Store,
+        uploadPageState2:false, 
+        clusterCount:0,
+        awsKey:null,
+        awsSecret:null,
+        awsClusterName: [],
+        awsLocation:null,
+        awsDeployPage: false,
+        awsDeployName: null,
+        awsDeployRegion: null
+      });
+    }
+    const handleSubmit = () =>{
+        create(Store.credentials, input['zone'], input)
+        setStore({...Store, awsDeployPage: true})
+    }
 
-      <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
-      <option selected>Choose AWS cluster type</option>
-      <option value='affordable'>affordable</option>
-      {/* <option value='standard'>standard</option>
-      <option value='cpuIntensive'>cpuIntensive</option>
-      <option value='memoryIntensive'>memoryIntensive</option>
-      <option value='gpuAcceleratedComputing'>gpuAcceleratedComputing</option>
-      <option value='highly available'>highly available</option> */}
-      </select>
+    const handleFetchSubmit = () => {
+      const arg = {
+        name: Store.awsClusterName, 
+        accessKeyId: Store.awsKey, 
+        secretAccessKey: Store.awsSecret, 
+        region: "us-east-2"
+      }
+      ipcRenderer.send('asynchronous-message2', arg)
+      setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+      }
 
-      <select id='deployLoc' className='loc' onChange={handleLoc}>
-      <option selected>Choose a location to host</option>
-      <option value='us-east-1'>us-east-1</option>
-      <option value='us-east-2'>us-east-2</option>
-      <option value='us-west-1'>us-west-1</option>
-      <option value='us-west-2'>us-west-2</option>
-      <option value='ap-east-1'>ap-east-1</option>
-      <option value='ap-south-1'>ap-south-1</option>
-      <option value='ap-northeast-1'>ap-northeast-1</option>
-      <option value='ap-northeast-2'>ap-northeast-2</option>
-      </select>
 
+    const handleRemove = () => {
+      //make copy of clusters array via slice
+      console.log('clusters: ', Store.clusters)
+      let clusterArrCopy = Store.clusters.slice();
+      //go through all elements of copy clusters array
+      for (let i = 0; i < clusterArrCopy.length; i++) {
+          //if you find one where the name matches, splice out from copied array
+        if (clusterArrCopy[i].clusterName === Store.awsClusterName) {
+          clusterArrCopy.splice(i, 1)
+          clusterArrCopy = clusterArrCopy;
+        }
+      }
+      //set store of clusters to copied array 
+      console.log('clusterArrCopy: ', clusterArrCopy)
+      setStore({...Store, clusters: clusterArrCopy, awsDeployPage: true})
+      console.log('clusters: ', Store.clusters)
+    }
+
+    return (
+    <div className="deployWrapper">
+      <div className="fetchAWS">
+        <h3 className="deployTitle">Display AWS Clusters:</h3> 
+        <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="clusterName"></input>
+        <div id="uploadPage2SubmitandBackButts">
+          <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Node</button>
+          <button id="uploadPage2BackButt" className = 'backButton' onClick={handleRemove}>Remove Node</button>
+        </div>
       </div>
-      <div className="nodeCountDropDown">
-      <select id='nodeCounter' className='clusterType' onChange={handleNodeCount}>
-      <option selected>Nodes in the cluster</option>
-      <option value='1'>1</option>
-      <option value='2'>2</option>
-      <option value='3'>3</option>
-      <option value='4'>4</option>
-      <option value='5'>5</option>
-      </select>
+        <div className="inputPageDeploy">
+        <h3 className="deployTitle">Deploy New AWS Cluster:</h3>
+        <input className='awsDeployClusterName' type="text" onChange={handleNewName} placeholder="clusterName"/>
+        <div>
 
-      </div>
+        <select id='deployLoc' className='loc' onChange={handleLoc}>
+        <option selected>Choose a location to host</option>
+        <option value='us-east-1'>us-east-1</option>
+        <option value='us-east-2'>us-east-2</option>
+        <option value='us-west-1'>us-west-1</option>
+        <option value='us-west-2'>us-west-2</option>
+        </select>
 
-      <div id='buts'>
-        <button id="deploySubmit" className='uploadButtD' onClick={handleSubmit}> Submit </button>
-        <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
-      </div>
+        </div>
 
-    <div id='infobox' className='bg-light-blue dib br3 pa3 ma2 shadow-5'>
-      <div id="clicker" tabIndex={1} >
-          <p>
-          <strong>Affordable</strong><br/>
-          </p>
-      </div>
-
-      <div id="hiddenAf">
-        Good for starting your first cluster for lightweight apps <br/>
-        Machine type:g1-small <br/>
-        Autoscaling:Disabled <br/>
-        Stackdriver Logging and Monitoring: Disabled <br/>
-        Boot disk size: 30GB <br/>
-      </div>
-
-      <div id="clicker" tabIndex={1} >
-        <p>
-          <strong>Standard</strong> <br/>
-        </p>
-      </div>
-
-      <div id="hiddenAf">
-        Continuous integration, web serving, backend<br/>
-        Machine type:n1-standard <br/>
-        Autoscaling:Disabled <br/>
-        Stackdriver Logging and Monitoring: Disabled <br/>
-        Boot disk size: 100GB <br/>
-      </div>
-
-      <div id="clicker" tabIndex={1} >
-        <p>
-          <strong>CPU-Intensive</strong> <br/>
-        </p>
-      </div>
-
-      <div id="hiddenAf">
-        Web crawling or anything that requires more cpu<br/>
-        Machine type:n1-highcpu-4 <br/>
-        Autoscaling:True <br/>
-        Stackdriver Logging and Monitoring: Enabled <br/>
-        Boot disk size: 100GB <br/>
-      </div>
-
-      <div id="clicker" tabIndex={1} >
-        <p>
-          <strong>Memory-Intensive</strong> <br/>
-        </p>
-      </div>
-
-      <div id="hiddenAf">
-        Databases, analytics, anything that takes memory<br/>
-        Machine type:n1-highmem-2 <br/>
-        Autoscaling:True <br/>
-        Stackdriver Logging and Monitoring: Enabled <br/>
-        Boot disk size: 100GB <br/>
-      </div>
-
-      <div id="clicker" tabIndex={1} >
-        <p>
-          <strong>GPU Accelerated Computing</strong> <br/>
-        </p>
-      </div>
-
-      <div id="hiddenAf">
-        Machine Learning, video transcoding, scientific computations<br/>
-        Machine type:n1-highmem-2 + GPU<br/>
-        Autoscaling:True <br/>
-        Stackdriver Logging and Monitoring: Enabled <br/>
-        Boot disk size: 100GB <br/>
-      </div>
-
-      <div id="clicker" tabIndex={1} >
-        <p>
-          <strong>Highly available</strong> <br/>
-        </p>
-      </div>
-
-      <div id="hiddenAf">
-        Most demanding requirements<br/>
-        Machine type:n1-highmem-2 + GPU <br/>
-        Autoscaling:True <br/>
-        Stackdriver Logging and Monitoring: Enabled <br/>
-        Boot disk size: 100GB <br/>
-      </div>
+        <div id='buts'>
+        <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Deploy Node</button>
+        <button id="uploadPage2Submit" className="uploadButt">Delete Node</button>
+        <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+        </div>
       </div>
     </div>
-  </div>
-  )
+        )
 }
 
 export default awsDeploy;

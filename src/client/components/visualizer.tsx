@@ -55,17 +55,10 @@ const Visualizer = () => {
   const far = 3000;
   
   useEffect(() => {
-    if(store.clusters != null){
+    if(store.clusters.length){
 
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize( width, height );
-      // if (divRefOne.current.hasChildNodes()) {
-      //   while (divRefOne.current.childNodes) {
-      //     //The list is LIVE so it will re-index each call
-      //     let child = divRefOne.current.firstChild
-      //     divRefOne.current.removeChild(child);
-      //   }
-      // }
       ref.current.appendChild(renderer.domElement);
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
       //---------------number of hexagons---------------\\
@@ -92,7 +85,7 @@ const Visualizer = () => {
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [2400*i -2400,1]; // what is the purpose of these numbers?
+        const position = [2400 * i - 2400, 1]; // what is the purpose of these numbers?
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
