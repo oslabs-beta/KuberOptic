@@ -9,7 +9,7 @@
 #leCanvas{
   float: right;
   height:99.5%;
-  border-style: inset;
+  /* border-style: inset; */
   position: absolute;
 }
 canvas {
@@ -28,14 +28,14 @@ canvas {
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
-  height:99.5%;
-  width: 26%;
+  /* height:99.5%; */
+  /* width: 26%; */
   float:left;
   background-color: rgb(0, 26, 255);
   border: rgba(67, 84, 105, 1) 3px;
-  min-width: 216px;
-  min-height: 280px;
-  border-style: inset;
+  /* min-width: 216px; */
+  /* min-height: 280px; */
+  /* border-style: inset; */
   z-index: 1000;
 }
 #tool-tip {
@@ -287,7 +287,7 @@ canvas {
   display: flex;
   flex-direction: column;
   align-content: center;
-  padding-top: 50px;
+  /* padding-top: 50px; */
 }
 
 .vizDiv {

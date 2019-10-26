@@ -56,7 +56,8 @@ const SideBar = () =>{
   // else if uploadPageState2 is true, display UploadPage2
   // else display LandingPage
   return(
-    <div id='leSidebar'>
+    // id was originally #leSidebar
+    <div> 
       { Store.uploadPageState ? <UploadPage/> :
         Store.uploadPageState2 ? <UploadPage2/> :
         <div id="displays">

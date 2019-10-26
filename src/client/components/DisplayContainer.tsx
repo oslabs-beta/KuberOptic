@@ -46,8 +46,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // import ListItemText from '@material-ui/core/ListItemText';
 // import InboxIcon from '@material-ui/icons/MoveToInbox';
 // import MailIcon from '@material-ui/icons/Mail';
+import Container from '@material-ui/core/Container';
 
-const drawerWidth = 340; // originally 240
+const drawerWidth = 400; // originally 240
 
 // Material-UI uses "CSS in JS" styling
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,7 +63,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     appBarShift: {
-      // width: `calc(100% - ${drawerWidth}px)`, // original styling
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
       transition: theme.transitions.create(['margin', 'width'], {
@@ -164,7 +164,9 @@ export default function PersistentDrawerLeft() {
         <Divider />
 
         {/* add the sidebar components here */}
-        <SideBar />
+        <Container fixed>
+          <SideBar />
+        </Container>
       </Drawer>
 
       {/* this is the main content of the page - will be where visualizer is */}
