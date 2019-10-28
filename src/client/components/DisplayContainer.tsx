@@ -165,9 +165,7 @@ export default function DisplayContainer() {
         <Divider />
 
         {/* add the sidebar components here */}
-        {/* <Container fixed> */}
-          <SideBar />
-        {/* </Container> */}
+        <SideBar />
       </Drawer>
 
       {/* this is the main content of the page - will be where visualizer is */}

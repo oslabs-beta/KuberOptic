@@ -15,7 +15,7 @@ import { StoreContext } from '../../../store';
 import Checkbox from './subcomponents/Checkbox';
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
-import 'tachyons'
+// import 'tachyons'
 
 const GcpGetClusters = () => {
   const [Store, setStore] = useContext(StoreContext);
@@ -67,6 +67,7 @@ const GcpGetClusters = () => {
       />
     );
   });
+
   ipcRenderer.on('clusterClient', (event: any, arg: any) => {
     //logic incase we have more than one cluster already rendered
     // Bryan commented out the following for his own logic rendering
@@ -99,6 +100,7 @@ const GcpGetClusters = () => {
     console.log(`Bryan: After Res.clusters from GCP => Invoked clusterClient at UploadPage: Clusters: ${Store.clusters}`)
     event.returnValue = 'done';
   })
+
   const handleSubmit = () => {
     const creds = JSON.parse(Store.credentials);
     console.log('Bryan submit at Fetch has been clicked')
@@ -121,6 +123,7 @@ const GcpGetClusters = () => {
       }
       console.log(`************ Await function done`)
     }
+
     submit().then(function () {
       setStore({ ...Store, uploadPageState: true });
       console.log(`Bryan submit done at UploadPage`);
@@ -131,6 +134,7 @@ const GcpGetClusters = () => {
     //   ipcRenderer.send('asynchronous-message', creds, zone)
     // })
   }
+
   return (
     <div className="getGCPWrapper">
       <h3 className="deployTitle">

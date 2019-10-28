@@ -11,6 +11,8 @@
 
 import * as React from 'react';
 import { useContext } from 'react';
+import Divider from '@material-ui/core/Divider';
+
 import {StoreContext} from '../../../store'
 const [quickstart, create] = require('../../main/gcp/getGCPdata').default
 const { ipcRenderer } = require('electron');
@@ -88,6 +90,8 @@ const gcpDeploy = () =>{
   return (
     <div id="deployWrapper">
       <GetGCP/>
+
+      <Divider />
       
       <div className="inputPageDeploy">
         <h3 className="deployTitle">Deploy New GCP Cluster:</h3>

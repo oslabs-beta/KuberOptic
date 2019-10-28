@@ -69,24 +69,24 @@ const UploadPage = () => {
     <>
       { Store.deploying ? <Deploying/> :
         Store.gcpDeployPage ? <GCPDeploy/> :
-      <div className='uploadDiv'>
-        <div className="gcpImageContainer">
-          <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
+          <div className='uploadDiv'>
+            <div className="gcpImageContainer">
+              <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
 
-          {/* <div className='kubUploadText'>Google Cloud Platform</div> */}
-          <Typography className={classes.text} variant="h3">
-            Google Cloud Platform
-          </Typography>
-        </div>
+              {/* <div className='kubUploadText'>Google Cloud Platform</div> */}
+              <Typography className={classes.text} variant="h3">
+                Google Cloud Platform
+              </Typography>
+            </div>
 
-        <div id="uploadDivForSubmitandBackButts">
-          <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter GCP Info" required={true}></input>
-          <div className="buttonHolder">
-            <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
-            <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
-          </div>
-        </div>
-      </div> 
+            <div id="uploadDivForSubmitandBackButts">
+              <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter GCP Info" required={true}></input>
+              <div className="buttonHolder">
+                <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
+                <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+              </div>
+            </div>
+          </div> 
       }
     </>
   )
