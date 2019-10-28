@@ -15,11 +15,11 @@ import '../styles.css';
 import { StoreContextProvider } from '../../../store';;
 // import 'tachyons'; // tachyons is a styling tool - not being used in the project
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({ // will later import a theme object from a separate file instead
   palette: {
-    primary: blue
+    primary: green
   }
 }); 
 

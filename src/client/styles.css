@@ -22,22 +22,22 @@ canvas {
   justify-content: space-evenly;
   align-content: center;
 }
-#leSidebar{
+/* #leSidebar{ // not being used anymore
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
-  /* height:99.5%; */
-  /* width: 26%; */
+  height:99.5%;
+  width: 26%;
   float:left;
   background-color: rgb(0, 26, 255);
   border: rgba(67, 84, 105, 1) 3px;
-  /* min-width: 216px; */
-  /* min-height: 280px; */
-  /* border-style: inset; */
+  min-width: 216px;
+  min-height: 280px;
+  border-style: inset;
   z-index: 1000;
-}
+} */
 #tool-tip {
   display: none;
   position: absolute;
@@ -95,8 +95,10 @@ canvas {
 }
 .kubLogo {
   transform: rotate(360deg);
-  height: 300px;
-  width: 300px;
+  /* height: 300px; */
+  height: 50%;
+  /* width: 300px; */
+  width: 50%;
   margin: 50px auto;
   border-radius: 50%;
   color: rgb(254, 254, 255);
@@ -178,10 +180,10 @@ canvas {
   font-size: 15px;
   background-color: rgb(255, 255, 255);
 }
-#displays {
+/* #displays {
   width: 100%;
   height: 100%;
-}
+} */
 .awsAndGcpLogos {
   width: 100%;
   display: flex;
@@ -281,14 +283,14 @@ canvas {
   height: 100%;
 }
 
-.mainDiv {
+/* .mainDiv {
   width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-content: center;
-  /* padding-top: 50px; */
-}
+  padding-top: 50px;
+} */
 
 .vizDiv {
   height: 100%;
@@ -353,8 +355,8 @@ canvas {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  /* grid-column-gap: 10px; */
-  /* grid-row-gap: 10px; */
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
 }
 
 #uploadPage2SubmitandBackButts {
@@ -410,13 +412,13 @@ canvas {
   width: 49%;
   margin-bottom: 5px;
 }
-.landingTitle {
+/* .landingTitle {
   display: flex;
   flex-direction: column;
   color: aqua;
   width: 100%;
-}
-.title {
+} */
+/* .title {
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -426,7 +428,7 @@ canvas {
   text-align: center;
   font-family: 'Amatic SC', cursive;
   font-size: 80px;
-}
+} */
 
 .getGCPWrapper {
   height: 35%;

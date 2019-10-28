@@ -25,7 +25,8 @@ import SideBar from './sidebar';
 // export default DisplayContainer;
 
 
-// here is the Material-UI stuff
+// main Material-UI component: PersistentDrawerLeft
+// https://material-ui.com/components/drawers/
 
 import React from 'react';
 import clsx from 'clsx';
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerHeader: {
       display: 'flex',
       alignItems: 'center',
-      padding: theme.spacing(0, 1),
+      padding: theme.spacing(0, 1), // look at this to make maybe drawer header thinner
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end',
     },
@@ -110,8 +111,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 // rename this later
-export default function PersistentDrawerLeft() {
-  const classes = useStyles(); // this is showing an error but this is directly from Material-UI
+export default function DisplayContainer() {
+  const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -132,7 +133,7 @@ export default function PersistentDrawerLeft() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar> {/* if you want to make the toolbar denser, add `variant="dense"` as a prop to it */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -164,9 +165,9 @@ export default function PersistentDrawerLeft() {
         <Divider />
 
         {/* add the sidebar components here */}
-        <Container fixed>
+        {/* <Container fixed> */}
           <SideBar />
-        </Container>
+        {/* </Container> */}
       </Drawer>
 
       {/* this is the main content of the page - will be where visualizer is */}
