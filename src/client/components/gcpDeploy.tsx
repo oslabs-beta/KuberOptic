@@ -17,7 +17,6 @@ const { ipcRenderer } = require('electron');
 
 require('events').EventEmitter.defaultMaxListeners = 25;
 import GetGCP from './GcpGetClusters';
-import 'tachyons'
 
 // various inputs will be stored in this object and will be submitted when you call handleSubmit
 let deployVals = {};

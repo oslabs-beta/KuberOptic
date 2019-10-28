@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
 const [fetchAWS] = require('../../main/aws/getAWSData').default
-import 'tachyons'
 const { ipcRenderer } = require('electron');
 import fs from 'fs'
 const AWS = require('aws-sdk')

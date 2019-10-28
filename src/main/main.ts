@@ -2,8 +2,6 @@ const fetchLocal = require('./local/local').default
 const [fetchGCP, create] = require('./gcp/getGCPdata').default;
 const [loginAWS, listAWS, fetchAWS, createAWS, deleteAWS] = require('./aws/getAWSData').default
 const { app, ipcMain, BrowserWindow } = require('electron');
-import { StoreContext } from '../../store'
-import { awsRegionDisplay } from '../client/components/awsDeployPage'
 
 let dat = new Date()
  async function getLocal() {

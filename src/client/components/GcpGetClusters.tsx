@@ -15,7 +15,6 @@ import { StoreContext } from '../../../store';
 import Checkbox from './subcomponents/Checkbox';
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
-import 'tachyons'
 
 const GcpGetClusters = () => {
   const [Store, setStore] = useContext(StoreContext);

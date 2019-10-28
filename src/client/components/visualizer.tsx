@@ -73,7 +73,7 @@ const Visualizer = () => {
       // const testSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png'); //original image
       const testSprite = new THREE.TextureLoader().load('http://www.aljanh.net/data/archive/img/2594756229.png'); //possible replacement1
       // const testSprite = new THREE.TextureLoader().load('http://www.aljanh.net/data/archive/img/2076493265.png'); //possible replacement2
-      const colorArray = ['skyblue', 'blue', 'lightblue', 'lightgreen', 'cornsilk', 'skyblue', 'blue', 'lightblue', 'lightgreen', 'cornsilk'];
+      const colorArray = ['skyblue', '#B891FF', 'lightblue', 'lightgreen', 'cornsilk', 'skyblue', '#B891FF', 'lightblue', 'lightgreen', 'cornsilk'];
       const colorArray2 = ['red'];
       /* Testing to make random elements appear  */
       
@@ -90,7 +90,7 @@ const Visualizer = () => {
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [(1500 * i) - 2500, 1];
+        const position = [(1500 * i) - 5000, 1];
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
