@@ -17,7 +17,7 @@ const awsDeploy = () =>{
   }
 
   const handleName = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value)  
+    console.log('handleName', e.currentTarget.value)  
     setStore({...Store, awsClusterName: e.currentTarget.value.split(", ")})
   }
   
@@ -89,22 +89,22 @@ const awsDeploy = () =>{
     ipcRenderer.send('asynchronous-message2', arg)
   }
 
-  const awsRegionDisplay = (array) => {
-    setStore({...Store, awsClusterName: array})
-    const arg = {
-      name: Store.awsClusterName, 
-      accessKeyId: Store.awsKey, 
-      secretAccessKey: Store.awsSecret, 
-      region: Store.awsDeployRegion
-    }
+  // const awsRegionDisplay = (array) => {
+  //   setStore({...Store, awsClusterName: array})
+  //   const arg = {
+  //     name: Store.awsClusterName, 
+  //     accessKeyId: Store.awsKey, 
+  //     secretAccessKey: Store.awsSecret, 
+  //     region: Store.awsDeployRegion
+  //   }
     
-    ipcRenderer.send('asynchronous-message2', arg)
-  }
+  //   ipcRenderer.send('asynchronous-message2', arg)
+  // }
 
-  ipcRenderer.on('awsRegionDisplay', (event: any, arg: any) => {
-    console.log('running awsRegionDisplay in awsDeploy.tsx')
-    awsRegionDisplay(arg)
-  })
+  // ipcRenderer.on('awsRegionDisplay', (event: any, arg: any) => {
+  //   console.log('running awsRegionDisplay in awsDeploy.tsx')
+  //   awsRegionDisplay(arg)
+  // })
 
   const handleSubnet1 = (e) => {
     setStore({...Store, awsSubnet1: e.currentTarget.value})
@@ -166,11 +166,11 @@ const awsDeploy = () =>{
     </div>
     <br/><br/><br/><br/>
       <div className="inputPageDeploy">
-      {/* <h3 className="deployTitle">Deploy New AWS Cluster:</h3>
+      <h3 className="deployTitle">Deploy New AWS Cluster:</h3>
       <input className='awsDeployClusterName' type="text" onChange={handleDeployName} placeholder="Cluster Name"/>
       <input className='awsDeployClusterName' type="text" onChange={handleDeployArn} placeholder="Role ARN" />
       <input className='awsDeployClusterName' type="text" onChange={handleSubnet1} placeholder="Subnet ID 1" />
-      <input className='awsDeployClusterName' type="text" onChange={handleSubnet2} placeholder="Subnet ID 2" /> */}
+      <input className='awsDeployClusterName' type="text" onChange={handleSubnet2} placeholder="Subnet ID 2" />
 
       <div>
       <select id='deployLoc' className='loc' onChange={handleLoc}>

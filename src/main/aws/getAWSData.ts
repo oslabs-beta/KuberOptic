@@ -22,17 +22,23 @@ async function loginAWS(params) {
 }
 
 async function listAWS(region) {
-  console.log()
-  
-  
-  let eks = new AWS.EKS(region.region);
-  eks.listClusters((err, data) => {
-    if (err) console.log(err, err.stack);
-    else {
-      console.log(data)
-      return data
-  }
-})
+  console.log('inside loginAWS, and region is', region.region)
+
+  return new Promise ((resolve, reject) => {
+
+    
+    let eks = new AWS.EKS(region.region);
+    
+    eks.listClusters((err, data) => {
+      if (err) console.log(err, err.stack);
+      else {
+        console.log('data is ', data)
+        resolve(data)
+      }
+    }
+    )
+  })
+
 }
 
 //-------------function to get clusters-------------\\
@@ -73,7 +79,7 @@ async function fetchAWS(params){
   //     // clusterArray.push(awsDat)
   // })
 
-  console.log(params.name)
+  console.log('inside fetchAWS', params.name)
   let promiseArray = [];
   let clusterArray = [];
 

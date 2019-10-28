@@ -37,6 +37,26 @@ const UploadPage2 = () => {
 
   })
 
+
+  ipcRenderer.on('awsRegionDisplayFunc', (event: any, arg: any) => {
+    console.log('running awsRegionDisplay')
+    awsRegionDisplay(arg)
+  })
+
+    const awsRegionDisplay = (array) => {
+    setStore({...Store, awsClusterName: array})
+    const arg = {
+      name: array, 
+      accessKeyId: Store.awsKey, 
+      secretAccessKey: Store.awsSecret, 
+      region: Store.awsDisplayRegion
+    }
+    console.log('awsRegionDisplay arg: ', arg)
+    ipcRenderer.send('asynchronous-message2', arg)
+    setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+
+  }
+
   const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value)  
     setStore({...Store, awsKey: e.currentTarget.value})
@@ -82,9 +102,8 @@ const UploadPage2 = () => {
         secretAccessKey: Store.awsSecret, 
         region: Store.awsDisplayRegion
       }
-      // ipcRenderer.send('asynchronous-message2', arg)
       ipcRenderer.send('aws-login', arg)
-      setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+      // setStore({...Store, uploadPageState2: true, awsDeployPage: true});
     }
   }
 
