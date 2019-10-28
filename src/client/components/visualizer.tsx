@@ -353,6 +353,7 @@ const Visualizer = () => {
 
   return (
     <>
+    {/* some style changes were made to #leCanvas to avoid conflicting with Material-UI - is working for now */}
     <div ref={ref} id="leCanvas">
       <div ref={divRefOne} id="tool-tip">
         <div ref={divRefTwo} id="point-tip" />
