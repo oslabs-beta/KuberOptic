@@ -37,6 +37,26 @@ const UploadPage2 = () => {
 
   })
 
+
+  ipcRenderer.on('awsRegionDisplayFunc', (event: any, arg: any) => {
+    console.log('running awsRegionDisplay')
+    awsRegionDisplay(arg)
+  })
+
+    const awsRegionDisplay = (array) => {
+    setStore({...Store, awsClusterName: array})
+    const arg = {
+      name: array, 
+      accessKeyId: Store.awsKey, 
+      secretAccessKey: Store.awsSecret, 
+      region: Store.awsDisplayRegion
+    }
+    console.log('awsRegionDisplay arg: ', arg)
+    ipcRenderer.send('asynchronous-message2', arg)
+    setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+
+  }
+
   const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value)  
     setStore({...Store, awsKey: e.currentTarget.value})
@@ -45,6 +65,11 @@ const UploadPage2 = () => {
   const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value)  
     setStore({...Store, awsSecret: e.currentTarget.value})
+  }
+
+  const handleRegion = (e) => {
+    setStore({...Store, awsDisplayRegion: e.currentTarget.value})
+    console.log('region is', Store.awsDisplayRegion)
   }
 
   // const handleName = (e: React.FormEvent<HTMLInputElement>) => {
@@ -65,7 +90,8 @@ const UploadPage2 = () => {
     });
   };
 
-  const handleSubmit = () => {
+  function handleSubmit() {
+    console.log('handleSubmit region is', Store.awsDisplayRegion)
     if(typeof Store.awsSecret !== 'string' || typeof Store.awsKey !== 'string'){
       console.log('Enter a AWS key/secret to access AWS');
     }
@@ -74,11 +100,10 @@ const UploadPage2 = () => {
         // name: Store.awsClusterName, 
         accessKeyId: Store.awsKey, 
         secretAccessKey: Store.awsSecret, 
-        region: "us-east-2"
+        region: Store.awsDisplayRegion
       }
-      // ipcRenderer.send('asynchronous-message2', arg)
-      ipcRenderer.send('aws-login')
-      setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+      ipcRenderer.send('aws-login', arg)
+      // setStore({...Store, uploadPageState2: true, awsDeployPage: true});
     }
   }
 
@@ -95,6 +120,15 @@ const UploadPage2 = () => {
         <input className='uploadInput' type="text" onChange={handleKey}  placeholder="awsKey" required={true}></input>
         <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret" required={true}></input>
         {/* <input className='uploadInput' type="text" onChange={handleName} placeholder="clusterName"></input> */}
+        <div>
+      <select id='deployLoc' className='loc' onChange={handleRegion}>
+      <option selected>Choose a location to display</option>
+      <option value='us-east-1'>us-east-1</option>
+      <option value='us-east-2'>us-east-2</option>
+      <option value='us-west-1'>us-west-1</option>
+      <option value='us-west-2'>us-west-2</option>
+      </select>
+      </div>
         <div id="uploadPage2SubmitandBackButts">
           <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
           <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>Back</button>
