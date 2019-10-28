@@ -40,18 +40,16 @@ ipcMain.on('getNewClusters', (event: any, zone: any, nameTypeCount: any) => {
 
 ipcMain.on('aws-login', (event: any, arg: any) => {
   loginAWS(arg).then(res=> {
-      console.log('no name, moving to main list-aws. Arg is ', arg)
-      let region = arg.region
-      listAWS(region).then(res => {
-        console.log('listClusters res: ', res)
-        event.sender.send('awsRegionDisplay', res)
-      })
-    // setStore({...Store, uploadPageState2: true, awsDeployPage: true});
+      console.log('awsLogin call ', arg)
+    listAWS(arg).then(res => {
+      console.log('listClusters res: ', res)
+      event.sender.send('awsRegionDisplayFunc', res.clusters)
+    }).catch((e)=>console.log(e))
   })
 })
 
 ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
-  // console.log('start of async2')
+  console.log('start of async2')
   fetchAWS(arg).then(res=>{
     console.log('response on main ', res);
     event.sender.send('clusterClient2', res)
