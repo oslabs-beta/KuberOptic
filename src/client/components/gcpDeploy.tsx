@@ -42,9 +42,14 @@ const gcpDeploy = () =>{
   const handleBack = () => {
     const mainCanvas = document.getElementById('leCanvas');
     if (mainCanvas.hasChildNodes()) {
-      while (mainCanvas.hasChildNodes()) {
+      while (mainCanvas.children.length > 8) {
+      // while (mainCanvas.hasChildNodes()) {
         let child = mainCanvas.firstChild
+        if (child == null) break;
+        else {
+        console.log('child element deleted on back is... ', child)
         mainCanvas.removeChild(child);
+        }
       }
     }
 
@@ -56,7 +61,7 @@ const gcpDeploy = () =>{
       clusterCount: 0,
       clusters: [],
       visualize: false,
-      gcploc: { // GCP location(s)
+      gcploc: {
         'us-central1-a': false,
         'us-central1-b': false,
         'us-central1-c': false,
@@ -71,11 +76,14 @@ const gcpDeploy = () =>{
   const handleDeploy = () =>{
     create(Store.credentials, deployVals['zone'], deployVals)
     const creds = JSON.parse(Store.credentials)
+    ipcRenderer.send('getNewClusters', creds, deployVals['zone']);
     setStore({...Store,
       gcpDeployPage:false,
-      deploying: true
+      deploying: true,
+      clusters: [],
+      clusterCount: 0,
+      visualize: false
     })
-    ipcRenderer.send('getNewClusters', creds, deployVals['zone']);
   }
 
   ipcRenderer.on('newClusters', (event: any, singleArr: any) => {
@@ -90,6 +98,7 @@ const gcpDeploy = () =>{
         gcpDeployPage: true,
         visualize: true
        })
+       event.returnValue = 'done';
     } else {
       setStore({...Store,
         clusters: singleArr,

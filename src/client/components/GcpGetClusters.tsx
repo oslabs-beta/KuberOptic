@@ -78,12 +78,33 @@ const GcpGetClusters = () => {
         fetchMe.push(zone);
       }
     }
+    console.log('array going to main', fetchMe);
+    setStore({
+      ...Store,
+      gcpDeployPage: false,
+      clusters: [],
+      clusterCount: 0,
+      deploying: true, 
+      visualize: false,
+      gcploc: {
+        'us-central1-a': false,
+        'us-central1-b': false,
+        'us-central1-c': false,
+        'us-west1-a': false,
+        'southamerica-east1-a': false,
+        'southamerica-east1-b': false,
+        'southamerica-east1-c': false,
+        'europe-west2-a': false
+      },
+    });
+    console.log(Store)
     ipcRenderer.send('asynchronous-message', creds, fetchMe)
-    setStore({ ...Store, gcpDeployPage: true });
   }
 
   ipcRenderer.on('clusterClient', (event: any, gcpClusters: any) => {
+    console.log('was the store reset?', Store)
     const singleArr = []
+    console.log('this is what is coming back from deploying and fetching', gcpClusters)
     for (let item of gcpClusters) {
       if (Array.isArray(item)) {
         item.forEach(clust => singleArr.push(clust));
@@ -93,9 +114,24 @@ const GcpGetClusters = () => {
     if(Store.clusterCount) {
       let newClusters = Store.clusters.concat(singleArr);
       newClusters = Object.values(newClusters.reduce((allClusts, nextClust) => Object.assign(allClusts, { [nextClust.clusterName] : nextClust}), {}))
-      setStore({...Store, clusters: newClusters, clusterCount: newClusters.length, visualize: true })
+      setStore({
+        ...Store,
+        clusters: newClusters,
+        clusterCount: newClusters.length,
+        visualize: true,
+        gcpDeployPage: true,
+        deploying: false
+      })
+      event.returnValue = 'done';
     } else {
-      setStore({...Store, clusters: singleArr, clusterCount: singleArr.length, visualize: true })
+      setStore({
+        ...Store, 
+        clusters: singleArr,
+        clusterCount: singleArr.length,
+        visualize: true,
+        gcpDeployPage: true,
+        deploying: false
+      })
     }
     event.returnValue = 'done';
   })

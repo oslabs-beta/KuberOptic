@@ -17,39 +17,58 @@ let dat = new Date()
     return res;
  }
 
+// ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
+//   getLocal().then(res=>{
+//     event.sender.send('clusterClient', res)      
+//   }).catch((e)=>console.log(e))
+//   const returnedClusters = locations.map((zone) => {
+//     return new Promise ((resolve, reject) => {
+//       getGcp(creds, zone)
+//       .then(res => {
+//         if (res.length >= 1) {
+//           const clusters = []
+//           for (let clust of res) {
+//             clusters.push(clust)
+//           }
+//           resolve(clusters)
+//         }})
+//       .catch((e)=> {
+//         console.log(e)
+//         reject()
+//       })
+//     })
+//   })
+//   Promise.all(returnedClusters)
+//   .then(res => {
+//     event.sender.send('clusterClient', res)
+//     console.log('here in promise.all resolve', res) 
+//   })
+//   .catch((e)=>console.log(e))
+// })
+
 ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
-  getLocal().then(res=>{
-    event.sender.send('clusterClient', res)      
-  }).catch((e)=>console.log(e))
-  const returnedClusters = locations.map((zone) => {
-    return new Promise ((resolve, reject) => {
-      getGcp(creds, zone)
-      .then(res => {
-        if (res.length >= 1) {
-          const clusters = []
-          for (let clust of res) {
-            clusters.push(clust)
-          }
-          resolve(clusters)
-        }})
-      .catch((e)=> {
-        console.log(e)
-        reject()
-      })
-    })
-  })
-  Promise.all(returnedClusters)
-  .then(res => {
-    event.sender.send('clusterClient', res)
-    console.log('here in promise.all resolve', res) 
-  })
+  let search;
+  if (!locations.length) search = '-';
+  else {
+    search = new Set();
+    locations.forEach(zone => search.add(zone));
+  }
+
+  // getLocal()
+  // .then(res=> event.sender.send('clusterClient', res))
+  // .catch((e)=>console.log(e))
+
+  getGcp(creds, search)
+  .then(res => event.sender.send('clusterClient', res))
   .catch((e)=>console.log(e))
 })
 
 ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
-  getGcp(creds, location).then(res=>{
-    event.sender.send('newClusters', res)
-  }).catch((e)=>console.log(e))
+  const search = new Set();
+  search.add(location)
+  getGcp(creds, search)
+  .then(res=> event.sender.send('newClusters', res))
+  .catch((e)=>console.log(e))
 })
 
 ipcMain.on('aws-login', () => {

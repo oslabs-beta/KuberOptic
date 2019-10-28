@@ -54,13 +54,14 @@ const Visualizer = () => {
   const fov = 100;
   const near = 920;
   const far = 3000;
+  const renderer = new THREE.WebGLRenderer();
+  const scene = new THREE.Scene();
   
   useEffect(() => {
     if(store.clusters.length){
-      const renderer = new THREE.WebGLRenderer();
-      const mainCanvas = document.getElementById('leCanvas');
+  
       renderer.setSize( width, height );
-      mainCanvas.prepend(renderer.domElement)
+      ref.current.prepend(renderer.domElement)
 
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
       //---------------number of hexagons---------------\\
@@ -72,7 +73,7 @@ const Visualizer = () => {
       // const testSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png'); //original image
       const testSprite = new THREE.TextureLoader().load('http://www.aljanh.net/data/archive/img/2594756229.png'); //possible replacement1
       // const testSprite = new THREE.TextureLoader().load('http://www.aljanh.net/data/archive/img/2076493265.png'); //possible replacement2
-      const colorArray = ['skyblue', 'blue', 'lightblue', 'skyblue', 'blue', 'lightblue', ];
+      const colorArray = ['skyblue', 'blue', 'lightblue', 'lightgreen', 'cornsilk', 'skyblue', 'blue', 'lightblue', 'lightgreen', 'cornsilk'];
       const colorArray2 = ['red'];
       /* Testing to make random elements appear  */
       
@@ -89,7 +90,7 @@ const Visualizer = () => {
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [1500 * i - 1500, 1];
+        const position = [(1500 * i) - 2500, 1];
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
@@ -144,7 +145,7 @@ const Visualizer = () => {
      
       const points = new THREE.Points(pointsGeometry, pointsMaterial);
       const points2 = new THREE.Points(pointsGeometry2, pointsMaterial2);
-      const scene = new THREE.Scene();
+      
      
       scene.add(points);
       scene.add(points2);
@@ -338,7 +339,7 @@ const Visualizer = () => {
         updateTooltip();
       }
     }
-});
+}, [store.clusterCount]);
 
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
