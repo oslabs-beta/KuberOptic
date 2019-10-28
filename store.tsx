@@ -14,7 +14,7 @@ export const StoreContextProvider = (props: any) => {
     uploadPageState2:false,
     gcpDeployPage:false,
     credentials: {}, //google
-    clusters: [], //null or empty array is better?
+    clusters: [],
     gcploc: { // GCP location(s)
       'us-central1-a': false,
       'us-central1-b': false,
@@ -33,7 +33,12 @@ export const StoreContextProvider = (props: any) => {
     awsLocation:null,
     awsDeployPage: false,
     awsDeployName: null,
-    awsDeployRegion: null
+    awsDeployRegion: null,
+    awsDisplayRegion: null,
+    awsDeployRoleArn: null,
+    awsSubnet1: null, 
+    awsSubnet2: null,
+    visualize: false
   })
 
   return (

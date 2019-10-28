@@ -1,10 +1,12 @@
 const container = require('@google-cloud/container');
 
-// quickstart takes in the GCP credientials object and a timezone, defaults to central1-a if not specified
+// quickstart takes in the GCP credientials object and a timezone
 async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string) {
   const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
   const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
-  if (zone == null) zone= 'us-central1-a'
+  // if (zone == null) zone= 'us-central1-a' //currently do not need as we are providing the individual zones
+
+  console.log('getting from this zone', zone)
 
   const request:object = {
     projectId,

@@ -14,6 +14,7 @@ import React, { useEffect, useRef, useContext }from 'react'
 import * as d3 from 'd3';
 import * as _ from 'underscore';
 import {StoreContext} from '../../../store';
+import { Scene } from 'three';
 
 // -----------fakeStore----------- if needed to test
 
@@ -47,8 +48,8 @@ const Visualizer = () => {
   
   let [store, setStore] = useContext(StoreContext);
 
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  const width = window.innerWidth * .995;
+  const height = window.innerHeight * .995;
   const vizWidth = width;
   const fov = 100;
   const near = 920;
@@ -56,10 +57,11 @@ const Visualizer = () => {
   
   useEffect(() => {
     if(store.clusters.length){
-
       const renderer = new THREE.WebGLRenderer();
+      const mainCanvas = document.getElementById('leCanvas');
       renderer.setSize( width, height );
-      ref.current.appendChild(renderer.domElement);
+      mainCanvas.prepend(renderer.domElement)
+
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
       //---------------number of hexagons---------------\\
       const pointAmmount = store.clusters.length;
@@ -67,7 +69,9 @@ const Visualizer = () => {
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
       const circleSprite = new THREE.TextureLoader().load(".././src/client/assets/visualizerPage/Basic_hexagon.svg");
-      const testSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png');
+      // const testSprite = new THREE.TextureLoader().load('https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png'); //original image
+      const testSprite = new THREE.TextureLoader().load('http://www.aljanh.net/data/archive/img/2594756229.png'); //possible replacement1
+      // const testSprite = new THREE.TextureLoader().load('http://www.aljanh.net/data/archive/img/2076493265.png'); //possible replacement2
       const colorArray = ['skyblue', 'blue', 'lightblue', 'skyblue', 'blue', 'lightblue', ];
       const colorArray2 = ['red'];
       /* Testing to make random elements appear  */
@@ -85,7 +89,7 @@ const Visualizer = () => {
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [2400 * i - 2400, 1]; // what is the purpose of these numbers?
+        const position = [1500 * i - 1500, 1];
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
@@ -97,13 +101,11 @@ const Visualizer = () => {
         pointInfo.push(point);
       }
       
-
       //for each cluster we must put nodes inside
-      //omfg it works
       store.clusters.forEach((cluster, i)=>{
         for(let j = 0; j < cluster.nodeCount; j++){
           const name2 = `Point` + j;
-          const position = randomPosition(pointInfo[i].position[0], 300); // what is the purpose of 300?
+          const position = randomPosition(pointInfo[i].position[0], 300);
           const group = 0;
           const point2 = {position, name2, group};
           pointInfo2.push(point2);
@@ -118,14 +120,14 @@ const Visualizer = () => {
       const colors2 = [];
       
       for (const point of generatedPoints) {
-        const vertex = new THREE.Vector3(point.position[0], point.position[1]);
+        const vertex = new THREE.Vector3(point.position[0], point.position[1], 0);
         pointsGeometry.vertices.push(vertex);
         const color = new THREE.Color(colorArray[point.group]);
         colors.push(color);
       }
 
       for (const point2 of generatedPoints2) {
-        const vertex = new THREE.Vector3(point2.position[0], point2.position[1]);
+        const vertex = new THREE.Vector3(point2.position[0], point2.position[1], 1);
         pointsGeometry2.vertices.push(vertex);
         const color = new THREE.Color(colorArray2[point2.group]);
         colors2.push(color);
@@ -134,9 +136,9 @@ const Visualizer = () => {
       pointsGeometry2.colors = colors2;
       //sizeAttenuation:true makes shakes bigger when zoom
      
-      const pointsMaterial = new THREE.PointsMaterial({ size: 800, sizeAttenuation: true,
+      const pointsMaterial = new THREE.PointsMaterial({ size: 900, sizeAttenuation: true,
         vertexColors: THREE.VertexColors, map: circleSprite, transparent: true,});
-      const pointsMaterial2 = new THREE.PointsMaterial({ size: 100, sizeAttenuation: true,
+      const pointsMaterial2 = new THREE.PointsMaterial({ size: 125, sizeAttenuation: true,
         vertexColors: THREE.VertexColors, map: testSprite, transparent: true,});
         //this where the shape is created
      

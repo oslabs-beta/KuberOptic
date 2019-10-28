@@ -108,24 +108,6 @@ const SideBar = () =>{
     });
   }
 
-//rendering of summary of deployed clusters might need to move into gcp deploy page
-  // if(Store.clusterCount && Store.uploadPageState2) {
-  //   clusters = Store.clusters.map(clust => {
-  //     return (
-  //     <div className ="cluster">
-  //       <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
-  //       <center className="clusterInformation"><p>
-  //           Status: <em>{clust.clusterStatus}</em>
-  //           <br></br>
-  //           Nodes: <em>{clust.nodeCount}</em>
-  //           <br></br>
-  //           Location: <em>{clust.location}</em>
-  //       </p></center>
-  //     </div>
-  //     )
-  //   })
-  // }
-
   
   const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
   

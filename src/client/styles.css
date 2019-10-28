@@ -11,6 +11,7 @@
   height:99.5%;
   /* border-style: inset; */
   position: absolute;
+  overflow: hidden;
 }
 canvas {
   width: 100%;
@@ -74,6 +75,7 @@ canvas {
   width: 100%;
   background-color: rgb(0, 0, 0);
   font-family: 'Nunito', sans-serif;
+  overflow: hidden;
 }
 
 .text {

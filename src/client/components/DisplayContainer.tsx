@@ -12,7 +12,11 @@
 // import * as React from 'react';
 import Visualizer from './visualizer'
 import SideBar from './sidebar';
+import { useEffect, useRef, useContext }from 'react'
+import {StoreContext} from '../../../store';
 
+
+// for Bryan's notes on history
 // const DisplayContainer = () => {
 //   return (
 //     <div className='displayContainer'>
@@ -179,7 +183,7 @@ export default function DisplayContainer() {
         <div className={classes.drawerHeader} />
         
         {/* add visualizer here */}
-        <Visualizer/> 
+        { store.visualize && <Visualizer/> }
       </main>
     </div>
   );
