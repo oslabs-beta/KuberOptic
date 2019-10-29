@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      // padding: theme.spacing(3),
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -174,18 +174,16 @@ export default function DisplayContainer() {
       </Drawer>
 
       {/* this is the main content of the page - will be where visualizer is */}
-      {/* we can remove this and it still works */}
-      {/* <main
+      <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
-      > */}
-        {/* this doesn't do anything? */}
-        {/* <div className={classes.drawerHeader} />  */}
+      >
+        <div className={classes.drawerHeader} /> 
         
         {/* add visualizer here */}
         { Store.visualize && <Visualizer/> }
-      {/* </main> */}
+      </main>
     </div>
   );
 }
