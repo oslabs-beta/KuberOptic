@@ -17,35 +17,6 @@ let dat = new Date()
     return res;
  }
 
-// ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
-//   getLocal().then(res=>{
-//     event.sender.send('clusterClient', res)      
-//   }).catch((e)=>console.log(e))
-//   const returnedClusters = locations.map((zone) => {
-//     return new Promise ((resolve, reject) => {
-//       getGcp(creds, zone)
-//       .then(res => {
-//         if (res.length >= 1) {
-//           const clusters = []
-//           for (let clust of res) {
-//             clusters.push(clust)
-//           }
-//           resolve(clusters)
-//         }})
-//       .catch((e)=> {
-//         console.log(e)
-//         reject()
-//       })
-//     })
-//   })
-//   Promise.all(returnedClusters)
-//   .then(res => {
-//     event.sender.send('clusterClient', res)
-//     console.log('here in promise.all resolve', res) 
-//   })
-//   .catch((e)=>console.log(e))
-// })
-
 ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
   let search;
   if (!locations.length) search = '-';
@@ -53,10 +24,6 @@ ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
     search = new Set();
     locations.forEach(zone => search.add(zone));
   }
-
-  // getLocal()
-  // .then(res=> event.sender.send('clusterClient', res))
-  // .catch((e)=>console.log(e))
 
   getGcp(creds, search)
   .then(res => event.sender.send('clusterClient', res))
@@ -71,7 +38,7 @@ ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
   .catch((e)=>console.log(e))
 })
 
-
+// backend for AWS login, invokes the loginAWS function to configure credentials and the listAWS function to pull cluster names in region, then sends to awsRegionDisplayFunc to start the fetching process
 ipcMain.on('aws-login', (event: any, arg: any) => {
   loginAWS(arg).then(res=> {
       console.log('awsLogin call ', arg)
@@ -82,48 +49,33 @@ ipcMain.on('aws-login', (event: any, arg: any) => {
   })
 })
 
+// invokes the fetchAWS function which uses describeCluster to fetch data for all cluster names in the store
 ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
-  console.log('start of async2')
   fetchAWS(arg).then(res=>{
-    console.log('response on main ', res);
-    event.sender.send('clusterClient2', res)
-    // console.log('res in aws: ', res)
-    // console.log('clusters: ', Store.clusters, 'cluster count: ', Store.clusterCount, 'aws cluster names: ', Store.awsClusterName)
+    event.sender.send('clusterClient2', res);
     })
-  .catch((e)=>console.log(e))
-})
+  .catch((e)=>console.log(e));
+});
 
+// invokes the createAWS function to deploy a new cluster
 ipcMain.on('create-aws', (event: any, arg: any) => {
-  createAWS(arg).then(res =>{
-    console.log('create response on main :', res);
-    event.sender.send('createCluster2', res)
-  })
-  .catch((e) => console.log(e))
-})
+  createAWS(arg).then(res =>{})
+  .catch((e) => console.log(e));
+});
 
+// invokes the deleteAWS function to delete a cluster from the cloud
 ipcMain.on('delete-aws', (event: any, arg: any) => {
-  console.log('in main delete-aws')
-  deleteAWS(arg).then(res => {
-    event.sender.send('createCluster2', res)
-  })
+  deleteAWS(arg).then(res => {})
   .catch((e) => console.log(e))
-})
+});
 
+// invokes the listAWS function from the deploy page
 ipcMain.on('list-aws', (event: any, arg: any) => {
   console.log('in main list-aws')
   listAWS(arg).then(res => {
-    console.log('listClusters res: ', res)
-    event.sender.send('awsRegionDisplay', res)
-  })
-})
-
-// ipcMain.on('getNewClusters2', (event: any, arg: any) => {
-//   fetchAWS(arg).then(res=>{
-//     event.sender.send('newClusters2', res)
-//     console.log('res in aws: ', res)
-//     })
-//   .catch((e)=>console.log(e))
-// })
+    event.sender.send('awsRegionDisplay', res);
+  });
+});
 
 
 app.on('ready', () => {

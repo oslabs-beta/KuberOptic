@@ -1,11 +1,11 @@
 import fs from 'fs';
 import { promises } from 'dns';
 
-const AWS = require('aws-sdk')
-let nodes = Math.ceil(Math.random() * 5)
+const AWS = require('aws-sdk');
+let nodes = Math.ceil(Math.random() * 5);
 
+// function that takes AWS key, secret, and region from store, writes a json file and uses it to configure AWS credentials
 async function loginAWS(params) {
-  console.log('inside loginAWS, and region is', params.region)
   let credentials = {
     accessKeyId: params.accessKeyId, 
     secretAccessKey: params.secretAccessKey, 
@@ -18,32 +18,25 @@ async function loginAWS(params) {
         
   let eks = new AWS.EKS(params.region);
 
-  return params.region
-}
+  return params.region;
+};
 
+// function that takes AWS region and returns a list of clusters deployed to that region
 async function listAWS(region) {
-  console.log('inside loginAWS, and region is', region.region)
-
   return new Promise ((resolve, reject) => {
-
-    
     let eks = new AWS.EKS(region.region);
     
     eks.listClusters((err, data) => {
       if (err) console.log(err, err.stack);
       else {
-        console.log('data is ', data)
-        resolve(data)
-      }
-    }
-    )
-  })
+        resolve(data);
+      };
+    });
+  });
+};
 
-}
-
-//-------------function to get clusters-------------\\
+// function that takes AWS cluster names from the store and uses the describeCluster method to retrieve data for them individually and push into an array, with each cluster being an object of data
 async function fetchAWS(params){
-
   let credentials = {
     accessKeyId: params.accessKeyId, 
     secretAccessKey: params.secretAccessKey, 
@@ -56,60 +49,33 @@ async function fetchAWS(params){
         
   let eks = new AWS.EKS({region: params.region});
 
-  // let nameObj = {name: params.name}
-
-  // let clusterArray = [];
-
-  // const clusterData = await new Promise((resolve, reject) => {
-  //   eks.describeCluster(nameObj, function(err, data) {
-  //     if (err) console.log(err, err.stack); // an error occurred  
-  //     else{
-  //       let awsDat = {};
-      
-  //       awsDat["clusterName"]= data.cluster.name           // successful response
-  //       awsDat["endpoint"]= data.cluster.endpoint
-  //       awsDat["creationTime"]= data.cluster.createdAt
-  //       awsDat["clusterStatus"]= data.cluster.status
-  //       awsDat["nodeCount"]= nodes
-  //       awsDat["location"]= eks.config.region
-  //       clusterArray.push(awsDat)
-  //       resolve(clusterArray);
-  //     }
-  //   })
-  //     // clusterArray.push(awsDat)
-  // })
-
-  console.log('inside fetchAWS', params.name)
   let promiseArray = [];
   let clusterArray = [];
 
+  params.name.forEach(el => {
+    promiseArray.push(new Promise((resolve, reject) => {
 
-    params.name.forEach(el => {
-      promiseArray.push(new Promise((resolve, reject) => {
-
-        eks.describeCluster({name: el}, function(err, data) {
-          if (err) console.log(err, err.stack); // an error occurred  
-          else{
-            let awsDat = {};
-            
-            awsDat["clusterName"]= data.cluster.name           // successful response
-            awsDat["endpoint"]= data.cluster.endpoint
-            awsDat["creationTime"]= data.cluster.createdAt
-            awsDat["clusterStatus"]= data.cluster.status
-            awsDat["nodeCount"]= nodes
-            awsDat["location"]= eks.config.region
-            clusterArray.push(awsDat)
-            resolve(awsDat);
+      eks.describeCluster({name: el}, function(err, data) {
+        if (err) console.log(err, err.stack);  
+        else {
+          let awsDat = {};
           
-      }
-    })
+          awsDat["clusterName"] = data.cluster.name;
+          awsDat["endpoint"] = data.cluster.endpoint;
+          awsDat["creationTime"] = data.cluster.createdAt;
+          awsDat["clusterStatus"] = data.cluster.status;
+          awsDat["nodeCount"] = nodes;
+          awsDat["location"] = eks.config.region;
+          clusterArray.push(awsDat);
+          resolve(awsDat);   
+    };
+    });
   }));
-  }) 
-  console.log('clusterArray: ', clusterArray)
-  // console.log('clusters: ', Store.clusters, 'cluster count: ', Store.clusterCount, 'aws cluster names: ', Store.awsClusterName)
+  });
   return Promise.all(promiseArray);
-}
+};
 
+// function that takes AWS cluster name, ARN, subnet IDs, and region to deploy a new cluster to the cloud
 async function createAWS(params) {
   const request = {
     name: params.name,
@@ -121,34 +87,27 @@ async function createAWS(params) {
   const createClusties = await new Promise((resolve, reject) => {
     eks.createCluster(request, function (err, data) {
       if (err) console.log(err, err.stack)
-      console.log(data);
       resolve(data);
-    })
-  })
-  
+    });
+  });
   return createClusties;
-}
+};
 
+//function that takes AWS cluster name and deletes that cluster from the cloud
 async function deleteAWS(params) {
-  console.log('in deleteAWS')
   const request = {
     name: params.name
   }
   const eks = new AWS.EKS({region: params.region});
   const deleteClusties = await new Promise ((resolve, reject) => {
     eks.deleteCluster(request, function (err, data) {
-      if (err) console.log(err, err.stack)
+      if (err) console.log(err, err.stack);
       resolve(data);
-    })
-  })
-  console.log(deleteClusties)
-  return deleteClusties
-}
+    });
+  });
+  return deleteClusties;
+};
 
+export default [loginAWS, listAWS, fetchAWS, createAWS, deleteAWS]; ;
 
-// AWS.config.getCredentials();
-// fetchAWS({name: 'test'});
-
-export default [loginAWS, listAWS, fetchAWS, createAWS, deleteAWS]; //if functionality to deploy is possible
-
-// export default fetchAWS;
+;

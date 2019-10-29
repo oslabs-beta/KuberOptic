@@ -1,39 +1,101 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
-const [fetchAWS] = require('../../main/aws/getAWSData').default
 const { ipcRenderer } = require('electron');
-import fs from 'fs'
-const AWS = require('aws-sdk')
 let input = {};
 
 const awsDeploy = () =>{
   const [Store, setStore] = useContext(StoreContext);
   
-  const handleDeployName = (e) => {
-      // input['name'] = event.currentTarget.value;
-      setStore({...Store, awsDeployName: e.currentTarget.value})
-  }
-
+  // sets store to the cluster name from the input field
   const handleName = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log('handleName', e.currentTarget.value)  
     setStore({...Store, awsClusterName: e.currentTarget.value.split(", ")})
   }
   
+  // beginning of function to retrieve cluster data by name. Sets store to the cluster name and sends to 'asynchronous-message2' where fetchAWS is called. 
+  const handleFetchSubmit = () => {
+    if (Store.awsClusterName.length === 0) {
+      const arg = {
+      region: Store.awsDisplayRegion
+      }
+      ipcRenderer.send('list-aws', arg)
+    }
+    const arg = {
+      name: Store.awsClusterName, 
+      accessKeyId: Store.awsKey, 
+      secretAccessKey: Store.awsSecret, 
+      region: Store.awsDeployRegion
+    }
+    ipcRenderer.send('asynchronous-message2', arg)
+  }
+
+  // removes a cluster from the visualizer by name by removing it from the store array of cluster names
+  const handleRemove = () => {
+    let clusterArrCopy = Store.clusters.slice();
+    for (let i = 0; i < clusterArrCopy.length; i++) {
+      if (clusterArrCopy[i].clusterName === Store.awsClusterName) {
+        clusterArrCopy.splice(i, 1)
+        clusterArrCopy = clusterArrCopy;
+      }
+    }
+    setStore({...Store, clusters: clusterArrCopy, awsDeployPage: true})
+  }
+
+  // sets store to the cluster name for a new cluster 
+  const handleDeployName = (e) => {
+      setStore({...Store, awsDeployName: e.currentTarget.value})
+  }
+
+  // sets store to AWS ARN for cluster deployment
   const handleDeployArn = (e) => {
     setStore({...Store, awsDeployRoleArn: e.currentTarget.value})
   }
 
-  const handleLoc = (e) => {
-    setStore({...Store, awsDeployRegion: e.currentTarget.value})
-    //  input['zone'] = event.currentTarget.value;
+  // following 2 functions set the 2 subnets to the store for cluster deployment
+  const handleSubnet1 = (e) => {
+    setStore({...Store, awsSubnet1: e.currentTarget.value})
   }
 
-  // const handleRegion = (e) => {
-  //   setStore({...Store, awsDisplayRegion: e.currentTarget.value})
-  //   console.log('region is', Store.awsDisplayRegion)
-  // }
+  const handleSubnet2 = (e) => {
+    setStore({...Store, awsSubnet2: e.currentTarget.value})
+  }
 
+  // sets store to location for cluster deployment
+  const handleLoc = (e) => {
+    setStore({...Store, awsDeployRegion: e.currentTarget.value})
+  }
+
+  // submits name, ARN, subnets, and region for cluster deployment, and sends to 'create-aws' to invoke the createCluster method
+  const handleDeploySubmit = () => {
+    const arg = {
+      name: Store.awsDeployName,
+      accessKeyId: Store.awsKey,
+      secretAccessKey: Store.awsSecret,
+      region: Store.awsDeployRegion,
+      version: "1.14",
+      resourcesVpcConfig: {
+        endpointPrivateAccess: false,
+        endpointPublicAccess: true,
+        subnetIds: [Store.awsSubnet1, Store.awsSubnet2]
+      },
+      roleArn: Store.awsDeployRoleArn,
+    }
+      setStore({...Store, awsDeployPage: true})
+      ipcRenderer.send('create-aws', arg)
+  }
+
+  // deletes a cluster from the cloud, only needs a name
+  const handleDelete = () => {
+    const arg = {
+      name: Store.awsDeployName,
+      accessKeyId: Store.awsKey,
+      secretAccessKey: Store.awsSecret,
+      region: Store.awsDeployRegion,
+    }
+    ipcRenderer.send('delete-aws', arg);
+  }
+
+  // goes back to the landing page
   const handleBack = ()=>{
     return setStore({
       ...Store,
@@ -48,122 +110,20 @@ const awsDeploy = () =>{
       awsDeployRegion: null
     });
   }
-  const handleDeploySubmit = () => {
-    const arg = {
-      name: Store.awsDeployName,
-      accessKeyId: Store.awsKey,
-      secretAccessKey: Store.awsSecret,
-      region: Store.awsDeployRegion,
-      version: "1.14",
-      resourcesVpcConfig: {
-        endpointPrivateAccess: false,
-        endpointPublicAccess: true,
-        subnetIds: [Store.awsSubnet1, Store.awsSubnet2]
-      },
-      roleArn: Store.awsDeployRoleArn,
-      // subnetIds: ['subnet-06197f57dh38dlas8', 'subnet-dj48djs0k4e2ca240']
-    }
-      // create(Store.credentials, input['zone'], input)
-      setStore({...Store, awsDeployPage: true})
-      ipcRenderer.send('create-aws', arg)
-  }
-
-  const handleFetchSubmit = () => {
-    console.log('ClusterName array is', Store.awsClusterName)
-    if (Store.awsClusterName.length === 0) {
-      const arg = {
-      region: Store.awsDisplayRegion
-      }
-      console.log('no name, moving to main list-aws')
-      ipcRenderer.send('list-aws', arg)
-    }
-    
-    const arg = {
-      name: Store.awsClusterName, 
-      accessKeyId: Store.awsKey, 
-      secretAccessKey: Store.awsSecret, 
-      region: Store.awsDeployRegion
-    }
-    console.log('handleFetchSubmit function')
-    ipcRenderer.send('asynchronous-message2', arg)
-  }
-
-  // const awsRegionDisplay = (array) => {
-  //   setStore({...Store, awsClusterName: array})
-  //   const arg = {
-  //     name: Store.awsClusterName, 
-  //     accessKeyId: Store.awsKey, 
-  //     secretAccessKey: Store.awsSecret, 
-  //     region: Store.awsDeployRegion
-  //   }
-    
-  //   ipcRenderer.send('asynchronous-message2', arg)
-  // }
-
-  // ipcRenderer.on('awsRegionDisplay', (event: any, arg: any) => {
-  //   console.log('running awsRegionDisplay in awsDeploy.tsx')
-  //   awsRegionDisplay(arg)
-  // })
-
-  const handleSubnet1 = (e) => {
-    setStore({...Store, awsSubnet1: e.currentTarget.value})
-  }
-
-  const handleSubnet2 = (e) => {
-    setStore({...Store, awsSubnet2: e.currentTarget.value})
-  }
-
-
-  const handleRemove = () => {
-    //make copy of clusters array via slice
-    console.log('clusters: ', Store.clusters)
-    let clusterArrCopy = Store.clusters.slice();
-    //go through all elements of copy clusters array
-    for (let i = 0; i < clusterArrCopy.length; i++) {
-        //if you find one where the name matches, splice out from copied array
-      if (clusterArrCopy[i].clusterName === Store.awsClusterName) {
-        clusterArrCopy.splice(i, 1)
-        clusterArrCopy = clusterArrCopy;
-      }
-    }
-    //set store of clusters to copied array 
-    console.log('clusterArrCopy: ', clusterArrCopy)
-    setStore({...Store, clusters: clusterArrCopy, awsDeployPage: true})
-    console.log('clusters: ', Store.clusters)
-  }
-
-  const handleDelete = () => {
-    console.log('in handleDelete')
-    const arg = {
-      name: Store.awsDeployName,
-      accessKeyId: Store.awsKey,
-      secretAccessKey: Store.awsSecret,
-      region: Store.awsDeployRegion,
-    }
-
-    ipcRenderer.send('delete-aws', arg);
-  }
-
+  
+  // renders the display section (name input field) buttons to add or remove clusters from the display, and the deploy section (inputs for name, ARN, subnets, dropdown for region, and deploy/delete/back/buttons)
   return (
   <div className="deployWrapper">
     <div className="fetchAWS">
       <h3 className="deployTitle">Add/Remove AWS Clusters by Name:</h3> 
       <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="clusterName"></input>
-      {/* <div>
-      <select id='deployLoc' className='loc' onChange={handleRegion}>
-      <option selected>Choose a location to display</option>
-      <option value='us-east-1'>us-east-1</option>
-      <option value='us-east-2'>us-east-2</option>
-      <option value='us-west-1'>us-west-1</option>
-      <option value='us-west-2'>us-west-2</option>
-      </select>
-      </div> */}
+
       <div id="uploadPage2SubmitandBackButts">
         <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Cluster</button>
         <button id="uploadPage2BackButt" className = 'backButton' onClick={handleRemove}>Remove Cluster</button>
       </div>
     </div>
-    <br/><br/><br/><br/>
+
       <div className="inputPageDeploy">
       <h3 className="deployTitle">Deploy New AWS Cluster:</h3>
       <input className='awsDeployClusterName' type="text" onChange={handleDeployName} placeholder="Cluster Name"/>

@@ -9,6 +9,8 @@
  * ************************************
  */
 
+// This page is the "login" space for AWS. It takes an AWS Key, Secret, and region, and when submitted will bring you to the AWS Display/Deploy page where all clusters in the region are displayed. 
+
 import * as React from 'react';
 import { useContext } from 'react';
 // import DisplayContainer from './DisplayContainer';
@@ -19,31 +21,21 @@ import AWSDeploy from './awsDeploy'
 const UploadPage2 = () => {
   const [Store, setStore] = useContext(StoreContext);
 
+  // from main.ts, 'asynchronous-message2'
+  // iterates through the clusters submitted via the name or region, and adds to the array of clusters in the store. 
   ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
-    console.log('event on upload ',event);
-    // if(Store.clusterCount){
-      let newClusters = Store.clusters.slice();
-      arg.forEach(el=> newClusters.push(el))
-      setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
-      console.log('clusters: ', newClusters, 'cluster count: ', Store.clusterCount, 'aws cluster names: ', Store.awsClusterName)
-    // }
-    // else setStore({...Store, clusters: arg, clusterCount: arg.length });
-    console.log('arg :', arg)
-    // console.log('clusters: ', Store.clusters, 'cluster count: ', Store.clusterCount, 'aws cluster names: ', Store.awsClusterName)
+    let newClusters = Store.clusters.slice();
+    arg.forEach(el=> newClusters.push(el))
+    setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
     event.returnValue = 'done';
   })
 
-  ipcRenderer.on('createCluster2', (event: any, arg: any) => {
-
-  })
-
-
+  // this and the function below take in the cluster names from the listClusters method and sends them to 'asynchronous-message2' to be sent as arg for the describeCluster method
   ipcRenderer.on('awsRegionDisplayFunc', (event: any, arg: any) => {
-    console.log('running awsRegionDisplay')
     awsRegionDisplay(arg)
   })
 
-    const awsRegionDisplay = (array) => {
+  const awsRegionDisplay = (array) => {
     setStore({...Store, awsClusterName: array})
     const arg = {
       name: array, 
@@ -51,32 +43,26 @@ const UploadPage2 = () => {
       secretAccessKey: Store.awsSecret, 
       region: Store.awsDisplayRegion
     }
-    console.log('awsRegionDisplay arg: ', arg)
     ipcRenderer.send('asynchronous-message2', arg)
     setStore({...Store, uploadPageState2: true, awsDeployPage: true});
-
   }
 
+  // updates the store with the AWS key entered into the input field
   const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value)  
     setStore({...Store, awsKey: e.currentTarget.value})
   }
 
+  // updates the store with the AWS secret entered into the input field
   const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value)  
     setStore({...Store, awsSecret: e.currentTarget.value})
   }
 
+  // updates the store with the AWS region entered into the input field
   const handleRegion = (e) => {
     setStore({...Store, awsDisplayRegion: e.currentTarget.value})
-    console.log('region is', Store.awsDisplayRegion)
   }
 
-  // const handleName = (e: React.FormEvent<HTMLInputElement>) => {
-  //   console.log(e.currentTarget.value)  
-  //   setStore({...Store, awsClusterName: e.currentTarget.value})
-  // }
-
+  // brings the display back to the landing page
   const handleBack = ()=>{
     setStore({
       ...Store,
@@ -90,26 +76,23 @@ const UploadPage2 = () => {
     });
   };
 
+  // submits the AWS key, secret, and region to main.ts where the loginAWS function is invoked
   function handleSubmit() {
-    console.log('handleSubmit region is', Store.awsDisplayRegion)
     if(typeof Store.awsSecret !== 'string' || typeof Store.awsKey !== 'string'){
       console.log('Enter a AWS key/secret to access AWS');
     }
     else {
       const arg = {
-        // name: Store.awsClusterName, 
         accessKeyId: Store.awsKey, 
         secretAccessKey: Store.awsSecret, 
         region: Store.awsDisplayRegion
       }
       ipcRenderer.send('aws-login', arg)
-      // setStore({...Store, uploadPageState2: true, awsDeployPage: true});
     }
   }
 
+  // renders the login page, with input fields for AWS key, secret, and a drop down menu for US regions. 
   return (
-    // <>
-    //   {Store.uploadPageState2 ? <DisplayContainer /> :
     <>
         { Store.awsDeployPage ? <AWSDeploy/> :
       <div className='uploadDiv'>
@@ -119,8 +102,7 @@ const UploadPage2 = () => {
         </div>
         <input className='uploadInput' type="text" onChange={handleKey}  placeholder="awsKey" required={true}></input>
         <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret" required={true}></input>
-        {/* <input className='uploadInput' type="text" onChange={handleName} placeholder="clusterName"></input> */}
-        <div>
+      <div>
       <select id='deployLoc' className='loc' onChange={handleRegion}>
       <option selected>Choose a location to display</option>
       <option value='us-east-1'>us-east-1</option>
