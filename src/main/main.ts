@@ -17,35 +17,6 @@ let dat = new Date()
     return res;
  }
 
-// ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
-//   getLocal().then(res=>{
-//     event.sender.send('clusterClient', res)      
-//   }).catch((e)=>console.log(e))
-//   const returnedClusters = locations.map((zone) => {
-//     return new Promise ((resolve, reject) => {
-//       getGcp(creds, zone)
-//       .then(res => {
-//         if (res.length >= 1) {
-//           const clusters = []
-//           for (let clust of res) {
-//             clusters.push(clust)
-//           }
-//           resolve(clusters)
-//         }})
-//       .catch((e)=> {
-//         console.log(e)
-//         reject()
-//       })
-//     })
-//   })
-//   Promise.all(returnedClusters)
-//   .then(res => {
-//     event.sender.send('clusterClient', res)
-//     console.log('here in promise.all resolve', res) 
-//   })
-//   .catch((e)=>console.log(e))
-// })
-
 ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
   let search;
   if (!locations.length) search = '-';
@@ -70,7 +41,6 @@ ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
   .then(res=> event.sender.send('newClusters', res))
   .catch((e)=>console.log(e))
 })
-
 
 ipcMain.on('aws-login', (event: any, arg: any) => {
   loginAWS(arg).then(res=> {

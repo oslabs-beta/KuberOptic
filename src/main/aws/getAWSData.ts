@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { promises } from 'dns';
 
 const AWS = require('aws-sdk')
 let nodes = Math.ceil(Math.random() * 5)
@@ -23,22 +22,16 @@ async function loginAWS(params) {
 
 async function listAWS(region) {
   console.log('inside loginAWS, and region is', region.region)
-
   return new Promise ((resolve, reject) => {
-
-    
     let eks = new AWS.EKS(region.region);
-    
     eks.listClusters((err, data) => {
       if (err) console.log(err, err.stack);
       else {
         console.log('data is ', data)
         resolve(data)
       }
-    }
-    )
+    })
   })
-
 }
 
 //-------------function to get clusters-------------\\

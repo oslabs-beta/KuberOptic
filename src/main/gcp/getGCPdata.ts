@@ -41,14 +41,14 @@ const container = require('@google-cloud/container');
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // below here is practice 
 // quickstart takes in the GCP credientials object and a timezone
-function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zones:any) {
+async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zones:any) {
   const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
   const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
   const parent = `projects/${projectId}/locations/-`
   const request:object = {
     parent 
   };
-  const clustersToDisplay = client.listClusters(request).then(response => {
+  const clustersToDisplay = await client.listClusters(request).then(response => {
     const res = response[0];
     return res.clusters.reduce((clusts, nextClust) => {
       if (zones === '-' || zones.has(nextClust.location)) {
