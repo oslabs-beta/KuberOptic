@@ -174,16 +174,18 @@ export default function DisplayContainer() {
       </Drawer>
 
       {/* this is the main content of the page - will be where visualizer is */}
-      <main
+      {/* we can remove this and it still works */}
+      {/* <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
-      >
-        <div className={classes.drawerHeader} />
+      > */}
+        {/* this doesn't do anything? */}
+        {/* <div className={classes.drawerHeader} />  */}
         
         {/* add visualizer here */}
         { Store.visualize && <Visualizer/> }
-      </main>
+      {/* </main> */}
     </div>
   );
 }

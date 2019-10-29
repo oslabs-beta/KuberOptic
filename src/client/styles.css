@@ -130,7 +130,7 @@ canvas {
   height: 105px;
   width: 125px;
   /* animation: rotation 4s infinite linear; */
-  background-color: #e8eaf6;
+  background-color: #e8eaf6; /* light shade of indigo */
   border: solid 5px black;
   border-radius: 20px;
   box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
