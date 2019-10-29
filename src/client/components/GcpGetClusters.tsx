@@ -24,8 +24,7 @@ const GcpGetClusters = () => {
     const newGcpLoc = Store.gcploc;
     newGcpLoc[location] = event.target.checked;
     console.log(newGcpLoc)
-    setStore({
-      ...Store, 
+    setStore({...Store, 
       gcploc: newGcpLoc,
     });
   }
@@ -78,8 +77,9 @@ const GcpGetClusters = () => {
       }
     }
     console.log('array going to main', fetchMe);
-    setStore({
-      ...Store,
+    console.log(Store)
+    ipcRenderer.send('asynchronous-message', creds, fetchMe)
+    return setStore({...Store,
       gcpDeployPage: false,
       clusters: [],
       clusterCount: 0,
@@ -96,8 +96,6 @@ const GcpGetClusters = () => {
         'europe-west2-a': false
       },
     });
-    console.log(Store)
-    ipcRenderer.send('asynchronous-message', creds, fetchMe)
   }
 
   ipcRenderer.on('clusterClient', (event: any, gcpClusters: any) => {
@@ -110,28 +108,26 @@ const GcpGetClusters = () => {
       }
       else singleArr.push(item);
     }
-    if(Store.clusterCount) {
-      let newClusters = Store.clusters.concat(singleArr);
-      newClusters = Object.values(newClusters.reduce((allClusts, nextClust) => Object.assign(allClusts, { [nextClust.clusterName] : nextClust}), {}))
-      setStore({
-        ...Store,
-        clusters: newClusters,
-        clusterCount: newClusters.length,
-        visualize: true,
-        gcpDeployPage: true,
-        deploying: false
-      })
-      event.returnValue = 'done';
-    } else {
-      setStore({
-        ...Store, 
+    // if(Store.clusterCount) {
+    //   let newClusters = Store.clusters.concat(singleArr);
+    //   newClusters = Object.values(newClusters.reduce((allClusts, nextClust) => Object.assign(allClusts, { [nextClust.clusterName] : nextClust}), {}))
+    //   setStore({...Store,
+    //     clusters: newClusters,
+    //     clusterCount: newClusters.length,
+    //     visualize: true,
+    //     gcpDeployPage: true,
+    //     deploying: false
+    //   })
+    //   event.returnValue = 'done';
+    // } else {
+      setStore({...Store, 
         clusters: singleArr,
         clusterCount: singleArr.length,
         visualize: true,
         gcpDeployPage: true,
         deploying: false
       })
-    }
+    // }
     event.returnValue = 'done';
   })
 

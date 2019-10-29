@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { promises } from 'dns';
 
 const AWS = require('aws-sdk');
 let nodes = Math.ceil(Math.random() * 5);
@@ -25,7 +24,6 @@ async function loginAWS(params) {
 async function listAWS(region) {
   return new Promise ((resolve, reject) => {
     let eks = new AWS.EKS(region.region);
-    
     eks.listClusters((err, data) => {
       if (err) console.log(err, err.stack);
       else {
@@ -34,6 +32,7 @@ async function listAWS(region) {
     });
   });
 };
+
 
 // function that takes AWS cluster names from the store and uses the describeCluster method to retrieve data for them individually and push into an array, with each cluster being an object of data
 async function fetchAWS(params){

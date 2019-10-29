@@ -39,6 +39,7 @@ ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
 })
 
 // backend for AWS login, invokes the loginAWS function to configure credentials and the listAWS function to pull cluster names in region, then sends to awsRegionDisplayFunc to start the fetching process
+
 ipcMain.on('aws-login', (event: any, arg: any) => {
   loginAWS(arg).then(res=> {
       console.log('awsLogin call ', arg)

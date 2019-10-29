@@ -2,6 +2,10 @@ import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
 const { ipcRenderer } = require('electron');
+
+import Divider from '@material-ui/core/Divider';
+import fs from 'fs'
+const AWS = require('aws-sdk')
 let input = {};
 
 const awsDeploy = () =>{
@@ -120,9 +124,10 @@ const awsDeploy = () =>{
 
       <div id="uploadPage2SubmitandBackButts">
         <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Cluster</button>
-        <button id="uploadPage2BackButt" className = 'backButton' onClick={handleRemove}>Remove Cluster</button>
+        <button id="uploadPage2BackButt" className='uploadButt' onClick={handleRemove}>Remove Cluster</button>
       </div>
     </div>
+    <Divider />
 
       <div className="inputPageDeploy">
       <h3 className="deployTitle">Deploy New AWS Cluster:</h3>
@@ -145,7 +150,7 @@ const awsDeploy = () =>{
       <button id="uploadPage2Submit" className='uploadButt' onClick={handleDeploySubmit}>Deploy Cluster</button>
       <button id="uploadPage2Submit" className="uploadButt" onClick={handleDelete}>Delete Cluster</button>
       </div>
-      <div>
+      <div id='buttonToGoBack'>
       <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
       </div>
     </div>
