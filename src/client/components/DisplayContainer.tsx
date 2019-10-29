@@ -12,7 +12,11 @@
 // import * as React from 'react';
 import Visualizer from './visualizer'
 import SideBar from './sidebar';
+import { useContext }from 'react'
+import {StoreContext} from '../../../store';
 
+
+// for Bryan's notes on history
 // const DisplayContainer = () => {
 //   return (
 //     <div className='displayContainer'>
@@ -112,6 +116,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 // rename this later
 export default function DisplayContainer() {
+  const [Store, setStore] = useContext(StoreContext);
   const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -177,7 +182,7 @@ export default function DisplayContainer() {
         <div className={classes.drawerHeader} />
         
         {/* add visualizer here */}
-        <Visualizer/> 
+        { Store.visualize && <Visualizer/> }
       </main>
     </div>
   );

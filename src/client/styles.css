@@ -11,6 +11,7 @@
   height:99.5%;
   /* border-style: inset; */
   position: absolute;
+  overflow: hidden;
 }
 canvas {
   width: 100%;
@@ -74,6 +75,7 @@ canvas {
   width: 100%;
   background-color: rgb(0, 0, 0);
   font-family: 'Nunito', sans-serif;
+  overflow: hidden;
 }
 
 .text {
@@ -128,7 +130,7 @@ canvas {
   height: 105px;
   width: 125px;
   /* animation: rotation 4s infinite linear; */
-  background-color: red;
+  background-color: #e8eaf6;
   border: solid 5px black;
   border-radius: 20px;
   box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);

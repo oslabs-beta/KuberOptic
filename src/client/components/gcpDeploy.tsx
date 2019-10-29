@@ -19,7 +19,6 @@ const { ipcRenderer } = require('electron');
 
 require('events').EventEmitter.defaultMaxListeners = 25;
 import GetGCP from './GcpGetClusters';
-import 'tachyons'
 
 // various inputs will be stored in this object and will be submitted when you call handleSubmit
 let deployVals = {};
@@ -42,48 +41,74 @@ const gcpDeploy = () =>{
     deployVals['zone'] = location;
   }
   const handleBack = () => {
+    const mainCanvas = document.getElementById('leCanvas');
+    if (mainCanvas.hasChildNodes()) {
+      while (mainCanvas.children.length > 8) {
+      // while (mainCanvas.hasChildNodes()) {
+        let child = mainCanvas.firstChild
+        if (child == null) break;
+        else {
+        console.log('child element deleted on back is... ', child)
+        mainCanvas.removeChild(child);
+        }
+      }
+    }
+
     return setStore({
       ...Store,
       uploadPageState:false, 
-      // uploadPageState2:false,
-      // landingPageState: false,
-      // landingPageState2: false,
       gcpDeployPage:false,
       credentials: null,
       clusterCount: 0,
-      clusters: []
+      clusters: [],
+      visualize: false,
+      gcploc: {
+        'us-central1-a': false,
+        'us-central1-b': false,
+        'us-central1-c': false,
+        'us-west1-a': false,
+        'southamerica-east1-a': false,
+        'southamerica-east1-b': false,
+        'southamerica-east1-c': false,
+        'europe-west2-a': false
+      }
     });
   }
   const handleDeploy = () =>{
     create(Store.credentials, deployVals['zone'], deployVals)
     const creds = JSON.parse(Store.credentials)
+    ipcRenderer.send('getNewClusters', creds, deployVals['zone']);
     setStore({...Store,
       gcpDeployPage:false,
       deploying: true,
+      clusters: [],
+      clusterCount: 0,
+      visualize: false
     })
-    ipcRenderer.send('getNewClusters', creds, Store.gcpdeploylocation);
   }
 
-  ipcRenderer.on('newClusters', (event: any, arg: any) => {
+  ipcRenderer.on('newClusters', (event: any, singleArr: any) => {
     //logic incase we have more than one cluster already rendered
-    if(Store.clusterCount){
-      let newClusters = Store.clusters;
-      arg.forEach(el=> newClusters.push(el))
-      setStore({
-        ...Store,
+    if(Store.clusterCount) {
+      let newClusters = Store.clusters.concat(singleArr);
+      newClusters = Object.values(newClusters.reduce((allClusts, nextClust) => Object.assign(allClusts, { [nextClust.clusterName] : nextClust}), {}))
+      setStore({...Store,
         clusters: newClusters,
         clusterCount: newClusters.length,
-        deploying: false,
-        gcpDeployPage:true,
+        deploying: false, 
+        gcpDeployPage: true,
+        visualize: true
+       })
+       event.returnValue = 'done';
+    } else {
+      setStore({...Store,
+        clusters: singleArr,
+        clusterCount: singleArr.length,
+        deploying: false, 
+        gcpDeployPage: true,
+        visualize: true
        })
     }
-    else setStore({
-      ...Store,
-       clusters: arg, 
-       clusterCount: arg.length,
-       deploying: false,
-       gcpDeployPage:true,
-       });
     event.returnValue = 'done';
   })
 

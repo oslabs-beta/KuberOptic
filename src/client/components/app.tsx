@@ -13,13 +13,12 @@ import * as React from 'react';
 import DisplayContainer from './DisplayContainer';
 import '../styles.css';
 import { StoreContextProvider } from '../../../store';;
-// import 'tachyons'; // tachyons is a styling tool - not being used in the project
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
+import { green, indigo } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({ // will later import a theme object from a separate file instead
   palette: {
-    primary: green
+    primary: indigo
   }
 }); 
 

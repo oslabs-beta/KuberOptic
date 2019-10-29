@@ -15,12 +15,10 @@ import { StoreContext } from '../../../store';
 import Checkbox from './subcomponents/Checkbox';
 const { ipcRenderer } = require('electron');
 require('events').EventEmitter.defaultMaxListeners = 25;
-// import 'tachyons'
 
 const GcpGetClusters = () => {
   const [Store, setStore] = useContext(StoreContext);
- 
-  // function for handling location change
+  // function for handling location changes as boxes are checked
   const handleLocation = (location: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     // updated to account for selecting multiple locations
     const newGcpLoc = Store.gcploc;
@@ -68,72 +66,74 @@ const GcpGetClusters = () => {
     );
   });
 
-  ipcRenderer.on('clusterClient', (event: any, arg: any) => {
-    //logic incase we have more than one cluster already rendered
-    // Bryan commented out the following for his own logic rendering
-    // if(Store.clusterCount < arg.length){
-    //   let newClusters = [];
-    //   arg.forEach(el=> newClusters.push(el))
-    //   setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
-    // }
-    // else setStore({...Store, clusters: arg, clusterCount: arg.length });
-    let multi = Store.multiZoneClusters;
-    console.log('******* Initial multi')
-    console.log(multi)
-    console.log(arg)
-    if (multi === null) multi = [];
-    console.log('*******  multi array')
-    console.log(multi)
-    arg.forEach((addClus) => {
-      console.log('cluster in for each')
-      console.log(addClus)
-      multi.push(addClus);
-      console.log(`pushed into multi: `)
-      console.log(multi)
-    })
-    console.log('after for loop')
-    console.log(multi)
-    multi = Object.values(multi.reduce((acc, cur) => Object.assign(acc, { [cur.clusterName]: cur }), {}))
-    console.log('after for filter')
-    console.log(multi)
-    setStore({ ...Store, multiZoneClusters: multi, clusters: multi, clusterCount: multi.length })
-    console.log(`Bryan: After Res.clusters from GCP => Invoked clusterClient at UploadPage: Clusters: ${Store.clusters}`)
-    event.returnValue = 'done';
-  })
-
   const handleSubmit = () => {
     const creds = JSON.parse(Store.credentials);
-    console.log('Bryan submit at Fetch has been clicked')
-    // ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
-    // setStore({...Store, uploadPageState: true });
-    console.log(`Bryan default multi zones at Submit: `)
-    console.log(Store.gcploc)
-    async function submit() {
-      console.log(`Bryan: submit invoked at GcpGetClusters`)
-      let location = Store.gcploc;
-      for (let zone in location) {
-        console.log(`Bryan await loop => zone: ${zone}`)
-        if (location[zone]) {
-          console.log(`Insdie if statement with zone: ${zone}`)
-          const a = await ipcRenderer.send('asynchronous-message', creds, zone)
-          console.log(a);
-          console.log(Store.clusters)
-          console.log(`Await function for zone ***${zone}*** done`)
-        }
-      }
-      console.log(`************ Await function done`)
-    }
+    const locations = Store.gcploc;
+    const fetchMe = [];
 
-    submit().then(function () {
-      setStore({ ...Store, uploadPageState: true });
-      console.log(`Bryan submit done at UploadPage`);
+    console.log('building array of locations ----')
+    for (let zone in locations) {
+      if (locations[zone]) {
+        fetchMe.push(zone);
+      }
     }
-    )
-    // Store.multiZones.forEach((zone) => {
-    //   console.log(`Bryan foreach func - zone: ${zone}`)
-    //   ipcRenderer.send('asynchronous-message', creds, zone)
-    // })
+    console.log('array going to main', fetchMe);
+    setStore({
+      ...Store,
+      gcpDeployPage: false,
+      clusters: [],
+      clusterCount: 0,
+      deploying: true, 
+      visualize: false,
+      gcploc: {
+        'us-central1-a': false,
+        'us-central1-b': false,
+        'us-central1-c': false,
+        'us-west1-a': false,
+        'southamerica-east1-a': false,
+        'southamerica-east1-b': false,
+        'southamerica-east1-c': false,
+        'europe-west2-a': false
+      },
+    });
+    console.log(Store)
+    ipcRenderer.send('asynchronous-message', creds, fetchMe)
   }
+
+  ipcRenderer.on('clusterClient', (event: any, gcpClusters: any) => {
+    console.log('was the store reset?', Store)
+    const singleArr = []
+    console.log('this is what is coming back from deploying and fetching', gcpClusters)
+    for (let item of gcpClusters) {
+      if (Array.isArray(item)) {
+        item.forEach(clust => singleArr.push(clust));
+      }
+      else singleArr.push(item);
+    }
+    if(Store.clusterCount) {
+      let newClusters = Store.clusters.concat(singleArr);
+      newClusters = Object.values(newClusters.reduce((allClusts, nextClust) => Object.assign(allClusts, { [nextClust.clusterName] : nextClust}), {}))
+      setStore({
+        ...Store,
+        clusters: newClusters,
+        clusterCount: newClusters.length,
+        visualize: true,
+        gcpDeployPage: true,
+        deploying: false
+      })
+      event.returnValue = 'done';
+    } else {
+      setStore({
+        ...Store, 
+        clusters: singleArr,
+        clusterCount: singleArr.length,
+        visualize: true,
+        gcpDeployPage: true,
+        deploying: false
+      })
+    }
+    event.returnValue = 'done';
+  })
 
   return (
     <div className="getGCPWrapper">

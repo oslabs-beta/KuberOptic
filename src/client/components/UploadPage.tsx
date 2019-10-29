@@ -45,8 +45,6 @@ const UploadPage = () => {
       ...Store,
       uploadPageState:false, 
       uploadPageState2:false,
-      // landingPageState: false,
-      // landingPageState2: false,
       credentials: null,
       clusterCount: 0,
       clusters: []
@@ -56,8 +54,8 @@ const UploadPage = () => {
   // functionalilty for pressing 'submit' button
   const handleSubmit = () => {
     const creds = JSON.parse(Store.credentials); 
-    if (typeof creds !== 'object') {
-      console.log('Enter a JSON object from GCP');
+    if (typeof creds !== 'object' || !creds.hasOwnProperty("project_id")) {
+      console.log('Enter a JSON object from GCP that includes the project ID');
       console.log('locStore: ', Store.gcploc)
     }
     else setStore({...Store, gcpDeployPage: true });

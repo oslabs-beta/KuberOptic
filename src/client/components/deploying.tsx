@@ -7,7 +7,7 @@ const Deploying = () => {
         <img className='kubLogo' src={'https://i.gifer.com/4P4X.gif'}/>
         <div className="landingTitle">
           <h3 className='title'>KuberOptic</h3>
-          <h6 className='text'>deploying...</h6>
+          <h6 className='text'>deploying/fetching...</h6>
         </div>
       </div>
     </div>
