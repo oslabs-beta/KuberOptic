@@ -119,7 +119,7 @@ export default function DisplayContainer() {
   const [Store, setStore] = useContext(StoreContext);
   const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
