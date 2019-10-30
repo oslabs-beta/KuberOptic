@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      // padding: theme.spacing(3),
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -119,7 +119,7 @@ export default function DisplayContainer() {
   const [Store, setStore] = useContext(StoreContext);
   const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -149,7 +149,7 @@ export default function DisplayContainer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            KuberOptic!!!
+            KuberOptic
           </Typography>
         </Toolbar>
       </AppBar>
@@ -170,9 +170,7 @@ export default function DisplayContainer() {
         <Divider />
 
         {/* add the sidebar components here */}
-        {/* <Container fixed> */}
-          <SideBar />
-        {/* </Container> */}
+        <SideBar />
       </Drawer>
 
       {/* this is the main content of the page - will be where visualizer is */}
@@ -181,7 +179,7 @@ export default function DisplayContainer() {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />
+        <div className={classes.drawerHeader} /> 
         
         {/* add visualizer here */}
         { Store.visualize && <Visualizer/> }

@@ -11,6 +11,8 @@
 
 import * as React from 'react';
 import { useContext } from 'react';
+import Divider from '@material-ui/core/Divider';
+
 import {StoreContext} from '../../../store'
 const [quickstart, create] = require('../../main/gcp/getGCPdata').default
 const { ipcRenderer } = require('electron');
@@ -39,18 +41,18 @@ const gcpDeploy = () =>{
     deployVals['zone'] = location;
   }
   const handleBack = () => {
-    const mainCanvas = document.getElementById('leCanvas');
-    if (mainCanvas.hasChildNodes()) {
-      while (mainCanvas.children.length > 8) {
-      // while (mainCanvas.hasChildNodes()) {
-        let child = mainCanvas.firstChild
-        if (child == null) break;
-        else {
-        console.log('child element deleted on back is... ', child)
-        mainCanvas.removeChild(child);
-        }
-      }
-    }
+    // const mainCanvas = document.getElementById('leCanvas');
+    // if (mainCanvas.hasChildNodes()) {
+    //   while (mainCanvas.children.length > 8) {
+    //   while (mainCanvas.hasChildNodes()) {
+    //     let child = mainCanvas.firstChild
+    //     if (child == null) break;
+    //     else {
+    //     console.log('child element deleted on back is... ', child)
+    //     mainCanvas.removeChild(child);
+    //     }
+    //   }
+    // }
 
     return setStore({
       ...Store,
@@ -113,6 +115,8 @@ const gcpDeploy = () =>{
   return (
     <div id="deployWrapper">
       <GetGCP/>
+
+      <Divider />
       
       <div className="inputPageDeploy">
         <h3 className="deployTitle">Deploy New GCP Cluster:</h3>
