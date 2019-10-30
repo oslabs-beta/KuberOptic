@@ -239,6 +239,8 @@ canvas {
   justify-content: center;
   align-content: center;
 }
+
+/* no longer used? */
 .uploadDiv {
   /* height: 100%; */
   /* width: 300px; */
@@ -259,6 +261,7 @@ canvas {
   /* animation: rotation 1s infinite linear; */
 }
 
+/* no longer used? */
 .kubUploadText {
   height: auto;
   width: 295px;
@@ -347,10 +350,12 @@ canvas {
 .clusterInformation {
   margin-bottom: -10px;
 }
-#uploadDivForSubmitandBackButts {
+
+/* no longer used */
+/* #uploadDivForSubmitandBackButts {
   display: flex;
   flex-direction: column;
-}
+} */
 
 #uploadSelectMenu {
   /* used in UploadPage */

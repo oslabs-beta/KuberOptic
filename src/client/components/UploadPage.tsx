@@ -15,6 +15,7 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 import { StoreContext } from '../../../store';
 import GCPDeploy from './gcpDeploy';
@@ -35,11 +36,17 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       width: "100%",
     },
+    button: {
+      margin: theme.spacing(1),
+    },
+    input: {
+      display: 'none',
+    },
   }),
 );
 
 /*
-.uploadDiv {
+.uploadDiv { // no longer used
   height: 100%;
   width: 300px;
   display: flex;
@@ -70,7 +77,17 @@ const useStyles = makeStyles((theme: Theme) =>
   /* animation: rotation 1s infinite linear; 
 }
 
-#uploadDivForSubmitandBackButts {
+.kubUploadText { // no longer used
+  height: auto;
+  width: 295px;
+  margin: 15px auto;
+  color: aquamarine;
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 60px;
+}
+
+#uploadDivForSubmitandBackButts { // no longer used
   display: flex;
   flex-direction: column;
 }
@@ -128,7 +145,6 @@ const UploadPage = () => {
             </div>
 
             <form noValidate autoComplete="off">
-              {/* <div> */}
                 <TextField
                   id="standard-helperText"
                   label="Input GCP Info"
@@ -137,18 +153,27 @@ const UploadPage = () => {
                   margin="normal"
                   onChange={handleInput}
                 />
-              {/* </div> */}
             </form>
 
-            <div id="uploadDivForSubmitandBackButts">
+            <div>
+              <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmit}>
+                Submit
+              </Button>
+
+              <Button variant="outlined" color="primary" className={classes.button} onClick={handleBack}>
+                Back
+              </Button>
+            </div>
+
+            {/* <div id="uploadDivForSubmitandBackButts"> */}
               {/* <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter GCP Info" required={true}></input> */}
               
               
-              <div className="buttonHolder">
-                <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
-                <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
-              </div>
-            </div>
+              {/* <div className="buttonHolder"> */}
+                {/* <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button> */}
+                {/* <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button> */}
+              {/* </div> */}
+            {/* </div> */}
           {/* </div>  */}
         </Grid>
       }
