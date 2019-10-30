@@ -119,7 +119,7 @@ const awsDeploy = () =>{
   return (
   <div className="deployWrapper">
     <div className="fetchAWS">
-      <h3 className="deployTitle">Add/Remove AWS Clusters by Name:</h3> 
+      <h3 className="deployTitle">Add/Remove AWS Cluster(s) to/from Visualizer:</h3> 
       <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="clusterName"></input>
 
       <div id="uploadPage2SubmitandBackButts">
@@ -130,7 +130,7 @@ const awsDeploy = () =>{
     <Divider />
 
       <div className="inputPageDeploy">
-      <h3 className="deployTitle">Deploy New AWS Cluster:</h3>
+      <h3 className="deployTitle">Deploy/Delete AWS Cluster(s):</h3>
       <input className='awsDeployClusterName' type="text" onChange={handleDeployName} placeholder="Cluster Name"/>
       <input className='awsDeployClusterName' type="text" onChange={handleDeployArn} placeholder="Role ARN" />
       <input className='awsDeployClusterName' type="text" onChange={handleSubnet1} placeholder="Subnet ID 1" />

@@ -93,13 +93,14 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-// rename this later
 export default function DisplayContainer() {
   const [Store, setStore] = useContext(StoreContext);
   const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
+  // functionality to trigger the drawer being opened and closed -- initially it is set to open
+  // so users can login upon initially launching the app
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -147,15 +148,13 @@ export default function DisplayContainer() {
         <Divider />
 
         {/* add the sidebar components here */}
-        {/* <Container fixed> */}
         <SideBar />
-        {/* </Container> */}
       </Drawer>
 
-      {/* this is the main content of the page - will be where visualizer is */}
+      {/* this is the main content of the page - will be where visualizer is allows visualizer to move when drawer is opened and closed*/}
       <main className={clsx(classes.content, {[classes.contentShift]: open,})}> 
         <div className={classes.drawerHeader} />
-        {/* add visualizer here */}
+        {/* add visualizer here to render only when needed to prevent Three.js's canvas from running*/}
         { Store.visualize && <Visualizer/> }
       </main> 
     </div>

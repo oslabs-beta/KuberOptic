@@ -9,31 +9,35 @@ let dat = new Date()
     console.log('getting fetch Local at -------' , '    ', dat.getTime())
     return res;
  }
-
+//routes request to getGCPData page
  async function getGcp(GOOGLE_APPLICATION_CREDENTIALS, ZONE) {
     const res = await fetchGCP(GOOGLE_APPLICATION_CREDENTIALS, ZONE);
     let dat = new Date()
     console.log('fetchGetgcp -------' , '    ', dat.getTime())
     return res;
  }
-
+//call from GCP to go get clusters in locations listed
 ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
+  //if no zones were checked, it will fetch all deployed clusters associated with Project ID
   let search;
   if (!locations.length) search = '-';
+  //otherwise we want it to create a set with unique zone values, for checking the response
   else {
     search = new Set();
     locations.forEach(zone => search.add(zone));
   }
-
+  //sends the locations to fetch GCP on GetGCPData page
   getGcp(creds, search)
+  //sends the clusters back to GCP page to display
   .then(res => event.sender.send('clusterClient', res))
   .catch((e)=>console.log(e))
 })
-
+//following deployment of a GCP cluster, asks it to get other clusters in that same zone
 ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
   const search = new Set();
   search.add(location)
   getGcp(creds, search)
+  //sends the clusters back to GCP page to display
   .then(res=> event.sender.send('newClusters', res))
   .catch((e)=>console.log(e))
 })

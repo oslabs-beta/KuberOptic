@@ -2,7 +2,7 @@ import * as React from 'react';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-
+//page renders and displays following a request to Fetch or Deploy
 
 const Deploying = () => {
   // Material-UI uses "CSS in JS" styling
@@ -28,8 +28,6 @@ const Deploying = () => {
         <div className="landingTitle">
         <Typography className={classes.text} variant="h3">KuberOptic</Typography>
         <Typography className={classes.text} variant="h6">deploying/fetching...</Typography>
-          {/* <h3 className='title'></h3> */}
-          {/* <h6 className='text'>deploying/fetching...</h6> */}
         </div>
       </div>
     </div>

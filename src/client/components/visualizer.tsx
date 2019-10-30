@@ -43,38 +43,45 @@ import { Scene } from 'three';
 //     NodePool_0: [ 'pool-1', 'diskSize[Gb]: 30', 'MachineType: g1-small' ]
 //   }
 // ]
-
+//creates visualizer component;
 const Visualizer = () => {
   
   let [store, setStore] = useContext(StoreContext);
-
+  //dimensions being set for the visualizer
   const width = window.innerWidth * .995;
   const height = window.innerHeight * .995;
   const vizWidth = width;
   const fov = 100;
   const near = 920;
   const far = 3000;
+  //creates renderer and scene upon building the component to prevent it from creating multiple scenes
+  //to append to the DOM which can be quite memory intensive if this happens
   const renderer = new THREE.WebGLRenderer();
   const scene = new THREE.Scene();
   
   useEffect(() => {
+    //if there are clusters to display...
     if(store.clusters.length){
-  
+      //sets the size of the renderer element
       renderer.setSize( width, height );
+      //adds the canvas to the page
       ref.current.prepend(renderer.domElement)
 
       let camera = new THREE.PerspectiveCamera( fov, width / height, near, far );
       //---------------number of hexagons---------------\\
+      //how many clusters there are to display...
       const pointAmmount = store.clusters.length;
 
       // https://upload.wikimedia.org/wikipedia/commons/e/e6/Basic_hexagon.svg
       // https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png
+
+      //textures for rendering the cluster as well as the nodes within the cluster, along with colors
       const circleSprite = new THREE.TextureLoader().load(".././src/client/assets/visualizerPage/Basic_hexagon.svg");
       const testSprite = new THREE.TextureLoader().load('http://www.aljanh.net/data/archive/img/2594756229.png'); //possible replacement1
       const colorArray = ['skyblue', '#B891FF', 'lightblue', 'lightgreen', 'cornsilk', 'skyblue', '#B891FF', 'lightblue', 'lightgreen', 'cornsilk'];
       const colorArray2 = ['red'];
       /* Testing to make random elements appear  */
-      
+      //creates a random location of the node within the cluster, using the cluster location on the page
       const randomPosition = (offset:number, radius?: number ) => {
         const ptAngle = Math.random() * 2 * Math.PI;
         const ptRadiusSq = Math.random() * radius * radius;
@@ -82,13 +89,15 @@ const Visualizer = () => {
         const ptY = Math.sqrt(ptRadiusSq) * Math.sin(ptAngle);
         return [ptX + offset, ptY];
       }
-
+      //arrays that will contain information specific to each cluster
       const pointInfo = [];
+      //as well as info specfic to nodes in those clusters
       const pointInfo2 = [];
 
       //generating shapes for cluster!
       for (let i = 0; i < pointAmmount; i++) {
-        const position = [(1500 * i) - (1500 * (pointAmmount - i)), 1]; //-5000
+        //coordinates (similar to x, y axis) of where the cluster will display
+        const position = [(1500 * i) - (750 * (pointAmmount - 1)), 1]; //-5000
         const group = i;
         const name = store.clusters[i].clusterName;
         const clusterStatus = store.clusters[i].clusterStatus;
@@ -96,6 +105,7 @@ const Visualizer = () => {
         const location = store.clusters[i].location;
         const nodeCount = store.clusters[i].nodeCount;
         const endpoint = store.clusters[i].endpoint
+        //builds object with information to display when mousedOver
         const point = { position, name, clusterStatus, creationTime, location, nodeCount, endpoint, group };
         pointInfo.push(point);
       }
@@ -104,27 +114,28 @@ const Visualizer = () => {
       store.clusters.forEach((cluster, i)=>{
         for(let j = 0; j < cluster.nodeCount; j++){
           const name2 = `Point` + j;
+          //creates the position inside the cluster of where to position the node
           const position = randomPosition(pointInfo[i].position[0], 300);
           const group = 0;
           const point2 = {position, name2, group};
           pointInfo2.push(point2);
         }
       })
-
+      //copies arrays of clusters and nodes
       const generatedPoints = pointInfo;
       const generatedPoints2 = pointInfo2;
       const pointsGeometry = new THREE.Geometry();
       const pointsGeometry2 = new THREE.Geometry();
       const colors = [];
       const colors2 = [];
-      
+      //passes in the locations to be displayed as well as the color to use
       for (const point of generatedPoints) {
         const vertex = new THREE.Vector3(point.position[0], point.position[1], 0);
         pointsGeometry.vertices.push(vertex);
         const color = new THREE.Color(colorArray[point.group]);
         colors.push(color);
       }
-
+      //passes in the location of the nodes, and sets their color to Red
       for (const point2 of generatedPoints2) {
         const vertex = new THREE.Vector3(point2.position[0], point2.position[1], 1);
         pointsGeometry2.vertices.push(vertex);
@@ -141,14 +152,16 @@ const Visualizer = () => {
         vertexColors: THREE.VertexColors, map: testSprite, transparent: true,});
         //this where the shape is created
      
+      //array of clusters and nodes ready to add to the scene that we have created
       const points = new THREE.Points(pointsGeometry, pointsMaterial);
       const points2 = new THREE.Points(pointsGeometry2, pointsMaterial2);
       
-     
+     //adds those items and they start to display
       scene.add(points);
       scene.add(points2);
       scene.background = new THREE.Color('black');
 
+      //logic to move around on the visualizer canvas, while zooming etc.
       function toRadians (angle) {
         return angle * (Math.PI / 180);
       }
@@ -195,7 +208,7 @@ const Visualizer = () => {
       }
 
       setUpZoom();
-
+      //function to tell the scene to begin working 
       function animate () {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
@@ -302,7 +315,7 @@ const Visualizer = () => {
       const raycaster = new THREE.Raycaster();
       //this threshhold is what makes you hover over more than the centre
       raycaster.params.Points.threshold = 300;
-
+      //function to run display methods if the mouse was over one of the clusters
       const checkCollission = (mousePosition) => {
         const mouseVector = mouseToThree(...mousePosition);
         raycaster.setFromCamera(mouseVector, camera);
@@ -337,7 +350,7 @@ const Visualizer = () => {
         updateTooltip();
       }
     }
-}, [store.visualize]);
+}, [store.clusterCount]);
 
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
@@ -352,7 +365,6 @@ const Visualizer = () => {
 
   return (
     <>
-    {/* some style changes were made to #leCanvas to avoid conflicting with Material-UI - is working for now */}
     <div ref={ref} id="leCanvas">
       <div ref={divRefOne} id="tool-tip">
         <div ref={divRefTwo} id="point-tip" />

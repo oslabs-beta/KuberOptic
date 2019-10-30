@@ -66,10 +66,10 @@ async function fetchAWS(params){
           awsDat["nodeCount"] = nodes;
           awsDat["location"] = eks.config.region;
           clusterArray.push(awsDat);
-          resolve(awsDat);   
-    };
-    });
-  }));
+          resolve(awsDat);
+        };
+      });
+    }));
   });
   return Promise.all(promiseArray);
 };

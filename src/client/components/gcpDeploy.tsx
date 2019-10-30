@@ -24,21 +24,25 @@ let deployVals = {};
 
 const gcpDeploy = () =>{
   const [Store, setStore] = useContext(StoreContext);
-
+  //saves the input value for the name of the cluster you will create in the deployVals object
   const handleName = (event) => {
     deployVals['name'] = event.currentTarget.value;
   }
+  //saves the cluster type for the cluster you will create in the deployVals object
   const handleType = (event) => {
     deployVals['clusterType'] = event.currentTarget.value;
   }
+  //saves the node count for the cluster you will create in the deployVals object
   const handleNodeCount = (event) => {
     deployVals['count'] = event.currentTarget.value;
   }
+  //saves the deploy zone for the cluster you will create in the deployVals object
   const handleLoc = (event) => {
     const location = event.currentTarget.value
     // setStore({...Store, gcploc: location})
     deployVals['zone'] = location;
   }
+  //clears credentials, clusters, and other values and takes you to the main login page
   const handleBack = () => {
     return setStore({
       ...Store,
@@ -47,23 +51,19 @@ const gcpDeploy = () =>{
       credentials: null,
       clusterCount: 0,
       clusters: [],
-      visualize: false,
-      gcploc: {
-        'us-central1-a': false,
-        'us-central1-b': false,
-        'us-central1-c': false,
-        'us-west1-a': false,
-        'southamerica-east1-a': false,
-        'southamerica-east1-b': false,
-        'southamerica-east1-c': false,
-        'europe-west2-a': false
-      }
+      visualize: false
     });
   }
+
   const handleDeploy = () =>{
+    //sends to the GetGCPData file to create a cluster and sends the deployVals object with it
     create(Store.credentials, deployVals['zone'], deployVals)
     const creds = JSON.parse(Store.credentials)
+    //calls to main to have it fetch clusters from the zone you just deployed to -- currently, 
+    //comes back without the newly created cluster 
     ipcRenderer.send('getNewClusters', creds, deployVals['zone']);
+    //initializes the "Deploying/Fetching" page to show and allow input fields to be reset,
+    //also closes the Visualizer component to have it initialize a new one when coming back with response
     setStore({...Store,
       gcpDeployPage:false,
       deploying: true,
@@ -74,10 +74,12 @@ const gcpDeploy = () =>{
   }
 
   ipcRenderer.on('newClusters', (event: any, singleArr: any) => {
-    //logic incase we have more than one cluster already rendered
+    //logic in case we have more than one cluster already rendered
     if(Store.clusterCount) {
       let newClusters = Store.clusters.concat(singleArr);
+      //ensures that we do not display the same cluster more than once
       newClusters = Object.values(newClusters.reduce((allClusts, nextClust) => Object.assign(allClusts, { [nextClust.clusterName] : nextClust}), {}))
+      //sets store with the clusters that were returned and tells React to render Visualizer component
       setStore({...Store,
         clusters: newClusters,
         clusterCount: newClusters.length,
@@ -87,6 +89,7 @@ const gcpDeploy = () =>{
        })
        event.returnValue = 'done';
     } else {
+      //sets the store with clusters assuming there previously were no clusters
       setStore({...Store,
         clusters: singleArr,
         clusterCount: singleArr.length,
@@ -99,18 +102,18 @@ const gcpDeploy = () =>{
   })
 
   return (
-    <div id="deployWrapper">
+    <div className="deployWrapper">
       <GetGCP/>
       <br/>
       <Divider />
       <div className="inputPageDeploy">
         <h3 className="deployTitle">Deploy New GCP Cluster:</h3>
-          <input id="deployClustName" 
+          <input className="awsDeployClusterName" 
           name="name"
-          className='clusterType' 
+          // className='clusterType' 
           type="text" 
           onChange={handleName} 
-          placeholder="cluster name" 
+          placeholder="clusterName" 
           required={true}></input>
 
         <div id="deployDropDowns">

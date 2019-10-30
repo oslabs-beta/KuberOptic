@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SideBar = () =>{
   const [Store, setStore] = useContext(StoreContext);
-
+  // will render the GCP login page to input credentials
   const myFunctionG = () => {
     console.log(Store.uploadPageState);
     setStore({...Store, 
@@ -44,7 +44,7 @@ const SideBar = () =>{
     });
   }
 
-  // function to get to the Amazon Web Services upload page
+  // will render Amazon Web Services upload page to input credentials
   const myFunctionA = () => {
     console.log(Store.uploadPageState2);
     setStore({...Store, 
@@ -53,11 +53,11 @@ const SideBar = () =>{
   }
 
   
-  const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
+  const classes = useStyles(); // from Material-UI and is fine
   
-  // if uploadPageState is true, display UploadPage
-  // else if uploadPageState2 is true, display UploadPage2
-  // else display LandingPage
+  // if uploadPageState is true, display UploadPage (GCP Login)
+  // else if uploadPageState2 is true, display UploadPage2 (AWS Login)
+  // else display LandingPage (to choose which platform to login with either GCP or AWS)
   return(
     <Box>
       { Store.uploadPageState ? <UploadPage/> :

@@ -13,7 +13,6 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
 import { StoreContext } from '../../../store';
 import GCPDeploy from './gcpDeploy';
 import Deploying from './deploying';
@@ -36,10 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const UploadPage = () => {
   const [Store, setStore] = useContext(StoreContext);
   
+  // stores the GCP JSON data for login in the store for future use when deploying or fetching
   const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
     setStore({...Store, credentials:e.currentTarget.value});
   };
-    
+  // closes component and takes you back to launch page
   const handleBack = () => {
     setStore({
       ...Store,
@@ -51,7 +51,9 @@ const UploadPage = () => {
     });
   };
 
-  // functionalilty for pressing 'submit' button
+  // functionalilty for pressing 'submit' button 
+  // ensures that the credentials you provided include the project Id key
+  // will eventually render the GCP Deploy page
   const handleSubmit = () => {
     const creds = JSON.parse(Store.credentials); 
     if (typeof creds !== 'object' || !creds.hasOwnProperty("project_id")) {
@@ -61,7 +63,7 @@ const UploadPage = () => {
     else setStore({...Store, gcpDeployPage: true });
   } 
     
-  const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
+  const classes = useStyles(); // directly from Material-UI and is fine
 
   return (
     <>
