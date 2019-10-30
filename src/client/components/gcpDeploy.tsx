@@ -41,18 +41,18 @@ const gcpDeploy = () =>{
     deployVals['zone'] = location;
   }
   const handleBack = () => {
-    const mainCanvas = document.getElementById('leCanvas');
-    if (mainCanvas.hasChildNodes()) {
-      while (mainCanvas.children.length > 8) {
-      // while (mainCanvas.hasChildNodes()) {
-        let child = mainCanvas.firstChild
-        if (child == null) break;
-        else {
-        console.log('child element deleted on back is... ', child)
-        mainCanvas.removeChild(child);
-        }
-      }
-    }
+    // const mainCanvas = document.getElementById('leCanvas');
+    // if (mainCanvas.hasChildNodes()) {
+    //   while (mainCanvas.children.length > 8) {
+    //   while (mainCanvas.hasChildNodes()) {
+    //     let child = mainCanvas.firstChild
+    //     if (child == null) break;
+    //     else {
+    //     console.log('child element deleted on back is... ', child)
+    //     mainCanvas.removeChild(child);
+    //     }
+    //   }
+    // }
 
     return setStore({
       ...Store,

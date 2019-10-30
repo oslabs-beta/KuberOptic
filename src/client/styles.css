@@ -240,8 +240,8 @@ canvas {
   align-content: center;
 }
 .uploadDiv {
-  height: 100%;
-  width: 300px;
+  /* height: 100%; */
+  /* width: 300px; */
   display: flex;
   flex-direction: column;
   align-content: center;

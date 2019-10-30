@@ -149,7 +149,7 @@ export default function DisplayContainer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            KuberOptic!!!
+            KuberOptic
           </Typography>
         </Toolbar>
       </AppBar>
