@@ -110,7 +110,6 @@ const gcpDeploy = () =>{
         <h3 className="deployTitle">Deploy New GCP Cluster:</h3>
           <input className="awsDeployClusterName" 
           name="name"
-          // className='clusterType' 
           type="text" 
           onChange={handleName} 
           placeholder="clusterName" 

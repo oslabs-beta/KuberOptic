@@ -1,3 +1,5 @@
+import { area } from "d3";
+
 const fetchLocal = require('./local/local').default
 const [fetchGCP, create] = require('./gcp/getGCPdata').default;
 const [loginAWS, listAWS, fetchAWS, createAWS, deleteAWS] = require('./aws/getAWSData').default
@@ -47,30 +49,39 @@ ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
 ipcMain.on('aws-login', (event: any, arg: any) => {
   loginAWS(arg).then(res=> {
       console.log('awsLogin call ', arg)
-    listAWS(arg).then(res => {
-      console.log('listClusters res: ', res)
-      event.sender.send('awsRegionDisplayFunc', res.clusters)
+    listAWS(res).then(resp => {
+      console.log('listClusters res: ', resp)
+      event.sender.send('awsRegionDisplayFunc', resp.clusters)
     }).catch((e)=>console.log(e))
   })
 })
 
 // invokes the fetchAWS function which uses describeCluster to fetch data for all cluster names in the store
 ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
-  fetchAWS(arg).then(res=>{
-    event.sender.send('clusterClient2', res);
-    })
-  .catch((e)=>console.log(e));
+  console.log('argument coming in', arg)
+  if (!arg.clusters.length) {
+    console.log('is this catching the empty array?')
+    event.sender.send('clusterClient2', []);
+  } else {
+    fetchAWS(arg)
+    .then(res=>{event.sender.send('clusterClient2', res);})
+    .catch((e)=>console.log(e));
+  }
 });
 
 // invokes the createAWS function to deploy a new cluster
 ipcMain.on('create-aws', (event: any, arg: any) => {
-  createAWS(arg).then(res =>{})
+  createAWS(arg)
+  .then(res =>{event.sender.send('created', res.cluster.name)})
   .catch((e) => console.log(e));
 });
 
 // invokes the deleteAWS function to delete a cluster from the cloud
 ipcMain.on('delete-aws', (event: any, arg: any) => {
-  deleteAWS(arg).then(res => {})
+  deleteAWS(arg)
+  .then(res => {
+    console.log('what do we get from deleting', res)
+    event.sender.send('deleted', res.cluster.name)})
   .catch((e) => console.log(e))
 });
 
@@ -78,7 +89,7 @@ ipcMain.on('delete-aws', (event: any, arg: any) => {
 ipcMain.on('list-aws', (event: any, arg: any) => {
   console.log('in main list-aws')
   listAWS(arg).then(res => {
-    event.sender.send('awsRegionDisplay', res);
+    event.sender.send('awsRegionDisplayFunc', res);
   });
 });
 

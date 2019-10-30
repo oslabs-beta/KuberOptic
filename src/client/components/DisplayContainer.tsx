@@ -113,12 +113,12 @@ export default function DisplayContainer() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
         <Toolbar> {/* if you want to make the toolbar denser, add `variant="dense"` as a prop to it */}
           <IconButton
             color="inherit"
@@ -131,7 +131,7 @@ export default function DisplayContainer() {
           </IconButton>
           <Typography variant="h6" noWrap>KuberOptic</Typography>
         </Toolbar>
-      </AppBar>
+        </AppBar>
       <Drawer
         className={classes.drawer}
         variant="persistent"

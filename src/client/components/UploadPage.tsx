@@ -45,54 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-/*
-.uploadDiv { // no longer used
-  height: 100%;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  margin: 0px auto;
-}
-
-.gcpImageContainer{
-  box-sizing: border-box;
-  width: 300px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-}
-
-.kubUpload {
-  /* transform: rotate(360deg); 
-  height: 125px;
-  width: 175px;
-  margin: 10px auto;
-  /* margin-top: 60px; 
-  /* margin-left: 325px; 
-  color: rgb(254, 254, 255);
-  /* animation: rotation 1s infinite linear; 
-}
-
-.kubUploadText { // no longer used
-  height: auto;
-  width: 295px;
-  margin: 15px auto;
-  color: aquamarine;
-  text-align: center;
-  font-family: 'Amatic SC', cursive;
-  font-size: 60px;
-}
-
-#uploadDivForSubmitandBackButts { // no longer used
-  display: flex;
-  flex-direction: column;
-}
-*/
-
 
 const UploadPage = () => {
   const [Store, setStore] = useContext(StoreContext);
@@ -136,47 +88,26 @@ const UploadPage = () => {
         justify="space-around"
         alignItems="center"
         >
-          {/* <div className='uploadDiv'> */}
-            <div className="gcpImageContainer">
-              <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
+          <div className="gcpImageContainer">
+            <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
+            <Typography className={classes.text} variant="h3">Google Cloud Platform</Typography>
+          </div>
 
-              {/* <div className='kubUploadText'>Google Cloud Platform</div> */}
-              <Typography className={classes.text} variant="h3">
-                Google Cloud Platform
-              </Typography>
-            </div>
+          <form noValidate autoComplete="off">
+              <TextField
+                id="standard-helperText"
+                label="Input GCP Info"
+                className={classes.textField}
+                helperText="Enter a JSON object from GCP that includes the project_id key"
+                margin="normal"
+                onChange={handleInput}
+              />
+          </form>
 
-            <form noValidate autoComplete="off">
-                <TextField
-                  id="standard-helperText"
-                  label="Input GCP Info"
-                  className={classes.textField}
-                  helperText="Enter a JSON object from GCP that includes the project_id key"
-                  margin="normal"
-                  onChange={handleInput}
-                />
-            </form>
-
-            <div>
-              <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmit}>
-                Submit
-              </Button>
-
-              <Button variant="outlined" color="primary" className={classes.button} onClick={handleBack}>
-                Back
-              </Button>
-            </div>
-
-            {/* <div id="uploadDivForSubmitandBackButts"> */}
-              {/* <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter GCP Info" required={true}></input> */}
-              
-              
-              {/* <div className="buttonHolder"> */}
-                {/* <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button> */}
-                {/* <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button> */}
-              {/* </div> */}
-            {/* </div> */}
-          {/* </div>  */}
+          <div>
+            <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmit}>Submit</Button>
+            <Button variant="outlined" color="primary" className={classes.button} onClick={handleBack}>Back</Button>
+          </div>
         </Grid>
       }
     </>

@@ -14,11 +14,12 @@ import DisplayContainer from './DisplayContainer';
 import '../styles.css';
 import { StoreContextProvider } from '../../../store';;
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { green, indigo } from '@material-ui/core/colors';
+import { green, indigo, orange } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({ // will later import a theme object from a separate file instead
   palette: {
-    primary: indigo
+    primary: indigo,
+    secondary: orange,
   }
 }); 
 

@@ -52,7 +52,6 @@ const SideBar = () =>{
     });
   }
 
-  
   const classes = useStyles(); // from Material-UI and is fine
   
   // if uploadPageState is true, display UploadPage (GCP Login)

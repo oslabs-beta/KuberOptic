@@ -166,7 +166,12 @@ canvas {
   font-size: 15px;
   background-color: rgb(255, 255, 255);
 }
-.backButton{
+#buttonToGoBack, #buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+  /*backButton{
   height: 50px;
   width: 150px;
   border: dodgerblue solid 5px;
@@ -176,10 +181,7 @@ canvas {
   font-weight: bold;
   font-size: 15px;
   background-color: rgb(255, 255, 255);
-}
-#buttonToGoBack {
-  display:flex;
-}
+} */
 /* #displays {
   width: 100%;
   height: 100%;
@@ -191,10 +193,17 @@ canvas {
   justify-content: space-evenly;
 }
 .fetchAWS {
-  height: 30%;
+  height: 25%;
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+#awsButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 .awsGetClusterName {
   width: 90%;
@@ -222,13 +231,13 @@ canvas {
   display:block;
 }
 .loc{
-  height: 50px;
-  border: dodgerblue solid 5px;
-  border-radius: 5px;
+  height: 60px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bold;
   font-size: 15px;
-  background-color: rgb(255, 255, 255);
+  margin: 5px auto;
+  padding-bottom: 10px;
+  /* background-color: rgb(255, 255, 255); */
 }
 .gcpImageContainer{
   box-sizing: border-box;
@@ -332,8 +341,6 @@ canvas {
 
 #deployLoc {
   display: flex;
-  width: 80%;
-  margin: 10px auto;
 }
 
 #infobox{
@@ -465,10 +472,13 @@ canvas {
   height: 110%;
   width:100%;
 }
-/* .deployWrapper {
+.deployWrapper {
   height: 100%;
   width:100%;
-} */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .inputPageDeploy{
   display: flex;
   flex-direction: column;
