@@ -115,7 +115,7 @@ const gcpDeploy = () =>{
   return (
     <div id="deployWrapper">
       <GetGCP/>
-
+      <br/>
       <Divider />
       
       <div className="inputPageDeploy">

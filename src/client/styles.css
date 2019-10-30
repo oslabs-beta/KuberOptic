@@ -238,6 +238,7 @@ canvas {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  text-align: center;
 }
 
 /* no longer used? */
@@ -362,8 +363,6 @@ canvas {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
 }
 
 #uploadPage2SubmitandBackButts {
@@ -472,7 +471,7 @@ canvas {
   flex-direction: column;
   height: 60%;
   margin: 0px auto;
-  padding-top: 50px;
+  /* padding-top: 50px; */
 }
 #deployDropDowns {
   width: 100%;
