@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
+      // padding: theme.spacing(3),
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -128,7 +129,7 @@ export default function DisplayContainer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>KuberOptic!!!</Typography>
+          <Typography variant="h6" noWrap>KuberOptic</Typography>
         </Toolbar>
       </AppBar>
       <Drawer
