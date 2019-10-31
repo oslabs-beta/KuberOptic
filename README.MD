@@ -29,11 +29,11 @@ First create a google developer account for Google Cloud Platform (GCP) and star
 gcloud auth application-default login
 ```
 #### Input Project credentials
-##AWS - Access Key and Secret Key##
+AWS - Requires Access Key and Secret Key
 
 ![](https://media.giphy.com/media/gKZCm910k2g5ZnviQO/giphy.gif)
 
-##GCP - JSON object with Project_ID##
+GCP - Requires JSON object with Project_ID
 
 ![](https://media.giphy.com/media/Ws3EjFrutxn3YHR3In/giphy.gif)
 
