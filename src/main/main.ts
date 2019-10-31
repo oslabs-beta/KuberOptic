@@ -20,6 +20,9 @@ let dat = new Date()
  }
 //call from GCP to go get clusters in locations listed
 ipcMain.on('asynchronous-message', (event: any, creds: any, locations: any) => {
+  getLocal()
+  .then(res => event.sender.send('clusterClient', res))
+  .catch((e)=>console.log(e))
   //if no zones were checked, it will fetch all deployed clusters associated with Project ID
   let search;
   if (!locations.length) search = '-';
