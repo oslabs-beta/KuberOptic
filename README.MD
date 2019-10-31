@@ -29,7 +29,10 @@ First create a google developer account for Google Cloud Platform (GCP) and star
 gcloud auth application-default login
 ```
 #### Input Project credentials
-![](https://gph.is/g/a91Ww95)
+AWS - Access Key and Secret Key
+![](https://media.giphy.com/media/gKZCm910k2g5ZnviQO/giphy.gif)
+GCP - JSON object with Project_ID
+![](https://media.giphy.com/media/Ws3EjFrutxn3YHR3In/giphy.gif)
 ***
 #### Deployment (GCP) 
 ![](https://media.giphy.com/media/Y1M2Gynz25sCdQOqtp/giphy.gif)
@@ -46,7 +49,7 @@ You can also choose to remove individual or multiple clusters from the display w
 To deploy a new cluster, enter the name of the new cluster, your roleARN, two subnet IDs, and the region in which you wish to deploy, then click "Deploy Cluster." Please note that it will take a few minutes for your cluster to be created, at which point you can retrieve it for display. 
 
 To delete a cluster from the cloud, enter the name and region of the cluster you wish to delete (you don't need the roleARN or Subnet IDs) and click "Delete Cluster." As with deploying, it will take a few minutes for your changes to take effect.  
-![](https://gph.is/g/aRgXxQv)
+![](https://media.giphy.com/media/Y4D7nv61sLnOI9Kajc/giphy.gif)
 ***
 ### Azure
 **COMING SOON**
@@ -81,12 +84,19 @@ npm run lint
 ***
 ## Authors
 [Bryan Villafuerte](https://github.com/BryV38)
+
 [Darren Napier](https://github.com/darrenNapier)
+
 [Dominic Ameneyro](https://github.com/dameneyro)
+
 [Jacob Banks](https://github.com/jacobbanks)
+
 [Jay Dawson](https://github.com/ImJustJay)
+
 [Juan Espinoza](https://github.com/jespinoza17)
+
 [Jimmy Deng](https://github.com/rev619)
+
 [Timothy Mai](https://github.com/tqmai)
 ## License
 MIT
