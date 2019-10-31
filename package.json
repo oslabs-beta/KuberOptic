@@ -15,6 +15,8 @@
     "lint:fix": "npm run lint --fix",
     "test": "jest",
     "package-mac": "electron-packager . kuberoptic --overwrite --platform=darwin --arch=x64 --icon=src/client/assets/credsPage/kub.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . kuberoptic --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"KuberOptic\"",
+    "package-linux": "electron-packager . kuberoptic --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/kuberoptic-darwin-x64/kuberoptic.app kuberoptic --out=release-builds --overwrite"
   },
   "repository": {
