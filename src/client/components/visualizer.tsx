@@ -62,6 +62,7 @@ const Visualizer = () => {
   useEffect(() => {
     //if there are clusters to display...
     if(store.clusters.length){
+      renderer.getContext()
       //sets the size of the renderer element
       renderer.setSize( width, height );
       //adds the canvas to the page
@@ -350,7 +351,7 @@ const Visualizer = () => {
         updateTooltip();
       }
     }
-}, [store.clusterCount]);
+}, [store.visualize]);
 
   const ref = useRef<HTMLDivElement>(null)
   const divRefOne = useRef<HTMLDivElement>(null)
