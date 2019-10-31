@@ -22,10 +22,14 @@
     "url": "git+https://github.com/oslabs-beta/kubernati.git"
   },
   "contributors": [
+    "Bryan",
+    "Darren", 
+    "Dominic",
     "Jacob",
     "Jay",
     "Jimmy",
-    "Juan"
+    "Juan",
+    "Timothy"
   ],
   "license": "MIT",
   "bugs": {
@@ -108,14 +112,12 @@
     "aws-sdk": "^2.548.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "bootstrap": "^4.3.1",
     "d3": "^5.11.0",
     "electron-connect": "^0.6.3",
     "google-proto-files": "^1.1.0",
     "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
-    "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
     "scale": "0.0.7",
