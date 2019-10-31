@@ -1,5 +1,5 @@
 {
-  "name": "kubernati",
+  "name": "kuberoptic",
   "version": "1.0.0",
   "productName": "KuberOptic",
   "description": "An Electron app for developers to visualize their Kubernetes clusters in real-time",
@@ -14,12 +14,14 @@
     "lint": "eslint --ignore-path .gitignore '**/*.{ts,tsx}' ",
     "lint:fix": "npm run lint --fix",
     "test": "jest",
-    "package-mac": "electron-packager . kuberoptic --overwrite --platform=darwin --arch=x64 --icon=src/client/assets/credsPage/KuberOpticIcon.icns --prune=true --out=release-builds",
+    "package-mac": "electron-packager . kuberoptic --overwrite --platform=darwin --arch=x64 --icon=src/client/assets/credsPage/KuberOpticLogoCircle.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . kuberoptic --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"KuberOptic\"",
+    "package-linux": "electron-packager . kuberoptic --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/kuberoptic-darwin-x64/kuberoptic.app kuberoptic --out=release-builds --overwrite"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oslabs-beta/kubernati.git"
+    "url": "git+https://github.com/oslabs-beta/KuberOptic.git"
   },
   "contributors": [
     "Bryan",
@@ -33,9 +35,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/oslabs-beta/kubernati/issues"
+    "url": "https://github.com/oslabs-beta/KuberOptic/issues"
   },
-  "homepage": "https://github.com/oslabs-beta/kubernati#readme",
+  "homepage": "https://github.com/oslabs-beta/KuberOptic",
   "devDependencies": {
     "@babel/plugin-transform-async-to-generator": "^7.5.0",
     "@babel/plugin-transform-modules-commonjs": "^7.5.0",

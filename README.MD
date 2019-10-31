@@ -64,9 +64,11 @@ npm start
 ```
 npm run test
 ```
-**Build package for mac OS***
+**Build package and create installer for mac OS**
 ```
+npm run prod
 npm run package-mac
+npm create-installer-mac
 ```
 **Lint project**
 ```
