@@ -13,7 +13,6 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 import { StoreContext } from '../../../store'
@@ -26,73 +25,17 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      // flexGrow: 1
     },
     text: {
       align: 'center',
-      margin: '0 0 50px 0', // will adjust this later
+      margin: '0 0 50px 0',
     }
   }),
 );
 
-// the below styling rules are from styles.css but are no longer being used
-// will delete here and in styles.css later
-
-/* #leSidebar{ // not being used anymore
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
-  height:99.5%;
-  width: 26%;
-  float:left;
-  background-color: rgb(0, 26, 255);
-  border: rgba(67, 84, 105, 1) 3px;
-  min-width: 216px;
-  min-height: 280px;
-  border-style: inset;
-  z-index: 1000;
-} */
-
-/* #displays { // not being used anymore
-  width: 100%;
-  height: 100%;
-} */
-
-/* .mainDiv { // not being used anymore
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  padding-top: 50px;
-} */
-
-/*
-.title { // not being used anymore
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  margin-bottom: -10px;
-  margin-top: -40px;
-  text-align: center;
-  font-family: 'Amatic SC', cursive;
-  font-size: 80px;
-}
-*/
-
-/* .landingTitle { // not being used anymore
-  display: flex;
-  flex-direction: column;
-  color: aqua;
-  width: 100%;
-} */
-
 const SideBar = () =>{
   const [Store, setStore] = useContext(StoreContext);
-
+  // will render the GCP login page to input credentials
   const myFunctionG = () => {
     console.log(Store.uploadPageState);
     setStore({...Store, 
@@ -100,7 +43,7 @@ const SideBar = () =>{
     });
   }
 
-  // function to get to the Amazon Web Services upload page
+  // will render Amazon Web Services upload page to input credentials
   const myFunctionA = () => {
     console.log(Store.uploadPageState2);
     setStore({...Store, 
@@ -108,12 +51,11 @@ const SideBar = () =>{
     });
   }
 
+  const classes = useStyles(); // from Material-UI and is fine
   
-  const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
-  
-  // if uploadPageState is true, display UploadPage
-  // else if uploadPageState2 is true, display UploadPage2
-  // else display LandingPage
+  // if uploadPageState is true, display UploadPage (GCP Login)
+  // else if uploadPageState2 is true, display UploadPage2 (AWS Login)
+  // else display LandingPage (to choose which platform to login with either GCP or AWS)
   return(
     <Box>
       { Store.uploadPageState ? <UploadPage/> :
@@ -126,15 +68,8 @@ const SideBar = () =>{
             alignItems="center"
           >
             <img className='kubLogo' src={'https://i.gifer.com/4P4X.gif'}/>
-          
-            <Typography className={classes.text} variant="h3">
-              KuberOptic
-            </Typography>
-          
-            <Typography className={classes.text} variant="h5">
-              The Kubernetes Visualizer
-            </Typography>
-        
+            <Typography className={classes.text} variant="h3">KuberOptic</Typography>
+            <Typography className={classes.text} variant="h5">The Kubernetes Visualizer</Typography>
             <div className= "awsAndGcpLogos">
               <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
               <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>

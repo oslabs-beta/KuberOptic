@@ -13,121 +13,113 @@
 
 import * as React from 'react';
 import { useContext } from 'react';
-// import DisplayContainer from './DisplayContainer';
-import {StoreContext} from '../../../store';
-const { ipcRenderer } = require('electron');
-import AWSDeploy from './awsDeploy'
+import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { StoreContext } from '../../../store';
+import AWSDeploy from './awsDeploy';
+import Deploying from './deploying';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
+// Material-UI uses "CSS in JS" styling
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    text: {
+      align: 'center',
+      margin: '0 0 50px 0',
+    },
+    textField: {
+      width: "100%",
+    },
+    button: {
+      margin: theme.spacing(1),
+    },
+    input: {
+      display: 'none',
+    },
+  }),
+);
 
 const UploadPage2 = () => {
+
   const [Store, setStore] = useContext(StoreContext);
-
-  // 
- 
-
-  // iterates through the clusters submitted via the name or region, and adds to the array of clusters in the store. 
-  ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
-    console.log('clusterClient2 and arg is', arg)
-    let newClusters = Store.clusters.slice();
-    arg.forEach(el=> newClusters.push(el))
-    setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
-    console.log('done')
-    event.returnValue = 'done';
-  })
-
-  // this and the function below take in the cluster names from the listClusters method and sends them to 'asynchronous-message2' to be sent as arg for the describeCluster method
-  ipcRenderer.on('awsRegionDisplayFunc', (event: any, arg: any) => {
-    console.log('in uploadpage2 awsRegionDisplayFunc and arg is', arg)
-    awsRegionDisplay(arg)
-  })
-
-  const awsRegionDisplay = (array) => {
-    console.log('up2 awsRegionDisplay function and array is', array)
-    setStore({...Store, awsClusterName: array})
-    const arg = {
-      name: array, 
-      accessKeyId: Store.awsKey, 
-      secretAccessKey: Store.awsSecret, 
-      region: Store.awsDisplayRegion
-    }
-    ipcRenderer.send('asynchronous-message2', arg)
-    setStore({...Store, uploadPageState2: true, awsDeployPage: true});
-  }
-
-  
-
   // updates the store with the AWS key entered into the input field
-  const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStore({...Store, awsKey: e.currentTarget.value})
   }
-
   // updates the store with the AWS secret entered into the input field
-  const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSecret = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStore({...Store, awsSecret: e.currentTarget.value})
   }
-
-  // updates the store with the AWS region entered into the input field
-  const handleRegion = (e) => {
-    setStore({...Store, awsDisplayRegion: e.currentTarget.value})
-  }
-
-  // brings the display back to the landing page
+  // brings the display back to the main sidebar page
   const handleBack = ()=>{
     setStore({
       ...Store,
       uploadPageState:false, 
       uploadPageState2:false,
-      landingPageState: false,
-      landingPageState2: false,
       credentials: null,
       clusterCount: 0,
-      clusters: null
+      clusters: []
     });
   };
-
   // submits the AWS key, secret, and region to main.ts where the loginAWS function is invoked
   function handleSubmit() {
     if(typeof Store.awsSecret !== 'string' || typeof Store.awsKey !== 'string'){
       console.log('Enter a AWS key/secret to access AWS');
-    }
-    else {
-      console.log('click')
-      const arg = {
-        accessKeyId: Store.awsKey, 
-        secretAccessKey: Store.awsSecret, 
-        region: Store.awsDisplayRegion
-      }
-      setStore({...Store, uploadPageState2: true, awsDeployPage: true})
-      // ipcRenderer.send('aws-login', arg)
+    } else {
+      setStore({...Store,
+        awsDeployPage: true,
+      })
     }
   }
 
-  // renders the login page, with input fields for AWS key, secret, and a drop down menu for US regions. 
+  const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
+
+  // renders the login page, with input fields for AWS key, secret, and a drop down menu for US regions.     
   return (
     <>
-        { Store.awsDeployPage ? <AWSDeploy/> :
-      <div className='uploadDiv'>
+      { Store.deploying ? <Deploying/> :
+        Store.awsDeployPage ? <AWSDeploy/> :
+        <Grid
+        container
+        direction="column"
+        justify="space-around"
+        alignItems="center"
+        >
         <div className="awsImageContainer">
           <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
-          <div className='kubUploadText'>Amazon Web Services</div>
+          <Typography className={classes.text} variant="h3">Amazon Web Services</Typography>
         </div>
-        <input className='uploadInput' type="text" onChange={handleKey}  placeholder="awsKey" required={true}></input>
-        <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret" required={true}></input>
-      <div>
-      <select id='deployLoc' className='loc' onChange={handleRegion}>
-      <option selected>Choose a location to display</option>
-      <option value='us-east-1'>us-east-1</option>
-      <option value='us-east-2'>us-east-2</option>
-      <option value='us-west-1'>us-west-1</option>
-      <option value='us-west-2'>us-west-2</option>
-      </select>
-      </div>
-        <div id="uploadPage2SubmitandBackButts">
-          <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
-          <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>Back</button>
+        <form noValidate autoComplete="off">
+          <TextField
+            id="standard-helperText"
+            label="Access Key"
+            className={classes.textField}
+            helperText="Enter an AWS Access Key..."
+            margin="normal"
+            onChange={handleKey}
+          />
+          <TextField
+            id="standard-helperText"
+            label="Secret Key"
+            className={classes.textField}
+            helperText="Enter an AWS Secret Key..."
+            margin="normal"
+            onChange={handleSecret}
+          />
+        </form>
+
+        <div>
+          <Button variant="contained" color="secondary" className={classes.button} onClick={handleSubmit}>Submit</Button>
+          <Button variant="outlined" color="secondary" className={classes.button} onClick={handleBack}>Back</Button>
         </div>
-      </div>
+      </Grid>
       }   
-    </>
+  </>
   )
 }
 
