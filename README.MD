@@ -2,7 +2,7 @@
 ### 
 kuberoptic.com
 ***
-![](src/client/assets/credsPage/kubernatiGif.gif)
+![](src/client/assets/credsPage/MainKuberOpticGif.gif)
 ### A visualization and deployment tool for your Kubernetes cluster
 ###
 
@@ -87,20 +87,12 @@ npm run lint
 - Remodeled UI
 ***
 ## Authors
-[Bryan Villafuerte](https://github.com/BryV38)
+[Bryan Villafuerte](https://github.com/BryV38) - [Darren Napier](https://github.com/darrenNapier)
 
-[Darren Napier](https://github.com/darrenNapier)
+[Dominic Ameneyro](https://github.com/dameneyro) - [Jacob Banks](https://github.com/jacobbanks)
 
-[Dominic Ameneyro](https://github.com/dameneyro)
+[Jay Dawson](https://github.com/ImJustJay) - [Juan Espinoza](https://github.com/jespinoza17)
 
-[Jacob Banks](https://github.com/jacobbanks)
-
-[Jay Dawson](https://github.com/ImJustJay)
-
-[Juan Espinoza](https://github.com/jespinoza17)
-
-[Jimmy Deng](https://github.com/rev619)
-
-[Timothy Mai](https://github.com/tqmai)
+[Jimmy Deng](https://github.com/rev619) - [Timothy Mai](https://github.com/tqmai)
 ## License
 MIT
