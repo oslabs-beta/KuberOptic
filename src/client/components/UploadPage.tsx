@@ -11,80 +11,104 @@
 
 import * as React from 'react';
 import { useContext } from 'react';
-import DisplayContainer from './DisplayContainer';
+import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
 import { StoreContext } from '../../../store';
-const { ipcRenderer } = require('electron');
+import GCPDeploy from './gcpDeploy';
+import Deploying from './deploying';
 require('events').EventEmitter.defaultMaxListeners = 25;
+
+// Material-UI uses "CSS in JS" styling
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    text: {
+      align: 'center',
+      margin: '0 0 50px 0', 
+    },
+    textField: {
+      width: "100%",
+    },
+    button: {
+      margin: theme.spacing(1),
+    },
+    // input: {
+    //   display: 'none',
+    // },
+  }),
+);
+
 
 const UploadPage = () => {
   const [Store, setStore] = useContext(StoreContext);
-
-  ipcRenderer.on('clusterClient', (event: any, arg: any) => {
-    //logic incase we have more than one cluster already rendered
-    if(Store.clusterCount){
-      let newClusters = Store.clusters;
-      arg.forEach(el=> newClusters.push(el))
-      setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
-    }
-    else setStore({...Store, clusters: arg, clusterCount: arg.length });
-    event.returnValue = 'done';
-  })
-
-  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+  // stores the GCP JSON data for login in the store for future 
+  // use when deploying or fetching updates on any input changes
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStore({...Store, credentials:e.currentTarget.value});
   };
-    
+  // closes component and takes you back to launch page
   const handleBack = () => {
-    setStore({...Store, landingPageState:false});
+    setStore({
+      ...Store,
+      uploadPageState:false, 
+      uploadPageState2:false,
+      credentials: null,
+      clusterCount: 0,
+      clusters: []
+    });
   };
-  
-  const handleLoc = (event) => {
-    setStore({...Store, gcploc: event.currentTarget.value});
-  }
-  
+
+  // functionalilty for pressing 'submit' button 
+  // ensures that the credentials you provided include the project Id key
+  // will eventually render the GCP Deploy page
   const handleSubmit = () => {
     const creds = JSON.parse(Store.credentials); 
-    if(typeof creds !== 'object'){
-      console.log('Enter a JSON object from GCP');
+    if (typeof creds !== 'object' || !creds.hasOwnProperty("project_id")) {
+      console.log('Enter a JSON object from GCP that includes the project_id key');
       console.log('locStore: ', Store.gcploc)
     }
-    else{
-      ipcRenderer.send('asynchronous-message', creds, Store.gcploc)
-      setStore({...Store, uploadPageState: true });
-    }
-  }
+    else setStore({...Store, gcpDeployPage: true });
+  } 
     
+  const classes = useStyles(); // directly from Material-UI and is fine
+
   return (
     <>
-      { Store.uploadPageState ? 
-      <DisplayContainer /> :
-      <div className='uploadDiv'>
+      { Store.deploying ? <Deploying/> :
+        Store.gcpDeployPage ? <GCPDeploy/> :
+        <Grid
+        container
+        direction="column"
+        justify="space-around"
+        alignItems="center"
+        >
           <div className="gcpImageContainer">
             <img className='kubUpload' src={require('../assets/credsPage/google.png')}/>
-            <div className='kubUploadText'>Google Cloud Platform</div>
+            <Typography className={classes.text} variant="h3">Google Cloud Platform</Typography>
           </div>
 
-        <div id="uploadDivForSubmitandBackButts">
-          <input id="uploadEnterClustInfo" className='uploadInput' type="text" onChange={handleInput} placeholder="Enter Project Info" required={true}></input>
-          <div className="buttonHolder">
-            <button id="uploadSubmit" className='uploadButt' onClick={handleSubmit}> Submit </button>
-            <button id="uploadBackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
+          <form noValidate autoComplete="off">
+              <TextField
+                id="input-gcp-info"
+                label="Input GCP Info"
+                className={classes.textField}
+                helperText="Enter a JSON object from GCP that includes the project_id key"
+                margin="normal"
+                onChange={handleInput}
+              />
+          </form>
+
+          <div>
+            <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmit}>Submit</Button>
+            <Button variant="outlined" color="primary" className={classes.button} onClick={handleBack}>Back</Button>
           </div>
-        </div>
-        <div className="locationDropDown">
-          <select id="uploadSelectMenu" className='loc' onChange={handleLoc}>
-          <option>Select Zone</option>
-          <option value='us-central1-a'>us-central 1-a</option>
-          <option value='us-central1-b'>us-central 1-b</option>
-          <option value='us-central1-c'>us-central 1-c</option>
-          <option value='southamerica-east1-a'>southamerica-east 1-a</option>
-          <option value='southamerica-east1-b'>southamerica-east 1-b</option>
-          <option value='southamerica-east1-c'>southamerica-east 1-c</option>
-          <option value='europe-west2-a'>europe-west 2-a</option>
-          <option value='us-west1-a'>us-west 1-a</option>
-          </select>
-        </div>
-      </div>
+        </Grid>
       }
     </>
   )

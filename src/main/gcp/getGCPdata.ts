@@ -1,47 +1,62 @@
-const container = require('@google-cloud/container');
+import { contourDensity } from "d3";
 
-// quickstart takes in the GCP credientials object and a timezone, defaults to central1-a if not specified
-async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zone:string) {
+const container = require('@google-cloud/container');
+//call to GCP to get it to come back with clusters that are deployed
+async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zones:any) {
+  //initiates the container with GCP
   const client = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
   const projectId:string = GOOGLE_APPLICATION_CREDENTIALS['project_id'];
-  if (zone == null) zone= 'us-central1-a'
-
+  //request that will return all deployed clusters associated with this project ID
+  const parent = `projects/${projectId}/locations/-`
   const request:object = {
-    projectId,
-    zone 
+    parent 
   };
-    //response returns an object that has all the info we need
-  const [response] = await client.listClusters(request);
-  const clusters:any = response.clusters;
-
-  const clusterArray = [];
-
-  clusters.forEach(cluster=>{
-    let gcpDat:object = {};
-
-    gcpDat["endpoint"] = cluster.endpoint
-    gcpDat["clusterName"] = cluster.name;
-    gcpDat["clusterDescription"] = cluster.description;
-    gcpDat["creationTime"] = cluster.createTime;
-    gcpDat["clusterStatus"] = cluster.status;
-    gcpDat["nodeCount"] = cluster.currentNodeCount;
-    gcpDat["location"] = cluster.location;
-    cluster.nodePools.forEach((node, i)=>{
-    gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
-        `MachineType: ${node.config.machineType}`]
+  //will be the array of clusters we will eventually display in Visualizer
+  const clustersToDisplay = await client.listClusters(request).then(response => {
+    const res = response[0];
+    return res.clusters.reduce((clusts, nextClust) => {
+      //if looking for all zones, or if only looking for specific zones to return to render
+      if (zones === '-' || zones.has(nextClust.location)) {
+        //creates an object for storing values associated with the cluster
+        let gcpDat:object = {};
+        gcpDat["endpoint"] = nextClust.endpoint
+        gcpDat["clusterName"] = nextClust.name;
+        gcpDat["clusterDescription"] = nextClust.description;
+        gcpDat["creationTime"] = nextClust.createTime;
+        gcpDat["clusterStatus"] = nextClust.status;
+        gcpDat["nodeCount"] = nextClust.currentNodeCount;
+        gcpDat["location"] = nextClust.location;
+        nextClust.nodePools.forEach((node, i)=>{
+        gcpDat[`NodePool_${i}`] = [node.name , `diskSize[Gb]: ${node.config.diskSizeGb}`,
+            `MachineType: ${node.config.machineType}`]
+          })
+          //pushes that cluster object into the array that we will return
+          clusts.push(gcpDat)
+        }
+        console.log('clusters being built via reduce', clusts)
+        return clusts;
+      }, [])
     })
-    clusterArray.push(gcpDat)
-  })
-  return clusterArray;
-}
+    .catch(e=> console.log(e))
+    console.log('how often is the array being completed to resend to front?', clustersToDisplay)
+    return clustersToDisplay;
+  }
 
 async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-central1-a', input:object = {'clusterType':'affordable', 'name':'deployCluster', 'zone':'us-central1-a', 'count':'1'}){
   const client:any = new container.v1.ClusterManagerClient(GOOGLE_APPLICATION_CREDENTIALS);
   GOOGLE_APPLICATION_CREDENTIALS = JSON.parse(GOOGLE_APPLICATION_CREDENTIALS);
   const projectId:string = GOOGLE_APPLICATION_CREDENTIALS["project_id"];
-  let cluster:object ={};
   let clusterCount = Number(input['count'])
-  
+  let cluster:object ={};
+  //clusterTypes for 'affordable' will depend on the zone they are trying to be deployed in,
+  let clusterType = "1.13.11-gke.9";
+
+  // if (zone === 'us-central1-b' || zone === 'us-west1-a' || zone === 'southamerica-east1-a' || zone === 'southamerica-east1-b' || zone === 'europe-west2-a') {
+  //   clusterType = "1.13.11-gke.9"
+  // } else {
+  //   clusterType = "1.13.7-gke.24"
+  // }
+  //template for creating clusters based on the type for GCP
   if(input['clusterType'] == 'affordable'){
     cluster = {
       "name": input['name'],
@@ -85,7 +100,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
             "autoUpgrade": true,
             "autoRepair": true
           },
-          "version": "1.13.7-gke.24"
+          "version": clusterType
         }
       ],
       "networkPolicy": {},
@@ -101,7 +116,7 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
       "databaseEncryption": {
         "state": "DECRYPTED"
       },
-      "initialClusterVersion": "1.13.7-gke.24",
+      "initialClusterVersion": clusterType,
       "location": input['zone']
     }
   }
@@ -481,13 +496,15 @@ async function create(GOOGLE_APPLICATION_CREDENTIALS:any, zone:string ='us-centr
     }
   }
   //--------------After knowing input configuration----------\\
+  const parent = `projects/${projectId}/locations/${zone}`
+  //sends the location and cluster type in the below request
   const request:object = {
-    projectId,
-    zone,
-    cluster
+    cluster,
+    parent
   }
+  //call to GCP to create the cluster
   await client.createCluster(request)
-  .then(responses => {
+  .then(responses => { 
     var response = responses[0].status;
   })
   .catch(err => {

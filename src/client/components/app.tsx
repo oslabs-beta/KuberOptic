@@ -10,19 +10,30 @@
  */
 
 import * as React from 'react';
-import LandingPage from './LandingPage';
+import DisplayContainer from './DisplayContainer';
 import '../styles.css';
 import { StoreContextProvider } from '../../../store';;
-import 'tachyons'; // tachyons is a styling tool - figure out if this is being used or not
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { green, indigo, orange } from '@material-ui/core/colors';
+
+const theme = createMuiTheme({ // will later import a theme object from a separate file instead
+  palette: {
+    primary: indigo,
+    secondary: orange,
+  }
+}); 
 
 function App() {
   // wraps the LandingPage inside the StoreContextProvider, which provides access to state
+  // all this is wrapped in ThemeProvider, which provides the style theme
   return (
-    <StoreContextProvider>
-      <div className='app'>
-        <LandingPage/>
-      </div>
-    </StoreContextProvider>
+    <ThemeProvider theme={theme}>
+      <StoreContextProvider>
+        <div className='app'>
+          <DisplayContainer/>
+        </div>
+      </StoreContextProvider>
+    </ThemeProvider>
   );
 }
 export default App;

@@ -11,77 +11,73 @@
 
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
-import {StoreContext} from '../../../store'
+import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+
+import { StoreContext } from '../../../store'
+import UploadPage from './UploadPage';
+import UploadPage2 from './UploadPage2';
+import Box from '@material-ui/core/Box';
+
+// Material-UI uses "CSS in JS" styling
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    text: {
+      align: 'center',
+      margin: '0 0 50px 0',
+    }
+  }),
+);
 
 const SideBar = () =>{
   const [Store, setStore] = useContext(StoreContext);
-  let clusters;
-
-  const handleDeploy = () =>{
-    if(Store.uploadPageState) {
-    setStore({...Store, gcpDeployPage:true})
-    }
-    if(Store.uploadPageState2) {
-    setStore({...Store, awsDeployPage:true})
-    }
-  }
-  const handleBack = ()=>{
-    setStore({
-      ...Store, 
-      landingPageState2:false, 
-      landingPageState:false,
-      uploadPageState:false,
-      uploadPageState2:false,
-    })
+  // will render the GCP login page to input credentials
+  const myFunctionG = () => {
+    console.log(Store.uploadPageState);
+    setStore({...Store, 
+      uploadPageState: true,
+    });
   }
 
-  if(Store.clusterCount && Store.uploadPageState2) {
-    clusters = Store.clusters.map(clust => {
-      return (
-      <div className ="cluster">
-        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
-        <center className="clusterInformation"><p>
-            Status: <em>{clust.clusterStatus}</em>
-            <br></br>
-            Nodes: <em>{clust.nodeCount}</em>
-            <br></br>
-            Location: <em>{clust.location}</em>
-        </p></center>
-      </div>
-      )
-    })
+  // will render Amazon Web Services upload page to input credentials
+  const myFunctionA = () => {
+    console.log(Store.uploadPageState2);
+    setStore({...Store, 
+      uploadPageState2: true,
+    });
   }
 
-  if (Store.clusterCount && Store.uploadPageState) {
-    clusters = Store.clusters.map(clust => {
-      return (
-      <div className ="cluster">
-        <center className="clusterTitle"><h4><em>{clust.clusterName}</em></h4></center>
-        <center className="clusterInformation"><p>
-            Status: <em>{clust.clusterStatus}</em>
-            <br></br>
-            Nodes: <em>{clust.nodeCount}</em>
-            <br></br>
-            Location: <em>{clust.location}</em>
-        </p></center>
-      </div>
-      )
-    })
-  }
-
+  const classes = useStyles(); // from Material-UI and is fine
+  
+  // if uploadPageState is true, display UploadPage (GCP Login)
+  // else if uploadPageState2 is true, display UploadPage2 (AWS Login)
+  // else display LandingPage (to choose which platform to login with either GCP or AWS)
   return(
-      <div id='leSidebar'>
-        <div className="buttons">
-          <button className="SB" onClick={handleDeploy}> Deploy! </button>
-          <button className="SB" onClick ={handleBack}> Back </button>
+    <Box>
+      { Store.uploadPageState ? <UploadPage/> :
+        Store.uploadPageState2 ? <UploadPage2/> :
+        <div> 
+          <Grid
+            container
+            direction="column"
+            justify="space-around"
+            alignItems="center"
+          >
+            <img className='kubLogo' src={'https://i.gifer.com/4P4X.gif'}/>
+            <Typography className={classes.text} variant="h3">KuberOptic</Typography>
+            <Typography className={classes.text} variant="h5">The Kubernetes Visualizer</Typography>
+            <div className= "awsAndGcpLogos">
+              <img className='logo' src={require('../assets/credsPage/aws.png')} onClick={myFunctionA}/>
+              <img className='logo2' src={require("../assets/credsPage/google.png")} onClick={myFunctionG}/>
+            </div>
+          </Grid>
         </div>
-        <center className="deployedTitle"><h3>Deployed Clusters</h3></center>
-        { Store.clusterCount > 0 &&
-        <div className="clusterDeets"> 
-          {clusters} 
-        </div>
-        }
-    </div>
+      }
+    </Box>
   )
 }
 

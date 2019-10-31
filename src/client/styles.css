@@ -6,406 +6,382 @@
   z-index: 100;
   display:block;
 }
-  #leCanvas{
-    float: right;
-    width: 74%;
-    height:99.5%;
-    border-style: inset;
-  }
-  /* canvas {
-    height: 100%;
-    width: 100%;
-  } */
-  .buttons {
-    display: flex;
-    justify-content: space-evenly;
-    align-content: center;
-  }
-  #leSidebar{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-content: center;
-    height:99.5%;
-    width: 26%;
-    float:left;
-    padding-top: 10px;
-    background-color: rgb(0, 26, 255);
-    border: rgba(67, 84, 105, 1) 3px;
-    min-width: 216px;
-    min-height: 280px;
-    border-style: inset;
-  }
-  #tool-tip {
-    display: none;
-    position: absolute;
-    pointer-events: none;
-    font-size: 14px;
-    width: 250px;
-    color: black;
-    text-align: center;
-    line-height: 1;
-    padding: 6px;
-    background: white;
-    font-family: sans-serif;
-  }
-  #point-tip {
-    padding: 4px;
-    margin-bottom: 4px;
-  }
-  #group-tip {
-    display: none;
-    position: absolute;
-    pointer-events: none;
-    font-size: 14px;
-    width: 250px;
-    color: black;
-    text-align: center;
-    line-height: 1;
-    padding: 6px;
-    background: white;
-    font-family: sans-serif;
-  }
+#leCanvas{
+  position: fixed;
+  top: 0;
+  height: 99.5%;
+  overflow: hidden;
+}
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+}
+/* #leSidebar{ // not being used anymore
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  height:99.5%;
+  width: 26%;
+  float:left;
+  background-color: rgb(0, 26, 255);
+  border: rgba(67, 84, 105, 1) 3px;
+  min-width: 216px;
+  min-height: 280px;
+  border-style: inset;
+  z-index: 1000;
+} */
+#tool-tip {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  font-size: 14px;
+  width: 250px;
+  color: black;
+  text-align: center;
+  line-height: 1;
+  padding: 6px;
+  background: white;
+  font-family: sans-serif;
+}
+#point-tip {
+  padding: 4px;
+  margin-bottom: 4px;
+}
+#group-tip {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  font-size: 14px;
+  width: 250px;
+  color: black;
+  text-align: center;
+  line-height: 1;
+  padding: 6px;
+  background: white;
+  font-family: sans-serif;
+}
 
-  .app {
-    height: 100%;
-    width: 100%;
-    background-color: rgb(0, 0, 0);
-    font-family: 'Nunito', sans-serif;
-  }
+.app {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(0, 0, 0);
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+}
 
-  .text {
-    color: aqua;
-    margin-top: 20px;
-    font-size: 20px;
-    width: 400px;
-    align-content: center;
-    text-align: center;
-    font-family: 'Amatic SC', cursive;
-    font-size: 30px;
-  }
+.text {
+  color: aqua;
+  margin-top: 20px;
+  font-size: 20px;
+  /* width: 400px; */
+  align-content: center;
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 30px;
+}
+.displayContainer {
+  color: aquamarine;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+  border-style: outset;
+}
+.kubLogo {
+  transform: rotate(360deg);
+  /* height: 300px; */
+  height: 50%;
+  /* width: 300px; */
+  width: 50%;
+  margin: 50px auto;
+  border-radius: 50%;
+  color: rgb(254, 254, 255);
+  animation: rotation 8s infinite linear;
+  border-style: solid;
+}
+.logo {
+  transform: rotate(360deg);
+  height: 105px;
+  width: 125px;
+  background-color: oldlace;
+  border: solid 5px black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+  /* animation: rotation 4s infinite linear; */
+}
+.logo1 {
+  transform: rotate(360deg);
+  height: 125px;
+  width: 125px;
+  border: solid 10px black;
+  border-radius: 20px;
+  /* animation: rotation 4s infinite linear; */
+}
+.logo2 {
+  transform: rotate(360deg);
+  height: 105px;
+  width: 125px;
+  /* animation: rotation 4s infinite linear; */
+  background-color: #e8eaf6; /* light shade of indigo */
+  border: solid 5px black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+}
 
+@keyframes rotation {
+  from {
+  transform: rotate(0deg);
+  }
+  to {
+  transform: rotate(359deg);
+}
+}
+.uploadInput {
+  display: flex;
+  height: 60px;
+  width: 90%;
+  font-size: 24px;
+  margin: 10px auto;
+}
+.buttonHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.uploadButt {
+  height: 50px;
+  width: 150px;
+  border: dodgerblue solid 5px;
+  border-radius: 5px;
+  margin: 30px auto;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: rgb(255, 255, 255);
+}
+#buttonToGoBack, #buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+  /*backButton{
+  height: 50px;
+  width: 150px;
+  border: dodgerblue solid 5px;
+  border-radius: 5px;
+  margin: 0px auto;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: rgb(255, 255, 255);
+} */
+/* #displays {
+  width: 100%;
+  height: 100%;
+} */
+.awsAndGcpLogos {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.fetchAWS {
+  height: 25%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+#awsButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.awsGetClusterName {
+  width: 90%;
+  margin: 0px auto;
+  height: 40px;
+}
+.awsDeployClusterName {
+  display: flex;
+  width: 90%;
+  height: 40px;
+  margin: 10px auto;
+  font-size: 16px;
+}
 
-  .displayContainer {
-    color: aquamarine;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
-    border-style: outset;
-  }
-  #deployWrapper {
-    height: 100%;
-    width:100%;
-  }
+#clicker {
+  background-color:lightblue;
+  outline:none;
+  cursor:pointer;
+}
+#hiddenAf{
+  display:none;
+  background-color:lightblue;
+}
+#clicker:focus+#hiddenAf{
+  display:block;
+}
+.loc{
+  height: 60px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 5px auto;
+  padding-bottom: 10px;
+  /* background-color: rgb(255, 255, 255); */
+}
+.gcpImageContainer{
+  box-sizing: border-box;
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
 
-  .kubLogo {
-    transform: rotate(360deg);
-    height: 300px;
-    width: 300px;
-    margin: 50px auto;
-    border-radius: 50%;
-    color: rgb(254, 254, 255);
-    animation: rotation 8s infinite linear;
-  }
+/* no longer used? */
+.uploadDiv {
+  /* height: 100%; */
+  /* width: 300px; */
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: 0px auto;
+}
+.kubUpload {
+  /* transform: rotate(360deg); */
+  height: 125px;
+  width: 175px;
+  margin: 10px auto;
+  /* margin-top: 60px; */
+  /* margin-left: 325px; */
+  color: rgb(254, 254, 255);
+  /* animation: rotation 1s infinite linear; */
+}
 
+/* no longer used? */
+.kubUploadText {
+  height: auto;
+  width: 295px;
+  margin: 15px auto;
+  color: aquamarine;
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 60px;
+}
 
-  .logo {
-    transform: rotate(360deg);
-    height: 105px;
-    width: 125px;
-    background-color: oldlace;
-    border: solid 5px black;
-    border-radius: 20px;
-    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
-    /* animation: rotation 4s infinite linear; */
-  }
+.locationDropDown {
+  padding-top: 20px;
+}
 
-  .logo1 {
-    transform: rotate(360deg);
-    height: 125px;
-    width: 125px;
-    border: solid 10px black;
-    border-radius: 20px;
-    /* animation: rotation 4s infinite linear; */
-  }
+#root {
+  background-color: black;
+  position: absolute;
+  top: 0; bottom: 0; right: 0; left: 0;
+  outline: thin dashed green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
 
-  .logo2 {
-    transform: rotate(360deg);
-    height: 105px;
-    width: 125px;
-    /* animation: rotation 4s infinite linear; */
-    background-color: red;
-    border: solid 5px black;
-    border-radius: 20px;
-    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
-  }
+/* .mainDiv {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding-top: 50px;
+} */
 
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
-  }
+.vizDiv {
+  height: 100%;
+}
 
-  .uploadInput {
-    height: 70px;
-    width: 300px;
-    border: dodgerblue solid 5px;
-    border-radius: 5px;
-    color: black;
-    background-color: rgb(255, 255, 255);
-    font-size: 30px;
-    margin-top: 10px;
-    font-family: 'Nunito', sans-serif;
-  }
-  .buttonHolder {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
+.SB {
+  height: 50px;
+  width: 175px;
+  border: rgb(7, 185, 255) solid 5px;
+  border-radius: 5px;
+  /* margin-left: 30px;
+  margin-top: 30px; */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: rgb(255, 2, 213);
+  justify-content: space-evenly;
+  box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+  border-style: outset;
+}
+.uploadButtD {
+  height: 50px;
+  width: 175px;
+  border: dodgerblue solid 5px;
+  border-radius: 5px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: azure;
+  margin-top: 10px;
+}
 
-  .uploadButt {
-    height: 50px;
-    width: 100px;
-    border: dodgerblue solid 5px;
-    border-radius: 5px;
-    margin-top: 30px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: rgb(255, 255, 255);
-    }
-  .backButton{
-    height: 50px;
-    width: 100px;
-    border: dodgerblue solid 5px;
-    border-radius: 5px;
-    margin-top: 30px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: rgb(255, 255, 255);
-  }
+#deployLoc {
+  display: flex;
+}
 
-  .inputPageDeploy{
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: 100%;
-    margin: 0px auto;
-    padding-top: 50px;
-  }
-  #displays {
-    width: 100%;
-    height: 100%;
-  }
-  .awsAndGcpLogos {
-    width: 400px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
+#infobox{
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 350px;
+  margin: 0px auto;
+  color: black;
+  box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
+  border-style: outset;
+}
+.clusterTitle {
+  margin-bottom: -35px;
+  margin-top: -20px;
+}
+.clusterInformation {
+  margin-bottom: -10px;
+}
 
-  #buts{
-    display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 20px;
-    padding-top: 20px;
-  }
-  #clicker {
-    background-color:lightblue;
-    outline:none;
-    cursor:pointer;
-    }
-  #hiddenAf{
-    display:none;
-    background-color:lightblue;
-  }
-  #clicker:focus+#hiddenAf{
-    display:block;
-  }
-  .loc{
-    height: 50px;
-    border: dodgerblue solid 5px;
-    border-radius: 5px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: rgb(255, 255, 255);
-  }
-  .clusterType{
-    height:20px;
-    width:200px;
-    font-size:15px;
-  }
-  .gcpImageContainer{
-    box-sizing: border-box;
-    width: 300px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
-    .uploadDiv {
-      height: 100%;
-      width: 300px;
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      justify-content: center;
-      margin: 0px auto;
-    }
-    .kubUpload {
-    /* transform: rotate(360deg); */
-    height: 125px;
-    width: 175px;
-    margin: 10px auto;
-    /* margin-top: 60px; */
-    /* margin-left: 325px; */
-    color: rgb(254, 254, 255);
-    /* animation: rotation 1s infinite linear; */
-  }
+/* no longer used */
+/* #uploadDivForSubmitandBackButts {
+  display: flex;
+  flex-direction: column;
+} */
 
-  .kubUploadText {
-    height: auto;
-    width: 295px;
-    margin: 15px auto;
-    color: aquamarine;
-    text-align: center;
-    font-family: 'Amatic SC', cursive;
-    font-size: 60px;
-  }
+#uploadSelectMenu {
+  /* used in UploadPage */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  text-align: left;
+}
 
-  .locationDropDown {
-    padding-top: 20px;
-  }
+#uploadPage2SubmitandBackButts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 
-  #root {
-    background-color: black;
-    position: absolute;
-    top: 0; bottom: 0; right: 0; left: 0;
-    outline: thin dashed green;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
-
-  .mainDiv {
-    width: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    padding-top: 50px;
-  }
-
-  .vizDiv {
-    height: 100%;
-  }
-
-  .SB {
-    height: 50px;
-    width: 175px;
-    border: rgb(7, 185, 255) solid 5px;
-    border-radius: 5px;
-    /* margin-left: 30px;
-    margin-top: 30px; */
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: rgb(255, 2, 213);
-    justify-content: space-evenly;
-    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
-    border-style: outset;
-  }
-
-  .clusterType {
-    height: 50px;
-    width: 175px;
-    border: dodgerblue solid 5px;
-    border-radius: 5px;
-    /* margin-left: 30px;
-    margin-top: 30px; */
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: azure;
-  }
-
-  .uploadButtD {
-    height: 50px;
-    width: 175px;
-    border: dodgerblue solid 5px;
-    border-radius: 5px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: azure;
-  }
-
-  #deployLoc {
-    width: 49%;
-    margin-bottom: 5px;
-    margin-left: 2px;
-  }
-
-  #infobox{
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
-    width: 500px;
-    margin: 0px auto;
-    color: black;
-    box-shadow: 0px 0px 3px 3px rgba(67, 84, 105, 1);
-    border-style: outset;
-  }
-  .clusterTitle {
-    margin-bottom: -35px;
-    margin-top: -20px;
-  }
-  .clusterInformation {
-    margin-bottom: -10px;
-  }
-
-  #deployChooseClustType{
-    width: 49%;
-    margin-bottom: 5px;
-    margin-left: 2px;
-  }
-
-  #deployClustName {
-    margin: 50px auto;
-    width: 400px;
-  }
-  #deployDropDowns {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  #uploadDivForSubmitandBackButts {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #uploadSelectMenu {
-    width: 300px;
-  }
-
-  #uploadPage2SubmitandBackButts {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  .clusterDeets {
+.clusterDeets {
   color: black;
   border-radius: 5px;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.2);
@@ -441,19 +417,14 @@
 }
 .awsImageContainer {
   box-sizing: border-box;
-  width: 300px;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  text-align: center;
 }
-.nodeCountDropDown {
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-} 
 .count {
   width: 49%;
   margin-bottom: 5px;
@@ -461,10 +432,9 @@ justify-content: space-evenly;
 .landingTitle {
   display: flex;
   flex-direction: column;
-  color: aqua;
-  width: 400px;
+  width: 100%;
 }
-.title {
+/* .title {
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -474,4 +444,96 @@ justify-content: space-evenly;
   text-align: center;
   font-family: 'Amatic SC', cursive;
   font-size: 80px;
+} */
+
+.getGCPWrapper {
+  height: 35%;
+  width: 98%;
+  margin : 0 auto;
+  text-align: center;
+}
+
+/* GCP deploy */
+#deployClustName {
+  margin: 10px auto;
+  width: 95%;
+  height: 60px;
+}
+.clusterType {
+  height: 50px;
+  width: 49%;
+  margin-bottom: 5px;
+  border: dodgerblue solid 5px;
+  border-radius: 5px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: azure;
+}
+#deployWrapper {
+  height: 110%;
+  width:100%;
+}
+.deployWrapper {
+  height: 100%;
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.inputPageDeploy{
+  display: flex;
+  flex-direction: column;
+  height: 60%;
+  margin: 0px auto;
+  padding-top: 10px;
+  text-align: center;
+  align-items: center;
+}
+#deployDropDowns {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-bottom: 10px;
+}
+.deployTitle{
+  justify-content: center;
+  display: flex;
+}
+.nodeLocationRadios {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  font-size: 16px;
+  justify-content: center;
+  line-height: 2.4;
+  text-align: left;
+  padding-top: 10px;
+  }
+#buts{
+  display: flex;
+  justify-content: space-evenly;
+  /* padding-bottom: 20px;
+  padding-top: 20px; */
+}
+.div1 { grid-area: 1 / 1 / 2 / 2; }
+.div2 { grid-area: 1 / 2 / 2 / 3; }
+.div3 { grid-area: 2 / 1 / 3 / 2; }
+.div4 { grid-area: 2 / 2 / 3 / 3; }
+.div5 { grid-area: 3 / 1 / 4 / 2; }
+.div6 { grid-area: 3 / 2 / 4 / 3; }
+.div7 { grid-area: 4 / 1 / 5 / 2; }
+.div8 { grid-area: 4 / 2 / 5 / 3; }
+
+.deployLocTitle {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+input[type="radio"] {
+  margin: 0 10px 0 10px;
 }
