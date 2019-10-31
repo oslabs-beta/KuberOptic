@@ -24,7 +24,6 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 const [quickstart, create] = require('../../main/gcp/getGCPdata').default
 const { ipcRenderer } = require('electron');
-
 require('events').EventEmitter.defaultMaxListeners = 25;
 import GetGCP from './GcpGetClusters';
 
