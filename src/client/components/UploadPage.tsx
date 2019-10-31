@@ -25,13 +25,12 @@ require('events').EventEmitter.defaultMaxListeners = 25;
 // Material-UI uses "CSS in JS" styling
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { // currently not being used - maybe delete later
+    root: {
       display: 'flex',
-      // flexGrow: 1
     },
     text: {
       align: 'center',
-      margin: '0 0 50px 0', // will adjust later
+      margin: '0 0 50px 0', 
     },
     textField: {
       width: "100%",
@@ -39,17 +38,18 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       margin: theme.spacing(1),
     },
-    input: {
-      display: 'none',
-    },
+    // input: {
+    //   display: 'none',
+    // },
   }),
 );
 
 
 const UploadPage = () => {
   const [Store, setStore] = useContext(StoreContext);
-  // stores the GCP JSON data for login in the store for future use when deploying or fetching
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => { // was originally React.FormEvent
+  // stores the GCP JSON data for login in the store for future 
+  // use when deploying or fetching updates on any input changes
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStore({...Store, credentials:e.currentTarget.value});
   };
   // closes component and takes you back to launch page
@@ -95,7 +95,7 @@ const UploadPage = () => {
 
           <form noValidate autoComplete="off">
               <TextField
-                id="standard-helperText"
+                id="input-gcp-info"
                 label="Input GCP Info"
                 className={classes.textField}
                 helperText="Enter a JSON object from GCP that includes the project_id key"

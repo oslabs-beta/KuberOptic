@@ -25,11 +25,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      // flexGrow: 1
     },
     text: {
       align: 'center',
-      margin: '0 0 50px 0', // will adjust this later
+      margin: '0 0 50px 0',
     }
   }),
 );

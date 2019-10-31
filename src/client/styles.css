@@ -372,6 +372,7 @@ canvas {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, 1fr);
+  text-align: left;
 }
 
 #uploadPage2SubmitandBackButts {
@@ -449,6 +450,7 @@ canvas {
   height: 35%;
   width: 98%;
   margin : 0 auto;
+  text-align: center,
 }
 
 /* GCP deploy */
@@ -485,12 +487,15 @@ canvas {
   height: 60%;
   margin: 0px auto;
   padding-top: 10px;
+  text-align: center;
+  align-items: center;
 }
 #deployDropDowns {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  padding-bottom: 10px;
 }
 .deployTitle{
   justify-content: center;
@@ -505,7 +510,9 @@ canvas {
   grid-row-gap: 0px;
   font-size: 16px;
   justify-content: center;
-  line-height: 1.5;
+  line-height: 2.4;
+  text-align: left;
+  padding-top: 10px;
   }
 #buts{
   display: flex;
@@ -525,6 +532,7 @@ canvas {
 .deployLocTitle {
   width: 100%;
   justify-content: center;
+  text-align: center;
 }
 input[type="radio"] {
   margin: 0 10px 0 10px;

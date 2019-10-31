@@ -18,13 +18,12 @@ import Select from '@material-ui/core/Select';
 // Material-UI uses "CSS in JS" styling
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { // currently not being used - maybe delete later
+    root: {
       display: 'flex',
-      // flexGrow: 1
     },
     text: {
       align: 'center',
-      margin: '0 0 0 0', // will adjust later
+      margin: '0 0 0 0',
     },
     textField: {
       width: "90%",
@@ -49,8 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AWSDeploy = () => {
   const [Store, setStore] = useContext(StoreContext);
-  //related to Material UI drop down///////////////////////
-  // as well as formControl and formButton above
   const [zone, setZone] = React.useState('');
   const [region, setRegion] = React.useState('');
   const [open, setOpen] = React.useState(false);
@@ -59,22 +56,18 @@ const AWSDeploy = () => {
   const handleChange = event => {
     setZone(event.target.value);
     const zone = event.target.value
-    console.log('is it showing the zone i selected', zone)
     setStore({
       ...Store,
       awsDisplayRegion: zone
     })
-    console.log('is this updating the Store', Store)
   };
   const handleRegionChange = event => {
     setRegion(event.target.value);
     const zone = event.target.value
-    console.log('is it showing the zone i selected', zone)
     setStore({
       ...Store,
       awsDeployRegion: zone
     })
-    console.log('is this updating the Store', Store)
   };
 
   const handleClose = () => {
@@ -89,16 +82,14 @@ const AWSDeploy = () => {
   const handleRegOpen = () => {
     setRegOpen(true);
   };
-// //////////////////////////////////////////////////////////
 
   // sets store to the cluster name from the input field
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStore({...Store, awsClusterName: e.currentTarget.value.split(", ")})
   }
-  // const handleRegion = (e) => {
-  //   setStore({...Store, awsDisplayRegion: e.currentTarget.value})
-  // }
-  // beginning of function to retrieve cluster data by name. Sets store to the cluster name and sends to 'asynchronous-message2' where fetchAWS is called. 
+
+  // beginning of function to retrieve cluster data by name. Sets store to the 
+  // cluster name and sends to 'asynchronous-message2' where fetchAWS is called. 
   const handleFetchSubmit = () => {
     let arg;
     if (!Store.awsClusterName.length && Store.awsDisplayRegion) {
@@ -158,10 +149,7 @@ const AWSDeploy = () => {
   const handleSubnet2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStore({...Store, awsSubnet2: e.currentTarget.value})
   }
-  // sets store to location for cluster deployment
-  // const handleLoc = (e) => {
-  //   setStore({...Store, awsDeployRegion: e.currentTarget.value})
-  // }
+ 
   // submits name, ARN, subnets, and region for cluster deployment, and sends to 'create-aws' to invoke the createCluster method
   const handleDeploySubmit = () => {
    const arg = {
@@ -268,7 +256,6 @@ const AWSDeploy = () => {
         uploadPageState2: false, 
         awsDeployPage: false,
         deploying: true, 
-        // awsClusterName: array
       });
       ipcRenderer.send('asynchronous-message2', arg)
     }
@@ -307,41 +294,33 @@ const AWSDeploy = () => {
           <Typography className={classes.text} variant="h6">AWS Cluster(s) to Visualize:</Typography>
             <TextField
               id="standard-helperText"
-              label="clusterName"
+              label="cluster name(s)"
               className={classes.textField}
-              helperText="Enter an AWS cluster to remove or add..."
+              helperText="Enter AWS cluster(s) to remove or add..."
               margin="normal"
               onChange={handleName}
             />
 
-             <div className='loc'>
-              {/* <Button className={classes.formButton} onClick={handleOpen}>Choose location to display</Button> */}
-                <FormControl className={classes.formControl}>
-                  <InputLabel id="visualLocation">AWS Region</InputLabel>
-                    <Select
-                      labelId="visualLocation"
-                      id="visualLocation"
-                      open={open}
-                      onClose={handleClose}
-                      onOpen={handleOpen}
-                      value={zone}
-                      onChange={handleChange}
-                    >
-                  <MenuItem value=""><em>Select Region</em></MenuItem>
-                  <MenuItem value={'us-east-1'}>US East 1</MenuItem>
-                  <MenuItem value={'us-east-2'}>US East 2</MenuItem>
-                  <MenuItem value={'us-west-1'}>US West 1</MenuItem>
-                  <MenuItem value={'us-west-2'}>US West 2</MenuItem>
-                </Select>
-              </FormControl>
-              {/* <select id='deployLoc' className='loc'onChange={handleRegion}>
-              <option selected>Choose a location to display</option>
-              <option value='us-east-1'>us-east-1</option>
-              <option value='us-east-2'>us-east-2</option>
-              <option value='us-west-1'>us-west-1</option>
-              <option value='us-west-2'>us-west-2</option>
-              </select> */}
-            </div>
+            <div className='loc'>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="visualLocation">AWS Region</InputLabel>
+                  <Select
+                    labelId="visualLocation"
+                    id="visualLocation"
+                    open={open}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    value={zone}
+                    onChange={handleChange}
+                  >
+                <MenuItem value=""><em>Select Region</em></MenuItem>
+                <MenuItem value={'us-east-1'}>US East 1</MenuItem>
+                <MenuItem value={'us-east-2'}>US East 2</MenuItem>
+                <MenuItem value={'us-west-1'}>US West 1</MenuItem>
+                <MenuItem value={'us-west-2'}>US West 2</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
 
             <div id="awsButtons">
               <Button variant="contained" color="secondary" className={classes.button} onClick={handleFetchSubmit}>Add Cluster</Button>
@@ -371,7 +350,7 @@ const AWSDeploy = () => {
               id="standard-helperText"
               label="Subnet ID 1"
               className={classes.textField}
-              helperText="PLease provide the 1st of 2 subnets..."
+              helperText="Please provide the 1st of 2 subnets..."
               margin="normal"
               onChange={handleSubnet1}
             />
@@ -379,7 +358,7 @@ const AWSDeploy = () => {
               id="standard-helperText"
               label="Subnet ID 2"
               className={classes.textField}
-              helperText="PLease provide the 2nd of 2 subnets..."
+              helperText="Please provide the 2nd of 2 subnets..."
               margin="normal"
               onChange={handleSubnet2}
             />
@@ -402,14 +381,6 @@ const AWSDeploy = () => {
                 <MenuItem value={'us-west-2'}>US West 2</MenuItem>
               </Select>
             </FormControl>
-
-            {/* <select id='deployLoc' className='loc' onChange={handleLoc}>
-            <option selected>Choose a location to host</option>
-            <option value='us-east-1'>us-east-1</option>
-            <option value='us-east-2'>us-east-2</option>
-            <option value='us-west-1'>us-west-1</option>
-            <option value='us-west-2'>us-west-2</option>
-            </select> */}
           </div>
 
           <div id='buttons'>
@@ -417,7 +388,7 @@ const AWSDeploy = () => {
             <Button variant="outlined" color="secondary" className={classes.button} onClick={handleDelete}>Delete Cluster</Button>
           </div>
           <div id='buttonToGoBack'>
-            <Button variant="outlined" color="secondary" className={classes.button} onClick={handleBack}>Back</Button>
+            <Button variant="outlined"  className={classes.button} onClick={handleBack}>Back</Button>
           </div>
         </div>
       </div>

@@ -27,6 +27,7 @@ export default function Checkboxes(props) {
             checked={props.checked} 
             onChange={props.handleChange(props.value)} 
             value={props.value}
+            color="primary"
           />
         }
         label={props.label}

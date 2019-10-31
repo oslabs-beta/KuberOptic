@@ -13,35 +13,104 @@ import * as React from 'react';
 import { useContext } from 'react';
 import {StoreContext} from '../../../store'
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 const [quickstart, create] = require('../../main/gcp/getGCPdata').default
 const { ipcRenderer } = require('electron');
 
 require('events').EventEmitter.defaultMaxListeners = 25;
 import GetGCP from './GcpGetClusters';
 
+// Material-UI uses "CSS in JS" styling
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: { 
+      display: 'flex',
+    },
+    text: { 
+      align: 'center',
+      margin: '0 0 0 0', 
+    },
+    textField: {
+      width: "90%",
+      marginTop: 8,
+    },
+    button: {
+      margin: theme.spacing(1),
+      width: 120,
+    },
+    input: {
+      display: 'none',
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 150,
+    },
+    formButton: {
+      display: 'block',
+      marginTop: theme.spacing(2),
+    }
+  }),
+);
+
+
 // various inputs will be stored in this object and will be submitted when you call handleSubmit
 let deployVals = {};
 
 const gcpDeploy = () =>{
   const [Store, setStore] = useContext(StoreContext);
+  const [open, setOpen] = React.useState(false);
+  const [openCount, setOpenCount] = React.useState(false);
+  const [type, setType] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [count, setCount] = React.useState('');
+
   //saves the input value for the name of the cluster you will create in the deployVals object
   const handleName = (event) => {
-    deployVals['name'] = event.currentTarget.value;
+    setName(event.target.value)
+    const name = event.target.value
+    deployVals['name'] = name;
   }
-  //saves the cluster type for the cluster you will create in the deployVals object
-  const handleType = (event) => {
-    deployVals['clusterType'] = event.currentTarget.value;
-  }
-  //saves the node count for the cluster you will create in the deployVals object
-  const handleNodeCount = (event) => {
-    deployVals['count'] = event.currentTarget.value;
-  }
+  const handleTypeClose = () => {
+    setOpen(false);
+  };
+  const handleTypeOpen = () => {
+    setOpen(true);
+  };
+  const handleCountClose = () => {
+    setOpenCount(false);
+  };
+  const handleCountOpen = () => {
+    setOpenCount(true);
+  };
   //saves the deploy zone for the cluster you will create in the deployVals object
   const handleLoc = (event) => {
-    const location = event.currentTarget.value
-    // setStore({...Store, gcploc: location})
-    deployVals['zone'] = location;
+    const zone = event.target.value
+    deployVals['zone'] = zone;
+    setStore({...Store, gcpdeploylocation: zone})
+  };
+
+  //saves the cluster type for the cluster you will create in the deployVals object
+  const handleType = (event) => {
+    setType(event.target.value);
+    const type = event.target.value
+    deployVals['clusterType'] = type;
+  };
+
+  //saves the node count for the cluster you will create in the deployVals object
+  const handleCount = (event) => {
+    setCount(event.target.value)
+    const count = event.target.value;
+    deployVals['count'] = count;
   }
+  
   //clears credentials, clusters, and other values and takes you to the main login page
   const handleBack = () => {
     return setStore({
@@ -101,43 +170,75 @@ const gcpDeploy = () =>{
     event.returnValue = 'done';
   })
 
+  const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
+
   return (
+    <Grid
+        container
+        direction="column"
+        justify="space-around"
+        alignItems="center"
+        >
     <div className="deployWrapper">
       <GetGCP/>
       <br/>
       <Divider />
       <div className="inputPageDeploy">
-        <h3 className="deployTitle">Deploy New GCP Cluster:</h3>
-          <input className="awsDeployClusterName" 
-          name="name"
-          type="text" 
-          onChange={handleName} 
-          placeholder="clusterName" 
-          required={true}></input>
+      <Typography className={classes.text} variant="h6">Deploy New GCP Cluster:</Typography>
+        <TextField
+          id="standard-helperText"
+          label="cluster name"
+          className={classes.textField}
+          helperText="Enter a GCP cluster name..."
+          margin="normal"
+          onChange={handleName}
+          value={name}
+          />
 
         <div id="deployDropDowns">
-          <select id="deployChooseClustType" className='clusterType' onChange={handleType}>
-          <option selected>Cluster type</option>
-          <option value='affordable'>affordable</option>
-          <option value='standard'>standard</option>
-          <option value='cpuIntensive'>cpuIntensive</option>
-          <option value='memoryIntensive'>memoryIntensive</option>
-          <option value='gpuAcceleratedComputing'>gpuAcceleratedComputing</option>
-          <option value='highly available'>highly available</option>
-          </select>
-
-          <select id='nodeCounter' className='clusterType' onChange={handleNodeCount}>
-          <option selected># of Nodes</option>
-          <option value='1'>1</option>
-          <option value='2'>2</option>
-          <option value='3'>3</option>
-          <option value='4'>4</option>
-          <option value='5'>5</option>
-          </select>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="clusterType">Cluster Type</InputLabel>
+            <Select
+              labelId="clusterType"
+              id="clusterType"
+              open={open}
+              onClose={handleTypeClose}
+              onOpen={handleTypeOpen}
+              value={type}
+              onChange={handleType}
+            >
+          <MenuItem value=""><em>Cluster Type</em></MenuItem>
+          <MenuItem value={'affordable'}>affordable</MenuItem>
+          <MenuItem value={'standard'}>standard</MenuItem>
+          <MenuItem value={'cpuIntensive'}>cpuIntensive</MenuItem>
+          <MenuItem value={'memoryIntensive'}>memoryIntensive</MenuItem>
+          <MenuItem value={'gpuAcceleratedComputing'}>gpuAcceleratedComputing</MenuItem>
+          <MenuItem value={'highly available'}>highly available</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl className={classes.formControl}>
+          <InputLabel id="nodeCount">Node Count</InputLabel>
+            <Select
+              labelId="nodeCount"
+              id="nodeCount"
+              open={openCount}
+              onClose={handleCountClose}
+              onOpen={handleCountOpen}
+              value={count}
+              onChange={handleCount}
+            >
+          <MenuItem value=""><em>Node Total</em></MenuItem>
+          <MenuItem value={'1'}>1</MenuItem>
+          <MenuItem value={'2'}>2</MenuItem>
+          <MenuItem value={'3'}>3</MenuItem>
+          <MenuItem value={'4'}>4</MenuItem>
+          <MenuItem value={'5'}>5</MenuItem>
+        </Select>
+      </FormControl>
         </div>
 
           <div className="deployLocTitle">
-            <h3 className="deployTitle">Deploy Location</h3>
+          <Typography className={classes.text} variant="h6">Deploy Location</Typography>
             <form className="nodeLocationRadios">
               <div className="div1">
                 <label>  
@@ -192,11 +293,12 @@ const gcpDeploy = () =>{
 
 
           <div id='buts'>
-            <button id="deploySubmit" className='uploadButtD' onClick={handleDeploy}> Deploy </button>
-            <button id="deployBack" className = 'uploadButtD' onClick={handleBack}>  Back  </button>
+            <Button variant="contained" color="primary" className={classes.button} onClick={handleDeploy}>Deploy</Button>
+            <Button variant="outlined" color="primary" className={classes.button} onClick={handleBack}>Back</Button>
           </div>
+        </div>
       </div>
-    </div>
+    </Grid>
   )
 }
 

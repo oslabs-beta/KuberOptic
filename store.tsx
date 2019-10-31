@@ -6,8 +6,6 @@ export const StoreContext = createContext(null);
 export const StoreContextProvider = (props: any) => {
   
   const [Store, setStore] = useState({
-    multiZoneClusters: null,
-    multiZones: null,
     uploadPageState: false,
     uploadPageState2:false,
     gcpDeployPage:false,

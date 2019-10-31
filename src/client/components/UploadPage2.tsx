@@ -16,7 +16,6 @@ import { useContext } from 'react';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { StoreContext } from '../../../store';
-const { ipcRenderer } = require('electron');
 import AWSDeploy from './awsDeploy';
 import Deploying from './deploying';
 import TextField from '@material-ui/core/TextField';
@@ -26,13 +25,12 @@ import Button from '@material-ui/core/Button';
 // Material-UI uses "CSS in JS" styling
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { // currently not being used - maybe delete later
+    root: {
       display: 'flex',
-      // flexGrow: 1
     },
     text: {
       align: 'center',
-      margin: '0 0 50px 0', // will adjust later
+      margin: '0 0 50px 0',
     },
     textField: {
       width: "100%",
