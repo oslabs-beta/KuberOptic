@@ -31,7 +31,7 @@ gcloud auth application-default login
 #### Input Project credentials
 AWS - Requires Access Key and Secret Key
 
-![](https://media.giphy.com/media/gKZCm910k2g5ZnviQO/giphy.gif)
+![](https://media.giphy.com/media/fwzZ6dbJvqKDJxpyBh/giphy.gif)
 
 GCP - Requires JSON object with Project_ID
 
