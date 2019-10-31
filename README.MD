@@ -35,7 +35,19 @@ gcloud auth application-default login
 ![](src/client/assets/credsPage/deploymentGCP.gif)
 ***
 ### AWS <reading cluster>
-Our API utilizes AWS-SDK's EKS(Amazon Elastic Kubernetes Service). Simply go and create an AWS account to generate a secret ID and SecretKey for your IAM account. Enter the Secret ID and Key along with the cluster you want to inspect. As of now, you must specify the cluster name  
+  
+### AWS
+Our API utilizes AWS-SDK's EKS(Amazon Elastic Kubernetes Service). Simply go and create an AWS account to generate a secret ID and SecretKey for your IAM account. Enter the Secret ID and Key to enter the display/deploy page.
+
+You can choose to display by name or by region. 
+
+To display by region, choose the region from the drop-down menu and press the submit button. To display by name, enter the cluster name (or names, separated by commas) and press submit. Your deployed clusters will no be visualized in real time. 
+
+You can also choose to remove individual or multiple clusters from the display without deleting them from the cloud. Just enter the name(s) of the clusters you wish to remove and click "Remove Cluster."
+
+To deploy a new cluster, enter the name of the new cluster, your roleARN, two subnet IDs, and the region in which you wish to deploy, then click "Deploy Cluster." Please note that it will take a few minutes for your cluster to be created, at which point you can retrieve it for display. 
+
+To delete a cluster from the cloud, enter the name and region of the cluster you wish to delete (you don't need the roleARN or Subnet IDs) and click "Delete Cluster." As with deploying, it will take a few minutes for your changes to take effect.  
 ![](src/client/assets/credsPage/puttingAws.gif)
 ***
 ### Azure
@@ -47,6 +59,7 @@ npm run prod
 ```
 **Run in production environment**
 ```
+cd dist
 npm start
 ```
 **Run tests with Jest**
