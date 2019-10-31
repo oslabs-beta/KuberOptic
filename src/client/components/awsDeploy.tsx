@@ -253,7 +253,7 @@ const AWSDeploy = () => {
         region: Store.awsDisplayRegion
       }
       setStore({...Store,
-        uploadPageState2: false, 
+        visualize: false, 
         awsDeployPage: false,
         deploying: true, 
       });
