@@ -11,22 +11,42 @@ const awsDeploy = () =>{
   const handleName = (e: React.FormEvent<HTMLInputElement>) => {
     setStore({...Store, awsClusterName: e.currentTarget.value.split(", ")})
   }
+
+  // updates the store with the AWS region entered into the input field
+  const handleRegion = (e) => {
+    console.log(e.currentTarget.value)
+    let region = e.currentTarget.value
+    setStore({...Store, awsDisplayRegion: region})
+    console.log('in handleRegion on awsDeploy:', Store.awsDisplayRegion, region)
+    console.log(Store.awsDisplayRegion)
+      const arg = {
+        // region: Store.awsDisplayRegion
+        accessKeyId: Store.awsKey, 
+        secretAccessKey: Store.awsSecret, 
+        region: Store.awsDisplayRegion
+        }
+        ipcRenderer.send('list-aws', arg)
+    }
+  
+  
   
   // beginning of function to retrieve cluster data by name. Sets store to the cluster name and sends to 'asynchronous-message2' where fetchAWS is called. 
   const handleFetchSubmit = () => {
-    if (Store.awsClusterName.length === 0) {
+    // let inputName = document.getElementById("input-name").value
+    // if (inputName === null) {
+    //   const arg = {
+    //   region: Store.awsDisplayRegion
+    //   }
+    //   ipcRenderer.send('list-aws', arg)
+    // } else {
       const arg = {
-      region: Store.awsDisplayRegion
+        name: Store.awsClusterName, 
+        accessKeyId: Store.awsKey, 
+        secretAccessKey: Store.awsSecret, 
+        region: Store.awsDeployRegion
       }
-      ipcRenderer.send('list-aws', arg)
-    }
-    const arg = {
-      name: Store.awsClusterName, 
-      accessKeyId: Store.awsKey, 
-      secretAccessKey: Store.awsSecret, 
-      region: Store.awsDeployRegion
-    }
-    ipcRenderer.send('asynchronous-message2', arg)
+      ipcRenderer.send('asynchronous-message2', arg)
+    // }
   }
 
   // removes a cluster from the visualizer by name by removing it from the store array of cluster names
@@ -116,7 +136,17 @@ const awsDeploy = () =>{
   <div className="deployWrapper">
     <div className="fetchAWS">
       <h3 className="deployTitle">Add/Remove AWS Clusters by Name:</h3> 
-      <input className='awsGetClusterName' type="text" onChange={handleName} placeholder="clusterName"></input>
+      <input id="input-name" className='awsGetClusterName' type="text" onChange={handleName} placeholder="clusterName"></input>
+
+      <div>
+      <select id='deployLoc' className='loc' onChange={handleRegion}>
+      <option selected>Choose a location to display</option>
+      <option value='us-east-1'>us-east-1</option>
+      <option value='us-east-2'>us-east-2</option>
+      <option value='us-west-1'>us-west-1</option>
+      <option value='us-west-2'>us-west-2</option>
+      </select>
+      </div>
 
       <div id="uploadPage2SubmitandBackButts">
         <button id="uploadPage2Submit" className='uploadButt' onClick={handleFetchSubmit}>Add Cluster</button>

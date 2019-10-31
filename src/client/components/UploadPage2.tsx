@@ -21,21 +21,27 @@ import AWSDeploy from './awsDeploy'
 const UploadPage2 = () => {
   const [Store, setStore] = useContext(StoreContext);
 
-  // from main.ts, 'asynchronous-message2'
+  // 
+ 
+
   // iterates through the clusters submitted via the name or region, and adds to the array of clusters in the store. 
   ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
+    console.log('clusterClient2 and arg is', arg)
     let newClusters = Store.clusters.slice();
     arg.forEach(el=> newClusters.push(el))
     setStore({...Store, clusters: newClusters, clusterCount: newClusters.length })
+    console.log('done')
     event.returnValue = 'done';
   })
 
   // this and the function below take in the cluster names from the listClusters method and sends them to 'asynchronous-message2' to be sent as arg for the describeCluster method
   ipcRenderer.on('awsRegionDisplayFunc', (event: any, arg: any) => {
+    console.log('in uploadpage2 awsRegionDisplayFunc and arg is', arg)
     awsRegionDisplay(arg)
   })
 
   const awsRegionDisplay = (array) => {
+    console.log('up2 awsRegionDisplay function and array is', array)
     setStore({...Store, awsClusterName: array})
     const arg = {
       name: array, 
@@ -46,6 +52,8 @@ const UploadPage2 = () => {
     ipcRenderer.send('asynchronous-message2', arg)
     setStore({...Store, uploadPageState2: true, awsDeployPage: true});
   }
+
+  
 
   // updates the store with the AWS key entered into the input field
   const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
@@ -82,12 +90,14 @@ const UploadPage2 = () => {
       console.log('Enter a AWS key/secret to access AWS');
     }
     else {
+      console.log('click')
       const arg = {
         accessKeyId: Store.awsKey, 
         secretAccessKey: Store.awsSecret, 
         region: Store.awsDisplayRegion
       }
-      ipcRenderer.send('aws-login', arg)
+      setStore({...Store, uploadPageState2: true, awsDeployPage: true})
+      // ipcRenderer.send('aws-login', arg)
     }
   }
 

@@ -16,19 +16,20 @@ async function loginAWS(params) {
 
   AWS.config.loadFromPath('./credentials.json');
         
-  let eks = new AWS.EKS(params.region);
+  let eks = new AWS.EKS();
 
   return params.region;
 };
 
 // function that takes AWS region and returns a list of clusters deployed to that region
 async function listAWS(region) {
+  console.log('prePromise listAWS', region.region)
   return new Promise ((resolve, reject) => {
-    let eks = new AWS.EKS(region.region);
-    
+    let eks = new AWS.EKS('us-east-2');
     eks.listClusters((err, data) => {
       if (err) console.log(err, err.stack);
       else {
+        console.log('in liçstClusters method and date is ', data)
         resolve(data);
       };
     });

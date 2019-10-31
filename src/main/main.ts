@@ -42,16 +42,18 @@ ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
 ipcMain.on('aws-login', (event: any, arg: any) => {
   loginAWS(arg).then(res=> {
       console.log('awsLogin call ', arg)
-    listAWS(arg).then(res => {
-      console.log('listClusters res: ', res)
-      event.sender.send('awsRegionDisplayFunc', res.clusters)
-    }).catch((e)=>console.log(e))
+  //   listAWS(arg).then(res => {
+  //     console.log('listClusters res: ', res)
+  //     event.sender.send('awsRegionDisplayFunc', res.clusters)
+  //   }).catch((e)=>console.log(e))
   })
 })
 
 // invokes the fetchAWS function which uses describeCluster to fetch data for all cluster names in the store
 ipcMain.on('asynchronous-message2', (event: any, arg: any) => {
+  console.log('in main at async2 and arg is', arg)
   fetchAWS(arg).then(res=>{
+    console.log('returned from fetchAWS and res is', res)
     event.sender.send('clusterClient2', res);
     })
   .catch((e)=>console.log(e));
@@ -71,10 +73,11 @@ ipcMain.on('delete-aws', (event: any, arg: any) => {
 
 // invokes the listAWS function from the deploy page
 ipcMain.on('list-aws', (event: any, arg: any) => {
-  console.log('in main list-aws')
+  console.log('in main list-aws and arg is ', arg)
   listAWS(arg).then(res => {
-    event.sender.send('awsRegionDisplay', res);
-  });
+    console.log('main list-aws listClusters res: ', res)
+    event.sender.send('awsRegionDisplayFunc', res.clusters)
+  }).catch((e)=>console.log(e))
 });
 
 
