@@ -34,8 +34,6 @@ gcloud auth application-default login
 #### Deployment (GCP) 
 ![](src/client/assets/credsPage/deploymentGCP.gif)
 ***
-### AWS <reading cluster>
-  
 ### AWS
 Our API utilizes AWS-SDK's EKS(Amazon Elastic Kubernetes Service). Simply go and create an AWS account to generate a secret ID and SecretKey for your IAM account. Enter the Secret ID and Key to enter the display/deploy page.
 
