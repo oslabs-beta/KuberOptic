@@ -179,7 +179,7 @@ const AWSDeploy = () => {
     ipcRenderer.send('delete-aws', arg);
     let clusterArrCopy = Store.clusters.slice();
     for (let i = 0; i < clusterArrCopy.length; i += 1) {
-      if (clusterArrCopy[i].clusterName === arg) {
+      if (clusterArrCopy[i].clusterName === arg.name) {
         clusterArrCopy.splice(i, 1)
         clusterArrCopy = clusterArrCopy;
       }
