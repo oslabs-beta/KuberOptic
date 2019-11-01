@@ -11,9 +11,13 @@ async function loginAWS(params) {
     region: params.region //will need to remove
   };
 
-  fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
+  const homedir = require('os').homedir();
+  //creates .aws folder
+  if (!fs.existsSync(homedir + '/.aws')) fs.mkdirSync(homedir + '/.aws');
 
-  await AWS.config.loadFromPath('./credentials.json');
+  fs.writeFileSync(homedir + '/.aws/credentials', JSON.stringify(credentials));
+
+  await AWS.config.loadFromPath(homedir + '/.aws/credentials');
 
   return params.region;
 };
@@ -25,7 +29,6 @@ function listAWS(region) {
     eks.listClusters((err, data) => {
       if (err) console.log(err, err.stack);
       else {
-        console.log('in liçstClusters method and date is ', data)
         resolve(data);
       };
     });
@@ -42,9 +45,13 @@ async function fetchAWS(params){
     region: params.region
   };
   
-  fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
+  const homedir = require('os').homedir();
+  //creates .aws folder
+  if (!fs.existsSync(homedir + '/.aws')) fs.mkdirSync(homedir + '/.aws');
 
-  AWS.config.loadFromPath('./credentials.json');
+  fs.writeFileSync(homedir + '/.aws/credentials', JSON.stringify(credentials));
+
+  await AWS.config.loadFromPath(homedir + '/.aws/credentials');
         
   let eks = new AWS.EKS({region: params.region});
 
@@ -81,9 +88,13 @@ async function createAWS(params) {
     region: params.region
   };
 
-  fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
+  const homedir = require('os').homedir();
+  //creates .aws folder
+  if (!fs.existsSync(homedir + '/.aws')) fs.mkdirSync(homedir + '/.aws');
 
-  AWS.config.loadFromPath('./credentials.json');
+  fs.writeFileSync(homedir + '/.aws/credentials', JSON.stringify(credentials));
+
+  await AWS.config.loadFromPath(homedir + '/.aws/credentials');
 
   const request = {
     name: params.name,
@@ -110,9 +121,13 @@ async function deleteAWS(params) {
     region: params.region
   };
 
-  fs.writeFileSync('./credentials.json', JSON.stringify(credentials));
+  const homedir = require('os').homedir();
+  //creates .aws folder
+  if (!fs.existsSync(homedir + '/.aws')) fs.mkdirSync(homedir + '/.aws');
 
-  AWS.config.loadFromPath('./credentials.json');
+  fs.writeFileSync(homedir + '/.aws/credentials', JSON.stringify(credentials));
+
+  await AWS.config.loadFromPath(homedir + '/.aws/credentials');
 
   const request = {
     name: params.name
@@ -129,5 +144,3 @@ async function deleteAWS(params) {
 };
 
 export default [loginAWS, listAWS, fetchAWS, createAWS, deleteAWS]; ;
-
-;
