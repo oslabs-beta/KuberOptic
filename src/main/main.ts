@@ -93,7 +93,7 @@ ipcMain.on('delete-aws', (event: any, arg: any) => {
 
 // invokes the listAWS function from the deploy page
 ipcMain.on('list-aws', (event: any, arg: any) => {
-  console.log('in main list-aws')
+  console.log('in main list-aws and arg is ', arg)
   listAWS(arg).then(res => {
     event.sender.send('awsRegionDisplayFunc', res);
   });
