@@ -33,12 +33,10 @@ async function quickstart(GOOGLE_APPLICATION_CREDENTIALS:object, zones:any) {
           //pushes that cluster object into the array that we will return
           clusts.push(gcpDat)
         }
-        console.log('clusters being built via reduce', clusts)
         return clusts;
       }, [])
     })
     .catch(e=> console.log(e))
-    console.log('how often is the array being completed to resend to front?', clustersToDisplay)
     return clustersToDisplay;
   }
 

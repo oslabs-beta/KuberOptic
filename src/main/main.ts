@@ -43,7 +43,10 @@ ipcMain.on('getNewClusters', (event: any, creds: any, location: any) => {
   search.add(location)
   getGcp(creds, search)
   //sends the clusters back to GCP page to display
-  .then(res=> event.sender.send('newClusters', res))
+  .then(res=> {
+    if (res == null) res = [];
+    else event.sender.send('newClusters', res);
+  })
   .catch((e)=>console.log(e))
 })
 
