@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       width: 120,
     },
-    text: { 
+    text: {
       align: 'center',
       margin: '0 0 0 0',
     },
-  })
+  }),
 );
 
 const GcpGetClusters = () => {
@@ -43,11 +43,8 @@ const GcpGetClusters = () => {
     // updated to account for selecting multiple locations
     const newGcpLoc = Store.gcploc;
     newGcpLoc[location] = event.target.checked;
-    console.log(newGcpLoc)
-    setStore({...Store, 
-      gcploc: newGcpLoc,
-    });
-  }
+    setStore({ ...Store, gcploc: newGcpLoc });
+  };
   // GCP zones formatted in strings for front end boxes
   const labelsForFrontEnd = [
     'US Central (1A)',
@@ -57,8 +54,8 @@ const GcpGetClusters = () => {
     'S.America East (1A)',
     'S.America East (1B)',
     'S.America East (1C)',
-    'Europe West (2A)'
-  ]
+    'Europe West (2A)',
+  ];
   // making the options of locations to be displayed
   const deployLocationStrings = [
     'us-central1-a',
@@ -68,21 +65,21 @@ const GcpGetClusters = () => {
     'southamerica-east1-a',
     'southamerica-east1-b',
     'southamerica-east1-c',
-    'europe-west2-a'
+    'europe-west2-a',
   ];
   // deployLocations is what will be rendered later
   // will be a bunch of checkboxes with text labels
   const deployLocations = [];
   deployLocationStrings.forEach((location, ind) => {
     deployLocations.push(
-      <Checkbox 
+      <Checkbox
         checked={Store[location]}
         handleChange={handleLocation}
         value={location}
         label={labelsForFrontEnd[ind]}
         // maybe add a 'className' here, if needed
         // original class name: .loc
-      />
+      />,
     );
   });
 
@@ -92,29 +89,30 @@ const GcpGetClusters = () => {
     const locations = Store.gcploc;
     const fetchMe = [];
 
-    console.log('building array of locations ----')
     for (let zone in locations) {
       if (locations[zone]) {
         fetchMe.push(zone);
       }
     }
     //sends the credentials and locations to main to fetch from GCP
-    ipcRenderer.send('asynchronous-message', creds, fetchMe)
+    ipcRenderer.send('asynchronous-message', creds, fetchMe);
     //turns on the Deploying/Fetching component to render until response is received,
     // also kills current Visualizer component to have it re-render on response below
-    setStore({...Store,
+    setStore({
+      ...Store,
       gcpDeployPage: false,
       clusters: [],
       clusterCount: 0,
-      deploying: true, 
-      visualize: false
+      deploying: true,
+      visualize: false,
     });
-  }
+  };
 
   //response from GCP after telling it to fetch all or some zones
   ipcRenderer.on('clusterClient', (event: any, gcpClusters: any) => {
     //sets store with response from GCP and turns Visualizer component on to render
-    setStore({...Store, 
+    setStore({
+      ...Store,
       clusters: gcpClusters,
       clusterCount: gcpClusters.length,
       visualize: true,
@@ -128,31 +126,32 @@ const GcpGetClusters = () => {
         'southamerica-east1-a': false,
         'southamerica-east1-b': false,
         'southamerica-east1-c': false,
-        'europe-west2-a': false
-      }
-    })
-    return event.returnValue = 'done';
-  })
+        'europe-west2-a': false,
+      },
+    });
+    return (event.returnValue = 'done');
+  });
 
   const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
-  
+
   return (
-    <Grid
-      container
-      direction="column"
-      justify="space-around"
-      alignItems="center"
-      >
+    <Grid container direction="column" justify="space-around" alignItems="center">
       <div className="getGCPWrapper">
-      <Typography className={classes.text} variant="h6">Display GCP Clusters:</Typography>
-        <div id='uploadSelectMenu'>
-          {deployLocations}
-        </div>
-        <div id='buts'>
-        <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmit}>Fetch</Button>
+        <Typography className={classes.text} variant="h6">
+          Display GCP Clusters:
+        </Typography>
+        <div id="uploadSelectMenu">{deployLocations}</div>
+        <div id="buts">
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={handleSubmit}>
+            Fetch
+          </Button>
         </div>
       </div>
-  </Grid>
-  )
-}
+    </Grid>
+  );
+};
 export default GcpGetClusters;
