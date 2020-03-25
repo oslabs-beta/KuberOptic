@@ -2,7 +2,7 @@
  * ************************************
  *
  * @module  Checkbox.tsx
- * @author Timothy Mai 
+ * @author Timothy Mai
  * @date 10/21/19
  * @description creates a checkbox component
  *
@@ -23,9 +23,9 @@ export default function Checkboxes(props) {
     <div>
       <FormControlLabel
         control={
-          <Checkbox 
-            checked={props.checked} 
-            onChange={props.handleChange(props.value)} 
+          <Checkbox
+            checked={props.checked}
+            onChange={props.handleChange(props.value)}
             value={props.value}
             color="primary"
           />

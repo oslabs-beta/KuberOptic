@@ -9,7 +9,7 @@
  * ************************************
  */
 
-// This page is the "login" space for AWS. It takes an AWS Key, Secret, and region, and when submitted will bring you to the AWS Display/Deploy page where all clusters in the region are displayed. 
+// This page is the "login" space for AWS. It takes an AWS Key, Secret, and region, and when submitted will bring you to the AWS Display/Deploy page where all clusters in the region are displayed.
 
 import * as React from 'react';
 import { useContext } from 'react';
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: '0 0 50px 0',
     },
     textField: {
-      width: "100%",
+      width: '100%',
     },
     button: {
       margin: theme.spacing(1),
@@ -45,82 +45,91 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const UploadPage2 = () => {
-
   const [Store, setStore] = useContext(StoreContext);
   // updates the store with the AWS key entered into the input field
   const handleKey = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStore({...Store, awsKey: e.currentTarget.value})
-  }
+    setStore({ ...Store, awsKey: e.currentTarget.value });
+  };
   // updates the store with the AWS secret entered into the input field
   const handleSecret = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStore({...Store, awsSecret: e.currentTarget.value})
-  }
+    setStore({ ...Store, awsSecret: e.currentTarget.value });
+  };
   // brings the display back to the main sidebar page
-  const handleBack = ()=>{
+  const handleBack = () => {
     setStore({
       ...Store,
-      uploadPageState:false, 
-      uploadPageState2:false,
+      uploadPageState: false,
+      uploadPageState2: false,
       credentials: null,
       clusterCount: 0,
-      clusters: []
+      clusters: [],
     });
   };
   // submits the AWS key, secret, and region to main.ts where the loginAWS function is invoked
   function handleSubmit() {
-    if(typeof Store.awsSecret !== 'string' || typeof Store.awsKey !== 'string'){
+    if (typeof Store.awsSecret !== 'string' || typeof Store.awsKey !== 'string') {
       console.log('Enter a AWS key/secret to access AWS');
     } else {
-      setStore({...Store,
-        awsDeployPage: true,
-      })
+      setStore({ ...Store, awsDeployPage: true });
     }
   }
 
   const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
 
-  // renders the login page, with input fields for AWS key, secret, and a drop down menu for US regions.     
+  // renders the login page, with input fields for AWS key, secret, and a drop down menu for US regions.
   return (
     <>
-      { Store.deploying ? <Deploying/> :
-        Store.awsDeployPage ? <AWSDeploy/> :
-        <Grid
-        container
-        direction="column"
-        justify="space-around"
-        alignItems="center"
-        >
-        <div className="awsImageContainer">
-          <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
-          <Typography className={classes.text} variant="h3">Amazon Web Services</Typography>
-        </div>
-        <form noValidate autoComplete="off">
-          <TextField
-            id="standard-helperText"
-            label="Access Key"
-            className={classes.textField}
-            helperText="Enter an AWS Access Key..."
-            margin="normal"
-            onChange={handleKey}
-          />
-          <TextField
-            id="standard-helperText"
-            label="Secret Key"
-            className={classes.textField}
-            helperText="Enter an AWS Secret Key..."
-            margin="normal"
-            onChange={handleSecret}
-          />
-        </form>
+      {Store.deploying ? (
+        <Deploying />
+      ) : Store.awsDeployPage ? (
+        <AWSDeploy />
+      ) : (
+        <Grid container direction="column" justify="space-around" alignItems="center">
+          <div className="awsImageContainer">
+            <img className="kubUpload" src={require('../assets/credsPage/aws.png')} />
+            <Typography className={classes.text} variant="h3">
+              Amazon Web Services
+            </Typography>
+          </div>
+          <form noValidate autoComplete="off">
+            <TextField
+              id="standard-helperText"
+              label="Access Key"
+              className={classes.textField}
+              helperText="Enter an AWS Access Key..."
+              margin="normal"
+              onChange={handleKey}
+            />
+            <TextField
+              id="standard-helperText"
+              label="Secret Key"
+              className={classes.textField}
+              helperText="Enter an AWS Secret Key..."
+              margin="normal"
+              onChange={handleSecret}
+            />
+          </form>
 
-        <div>
-          <Button variant="contained" color="secondary" className={classes.button} onClick={handleSubmit}>Submit</Button>
-          <Button variant="outlined" color="secondary" className={classes.button} onClick={handleBack}>Back</Button>
-        </div>
-      </Grid>
-      }   
-  </>
-  )
-}
+          <div>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+              onClick={handleBack}>
+              Back
+            </Button>
+          </div>
+        </Grid>
+      )}
+    </>
+  );
+};
 
 export default UploadPage2;

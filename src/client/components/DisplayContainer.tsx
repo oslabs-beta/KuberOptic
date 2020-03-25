@@ -10,9 +10,9 @@
  */
 
 import React from 'react';
-import Visualizer from './visualizer'
+import Visualizer from './visualizer';
 import SideBar from './sidebar';
-import { useContext }from 'react'
+import { useContext } from 'react';
 import { StoreContext } from '../../../store';
 
 // main Material-UI component: PersistentDrawerLeft
@@ -113,25 +113,27 @@ export default function DisplayContainer() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-        <Toolbar> {/* if you want to make the toolbar denser, add `variant="dense"` as a prop to it */}
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}>
+        <Toolbar>
+          {' '}
+          {/* if you want to make the toolbar denser, add `variant="dense"` as a prop to it */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
+            className={clsx(classes.menuButton, open && classes.hide)}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>KuberOptic</Typography>
+          <Typography variant="h6" noWrap>
+            KuberOptic
+          </Typography>
         </Toolbar>
-        </AppBar>
+      </AppBar>
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -139,8 +141,7 @@ export default function DisplayContainer() {
         open={open}
         classes={{
           paper: classes.drawerPaper,
-        }}
-      >
+        }}>
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -153,11 +154,11 @@ export default function DisplayContainer() {
       </Drawer>
 
       {/* this is the main content of the page - will be where visualizer is allows visualizer to move when drawer is opened and closed*/}
-      <main className={clsx(classes.content, {[classes.contentShift]: open,})}> 
+      <main className={clsx(classes.content, { [classes.contentShift]: open })}>
         <div className={classes.drawerHeader} />
         {/* add visualizer here to render only when needed to prevent Three.js's canvas from running*/}
-        { Store.visualize && <Visualizer/> }
-      </main> 
+        {Store.visualize && <Visualizer />}
+      </main>
     </div>
   );
 }
