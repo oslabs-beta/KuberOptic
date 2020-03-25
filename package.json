@@ -1,5 +1,5 @@
 {
-  "name": "kubernati",
+  "name": "kuberoptic",
   "version": "1.0.0",
   "productName": "KuberOptic",
   "description": "An Electron app for developers to visualize their Kubernetes clusters in real-time",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oslabs-beta/kubernati.git"
+    "url": "git+https://github.com/oslabs-beta/KuberOptic.git"
   },
   "contributors": [
     "Bryan",
@@ -34,9 +34,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/oslabs-beta/kubernati/issues"
+    "url": "https://github.com/oslabs-beta/KuberOptic/issues"
   },
-  "homepage": "https://github.com/oslabs-beta/kubernati#readme",
+  "homepage": "https://github.com/oslabs-beta/KuberOptic",
   "devDependencies": {
     "@babel/plugin-transform-async-to-generator": "^7.5.0",
     "@babel/plugin-transform-modules-commonjs": "^7.5.0",

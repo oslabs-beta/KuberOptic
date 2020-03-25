@@ -2,7 +2,7 @@
 ### 
 kuberoptic.com
 ***
-![](src/client/assets/credsPage/kubernatiGif.gif)
+![](src/client/assets/credsPage/MainKuberOpticGif.gif)
 ### A visualization and deployment tool for your Kubernetes cluster
 ###
 
@@ -29,10 +29,17 @@ First create a google developer account for Google Cloud Platform (GCP) and star
 gcloud auth application-default login
 ```
 #### Input Project credentials
-![](src/client/assets/credsPage/puttingCreds.gif)
+AWS - Requires Access Key and Secret Key
+
+![](https://media.giphy.com/media/fwzZ6dbJvqKDJxpyBh/giphy.gif)
+
+GCP - Requires JSON object with Project_ID
+
+![](https://media.giphy.com/media/Ws3EjFrutxn3YHR3In/giphy.gif)
+
 ***
 #### Deployment (GCP) 
-![](src/client/assets/credsPage/deploymentGCP.gif)
+![](https://media.giphy.com/media/Y1M2Gynz25sCdQOqtp/giphy.gif)
 ***
 ### AWS
 Our API utilizes AWS-SDK's EKS(Amazon Elastic Kubernetes Service). Simply go and create an AWS account to generate a secret ID and SecretKey for your IAM account. Enter the Secret ID and Key to enter the display/deploy page.
@@ -46,7 +53,7 @@ You can also choose to remove individual or multiple clusters from the display w
 To deploy a new cluster, enter the name of the new cluster, your roleARN, two subnet IDs, and the region in which you wish to deploy, then click "Deploy Cluster." Please note that it will take a few minutes for your cluster to be created, at which point you can retrieve it for display. 
 
 To delete a cluster from the cloud, enter the name and region of the cluster you wish to delete (you don't need the roleARN or Subnet IDs) and click "Delete Cluster." As with deploying, it will take a few minutes for your changes to take effect.  
-![](src/client/assets/credsPage/puttingAws.gif)
+![](https://media.giphy.com/media/Y4D7nv61sLnOI9Kajc/giphy.gif)
 ***
 ### Azure
 **COMING SOON**
@@ -64,9 +71,11 @@ npm start
 ```
 npm run test
 ```
-**Build package for mac OS***
+**Build package and create installer for mac OS**
 ```
+npm run prod
 npm run package-mac
+npm create-installer-mac
 ```
 **Lint project**
 ```
@@ -78,9 +87,12 @@ npm run lint
 - Remodeled UI
 ***
 ## Authors
-[Juan Espinoza](https://github.com/jespinoza17)
-[Jacob Banks](https://github.com/jacobbanks)
-[Jay Dawson](https://github.com/ImJustJay)
-[Jimmy Deng](https://github.com/rev619)
+[Bryan Villafuerte](https://github.com/BryV38) - [Darren Napier](https://github.com/darrenNapier)
+
+[Dominic Ameneyro](https://github.com/dameneyro) - [Jacob Banks](https://github.com/jacobbanks)
+
+[Jay Dawson](https://github.com/ImJustJay) - [Juan Espinoza](https://github.com/jespinoza17)
+
+[Jimmy Deng](https://github.com/rev619) - [Timothy Mai](https://github.com/tqmai)
 ## License
 MIT
