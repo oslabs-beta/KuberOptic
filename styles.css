@@ -1,17 +1,23 @@
 .app {
-  height: 100vh;
+  height: 100%;
+  width: 100%;
   background-color: rgb(0, 0, 0); 
+  overflow: hidden;
 }
 
 .text {
   color: aqua;
   margin-top: 20px;
-  margin-left: 290px;
   font-size: 20px;
+  width: 400px;
+  align-content: center;
+  text-align: center;
 }
 
 .displayContainer {
   color: aquamarine;
+  height: 100%;
+  width: 100%;
 }
 
 .kubLogo {

@@ -3,3 +3,6 @@
 /creds.json
 .DS_store
 /release-builds 
+./dist/credentials.json
+access_keys
+/build

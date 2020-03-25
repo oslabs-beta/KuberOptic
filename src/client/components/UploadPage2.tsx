@@ -1,57 +1,135 @@
+/**
+ * ************************************
+ *
+ * @module  UploadPage2.tsx
+ * @author
+ * @date
+ * @description upload page for clusters from Amazon Web Services
+ *
+ * ************************************
+ */
+
+// This page is the "login" space for AWS. It takes an AWS Key, Secret, and region, and when submitted will bring you to the AWS Display/Deploy page where all clusters in the region are displayed.
+
 import * as React from 'react';
 import { useContext } from 'react';
-import DisplayContainer from './DisplayContainer';
-import {StoreContext} from '../../../store';
-const { ipcRenderer } = require('electron');
+import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { StoreContext } from '../../../store';
+import AWSDeploy from './awsDeploy';
+import Deploying from './deploying';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
-const UploadPage = () => {
+// Material-UI uses "CSS in JS" styling
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    text: {
+      align: 'center',
+      margin: '0 0 50px 0',
+    },
+    textField: {
+      width: '100%',
+    },
+    button: {
+      margin: theme.spacing(1),
+    },
+    input: {
+      display: 'none',
+    },
+  }),
+);
 
-    const [Store, setStore] = useContext(StoreContext);
+const UploadPage2 = () => {
+  const [Store, setStore] = useContext(StoreContext);
+  // updates the store with the AWS key entered into the input field
+  const handleKey = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStore({ ...Store, awsKey: e.currentTarget.value });
+  };
+  // updates the store with the AWS secret entered into the input field
+  const handleSecret = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStore({ ...Store, awsSecret: e.currentTarget.value });
+  };
+  // brings the display back to the main sidebar page
+  const handleBack = () => {
+    setStore({
+      ...Store,
+      uploadPageState: false,
+      uploadPageState2: false,
+      credentials: null,
+      clusterCount: 0,
+      clusters: [],
+    });
+  };
+  // submits the AWS key, secret, and region to main.ts where the loginAWS function is invoked
+  function handleSubmit() {
+    if (typeof Store.awsSecret !== 'string' || typeof Store.awsKey !== 'string') {
+      console.log('Enter a AWS key/secret to access AWS');
+    } else {
+      setStore({ ...Store, awsDeployPage: true });
+    }
+  }
 
-    ipcRenderer.on('clusterClient2', (event: any, arg: any) => {
-        setStore({...Store, gcp: arg});
-    })
+  const classes = useStyles(); // this is showing an error but this is directly from Material-UI and is fine
 
-    const handleKey = (e: React.FormEvent<HTMLInputElement>) => {
-        setStore({...Store, awsKey:e.currentTarget.value})
-    }
-    const handleSecret = (e: React.FormEvent<HTMLInputElement>) => {
-      setStore({...Store, awsKey:e.currentTarget.value})
-    }
-    const handleName = (e: React.FormEvent<HTMLInputElement>) => {
-      setStore({...Store, awsKey:e.currentTarget.value})
-    }
-    const handleBack = ()=>{
-      setStore({...Store, landingPageState2:false})
-    }
-    const handleSubmit = () => {
-        const creds = JSON.parse(Store.credentials);
-         if(typeof creds !== 'object'){
-          console.log('Enter a JSON object from GCP');
-        }
-        else{
-          ipcRenderer.send('asynchronous-message2', creds)
-          setStore({...Store, uploadPageState: true});
-       }
-    }
-    return <div>{Store.uploadPageState ? <DisplayContainer /> :
-        <div className='uploadDiv'>
-            <div>
-              <img className='kubUpload' src={require('../assets/credsPage/aws.png')}/>
-              <div className='kubUploadText'>Amazon Web Services</div>
-            </div>
-        <input className='uploadInput' type="text" onChange={handleKey} placeholder="awsKey"/>
-        <input className='uploadInput' type="text" onChange={handleSecret} placeholder="awsSecret"/>
-        <input className='uploadInput' type="text" onChange={handleName} placeholder="ClusterName"/>
-        <div id="uploadPage2SubmitandBackButts">
-        <button id="uploadPage2Submit" className='uploadButt' onClick={handleSubmit}>Submit</button>
-        &nbsp;
-        <button id="uploadPage2BackButt" className = 'backButton' onClick={handleBack}>  Back  </button>
-        </div>
-        
-        
-        </div>
-}</div>
-}
+  // renders the login page, with input fields for AWS key, secret, and a drop down menu for US regions.
+  return (
+    <>
+      {Store.deploying ? (
+        <Deploying />
+      ) : Store.awsDeployPage ? (
+        <AWSDeploy />
+      ) : (
+        <Grid container direction="column" justify="space-around" alignItems="center">
+          <div className="awsImageContainer">
+            <img className="kubUpload" src={require('../assets/credsPage/aws.png')} />
+            <Typography className={classes.text} variant="h3">
+              Amazon Web Services
+            </Typography>
+          </div>
+          <form noValidate autoComplete="off">
+            <TextField
+              id="standard-helperText"
+              label="Access Key"
+              className={classes.textField}
+              helperText="Enter an AWS Access Key..."
+              margin="normal"
+              onChange={handleKey}
+            />
+            <TextField
+              id="standard-helperText"
+              label="Secret Key"
+              className={classes.textField}
+              helperText="Enter an AWS Secret Key..."
+              margin="normal"
+              onChange={handleSecret}
+            />
+          </form>
 
-export default UploadPage;
+          <div>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+              onClick={handleBack}>
+              Back
+            </Button>
+          </div>
+        </Grid>
+      )}
+    </>
+  );
+};
+
+export default UploadPage2;
