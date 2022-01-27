@@ -117,7 +117,7 @@
     "react-router-dom": "^5.0.1",
     "scale": "0.0.7",
     "tachyons": "^4.11.1",
-    "three": "^0.107.0",
+    "three": "^0.137.0",
     "three-orbitcontrols": "^2.102.2",
     "ts-node": "^8.3.0",
     "underscore": "^1.9.1",
